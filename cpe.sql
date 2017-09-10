@@ -1,9 +1,9 @@
 BEGIN;
 	DO
 	$body$
-	BEGIN   
+	BEGIN
 		IF NOT EXISTS (
-		   SELECT * 
+		   SELECT *
 		   FROM pg_catalog.pg_user
 		   WHERE usename = 'cpedba') THEN
 
@@ -37,19 +37,14 @@ BEGIN;
 	       nombre        varchar(40),
 	       apellido        varchar(40),
 	       passwordUser varchar(250) not null,
-		   publicKeyUser varchar(2100) not null,
 	       mailUser varchar(250) not null,
 	       authkeyUser varchar(250) ,
-	       activUser integer DEFAULT 0,
-	       avatar        varchar(120)
-	       
+	       activUser integer DEFAULT 0
+	       --avatar        varchar(120)
+
 	);
 
-	CREATE TABLE mail (
-	       mail_id    SERIAL PRIMARY KEY,
-	       usuario_id     integer REFERENCES usuario,
-	       email   varchar(40)
-	);
+
 
 	CREATE TABLE instituto (
 	       instituto_id     SERIAL PRIMARY KEY,

@@ -59,4 +59,8 @@ class Sector extends \yii\db\ActiveRecord
     {
         return new SectorQuery(get_called_class());
     }
+
+    public static function getAllSectors(){
+      return Sector::find()->all();
+    }
 }
