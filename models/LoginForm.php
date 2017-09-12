@@ -44,13 +44,12 @@ class LoginForm extends Model
      */
     public function validatePassword($attribute, $params)
     {
-        if (!$this->hasErrors()) {
-            $user = $this->getUser();
-
-            if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
-            }
-        }
+      $table = Usuario::find()
+          ->where ( "passworduser=:passworduser",
+          [":passworduser"=>crypt($this->password, Yii::$app->params["salt"])] )
+          ->andWhere("mailuser=:mailuser", [":mailuser"=>$this->username]);
+      if ($table->count() == 1)return true;
+      else $this->addError( $attribute, "El password es erroneo" );
     }
 
     /**
@@ -73,7 +72,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = Usuario::findByEmail($this->username);
         }
 
         return $this->_user;

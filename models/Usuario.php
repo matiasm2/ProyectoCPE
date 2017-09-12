@@ -104,7 +104,7 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     public function validateAuthKey($authKey): bool {
-        $usr=Usuario::find()->where ( "authkeyUser=:authkeyUser", [":authkeyUser" =>
+        $usr=Usuario::find()->where ( "authkeyuser=:authkeyuser", [":authkeyuser" =>
             crypt($authkeyuser, Yii::$app->params["salt"])]);
         if ($usr->count() == 1) {
             return true;
@@ -117,10 +117,14 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     public static function findIdentityByAccessToken($token, $type = null): IdentityInterface {
-        return Usuario::findOne(['authkeyUser' => $token]);
+        return Usuario::findOne(['authkeyuser' => $token]);
     }
 
-    public static function findByUsername($username){
-        return Usuario::findOne(['nameUser' => $username]);
+    // public static function findByUsername($username){
+    //     return Usuario::findOne(['nombre' => $username]);
+    // }
+
+    public static function findByEmail($mailuser) {
+      return Usuario::findOne(['mailuser' => $mailuser]);
     }
 }

@@ -23,28 +23,37 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
+     public function behaviors() {
+         return [
+             'access' => [
+                 'class' => AccessControl::className(),
+                 'only' => ['logout', 'contact', 'register', 'login',],
+                 'rules' => [
+                     [
+                         'allow' => true,
+                         'actions' => ['login', 'logout', 'contact', 'register',],
+                         'roles' => ['?'],
+                     ],
+                     [
+                         'allow' => true,
+                         'actions' => ['logout', 'register',],
+                         'roles' => ['@'],
+                     ],
+                     [
+                         'allow' => false,
+                         'actions' => ['contact', 'login'],
+                         'roles' => ['@'],
+                     ],
+                 ],
+             ],
+             'verbs' => [
+                 'class' => VerbFilter::className(),
+                 'actions' => [
+                     'logout' => ['post'],
+                 ],
+             ],
+         ];
+     }
 
     /**
      * @inheritdoc
@@ -219,4 +228,6 @@ class SiteController extends Controller
                 return $this->redirect(["site/login"]);
         }
     }
+
+
 }
