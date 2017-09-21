@@ -169,7 +169,7 @@ class SiteController extends Controller
             $authKey = urlencode($user->authkeyuser);
             $subject = "Confirmar registro";
             $body = "<h1>Haga click en el siguiente enlace para finalizar tu registro</h1>";
-            $link = Intranet::getUrlHead() . "/web/index.php?r=site/confirm&id=" . $id . "&authKey=" . $authKey;
+            $link = Intranet::getUrlHead() . "/ProyectoCPE/web/index.php?r=site/confirm&id=" . $id . "&authKey=" . $authKey;
             $body .= "<a href='" . $link . "'>Confirmar</a>";
 
             if (Yii::$app->params["adminEmail"] != 'email@gmail.com') {
@@ -216,10 +216,10 @@ class SiteController extends Controller
                                     ->andWhere("authkeyuser=:authkeyuser", [":authkeyuser" => $authKey])->one();
                     $activar->activuser = 1;
                     if ($activar->update() !== false) {
-                        echo "Registro ok en chatpf, redireccionando..";
+                        echo "Registro ok, redireccionando..";
                         echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
                     } else {
-                        echo "Registro fallido en chatpf, redireccionando..";
+                        echo "Registro fallido, redireccionando..";
                         echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
                     }
                 } else
