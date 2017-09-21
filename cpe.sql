@@ -1,3 +1,4 @@
+CREATE DATABASE cpe_db;
 BEGIN;
 	DO
 	$body$
@@ -25,6 +26,8 @@ BEGIN;
 	ALTER ROLE cpedba WITH CREATEDB SUPERUSER;
         GRANT CONNECT ON DATABASE cpe_db TO cpedba;
         GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO cpedba;
+
+	\c cpe_db;
 
 	CREATE TABLE sector (
 	       sector_id    SERIAL PRIMARY KEY,
@@ -89,7 +92,7 @@ BEGIN;
 	       programa_id  SERIAL PRIMARY KEY,
 	       planmateria_id  integer REFERENCES planmateria,
 	       ano_id  integer REFERENCES ano,
-				 fecha datetime
+				 fecha date
 	);
 
 	CREATE TABLE estado (
@@ -103,7 +106,7 @@ BEGIN;
 	       usuario_id    integer REFERENCES usuario,
 	       estado_id     integer REFERENCES estado,
 	       archivo       varchar(100) not null,
-				 fecha datetime
+				 fecha date
 	);
 
 COMMIT;
