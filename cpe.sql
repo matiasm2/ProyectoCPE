@@ -89,7 +89,11 @@ BEGIN;
 	       programa_id  SERIAL PRIMARY KEY,
 	       planmateria_id  integer REFERENCES planmateria,
 	       ano_id  integer REFERENCES ano,
+<<<<<<< HEAD
 				 fecha datetime
+=======
+	       fecha	datetime
+>>>>>>> 137883d6bde3dbdeb524d04d1774fdb5697a412b
 	);
 
 	CREATE TABLE estado (
@@ -102,8 +106,13 @@ BEGIN;
 	       programa_id   integer REFERENCES programa,
 	       usuario_id    integer REFERENCES usuario,
 	       estado_id     integer REFERENCES estado,
+<<<<<<< HEAD
 	       archivo       varchar(100) not null,
 				 fecha datetime
+=======
+	       archivo       varchar(100),
+	       fecha		 datetime
+>>>>>>> 137883d6bde3dbdeb524d04d1774fdb5697a412b
 	);
 
 COMMIT;
