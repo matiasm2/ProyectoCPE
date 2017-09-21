@@ -88,7 +88,8 @@ BEGIN;
 	CREATE TABLE programa (
 	       programa_id  SERIAL PRIMARY KEY,
 	       planmateria_id  integer REFERENCES planmateria,
-	       ano_id  integer REFERENCES ano
+	       ano_id  integer REFERENCES ano,
+				 fecha datetime
 	);
 
 	CREATE TABLE estado (
@@ -101,7 +102,8 @@ BEGIN;
 	       programa_id   integer REFERENCES programa,
 	       usuario_id    integer REFERENCES usuario,
 	       estado_id     integer REFERENCES estado,
-	       archivo       bytea
+	       archivo       varchar(100) not null,
+				 fecha datetime
 	);
 
 COMMIT;
