@@ -65,15 +65,27 @@ class ArchivoprogramaController extends Controller
     {
         $model = new Archivoprograma();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
-        } else {
+        //if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
+        //} else {
+            //return $this->render('create', [
+                //'model' => $model,
+            //]);
+        //}
+        if ($model->load(Yii::$app->request->post())){
+			$model->programa_id=$this->programa_id;
+			$model->estado_id=$this->estado_id;
+			$model->usuario_id=Yii::$app->user->identity->usuario_id;
+			$model->fecha=date('Y-m-d');
+			
+            $model->archivo=UploadedFile::getInstance($model,'archivo');
+		} else {
             return $this->render('create', [
                 'model' => $model,
             ]);
-        }
-    }
-
+		}
+	}
+	
     /**
      * Updates an existing Archivoprograma model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -85,7 +97,7 @@ class ArchivoprogramaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
+			return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

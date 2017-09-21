@@ -11,7 +11,8 @@ use Yii;
  * @property integer $programa_id
  * @property integer $usuario_id
  * @property integer $estado_id
- * @property resource $archivo
+ * @property string $archivo
+ * @property string $fecha
  *
  * @property Estado $estado
  * @property Programa $programa
@@ -34,7 +35,9 @@ class Archivoprograma extends \yii\db\ActiveRecord
     {
         return [
             [['programa_id', 'usuario_id', 'estado_id'], 'integer'],
-            [['archivo'], 'string'],
+            [['archivo'], 'required'],
+            [['fecha'], 'safe'],
+            [['archivo'], 'string', 'max' => 100],
             [['estado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::className(), 'targetAttribute' => ['estado_id' => 'estado_id']],
             [['programa_id'], 'exist', 'skipOnError' => true, 'targetClass' => Programa::className(), 'targetAttribute' => ['programa_id' => 'programa_id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usuario_id' => 'usuario_id']],
@@ -52,6 +55,7 @@ class Archivoprograma extends \yii\db\ActiveRecord
             'usuario_id' => 'Usuario ID',
             'estado_id' => 'Estado ID',
             'archivo' => 'Archivo',
+            'fecha' => 'Fecha',
         ];
     }
 

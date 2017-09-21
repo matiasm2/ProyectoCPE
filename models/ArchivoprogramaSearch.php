@@ -19,7 +19,7 @@ class ArchivoprogramaSearch extends Archivoprograma
     {
         return [
             [['archivoprograma_id', 'programa_id', 'usuario_id', 'estado_id'], 'integer'],
-            [['archivo'], 'safe'],
+            [['archivo', 'fecha'], 'safe'],
         ];
     }
 
@@ -63,6 +63,7 @@ class ArchivoprogramaSearch extends Archivoprograma
             'programa_id' => $this->programa_id,
             'usuario_id' => $this->usuario_id,
             'estado_id' => $this->estado_id,
+            'fecha' => $this->fecha,
         ]);
 
         $query->andFilterWhere(['like', 'archivo', $this->archivo]);
