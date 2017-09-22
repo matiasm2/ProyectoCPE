@@ -8,6 +8,7 @@ use app\models\ArchivoprogramaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ArchivoprogramaController implements the CRUD actions for Archivoprograma model.
@@ -73,19 +74,24 @@ class ArchivoprogramaController extends Controller
             //]);
         //}
         if ($model->load(Yii::$app->request->post())){
-			$model->programa_id=$this->programa_id;
-			$model->estado_id=$this->estado_id;
-			$model->usuario_id=Yii::$app->user->identity->usuario_id;
-			$model->fecha=date('Y-m-d');
-			
-            $model->archivo=UploadedFile::getInstance($model,'archivo');
-		} else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-		}
-	}
-	
+    			$model->usuario_id=Yii::$app->user->identity->usuario_id;
+          $model->archivo= UploadedFile::getInstance($model,'archivo');
+    			$model->fecha=date('Y-m-d');
+          if ($model->save()) {
+            if ($model->upload()) {
+              return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
+            } else {
+              return $this->render('errorup');
+            }
+          } else {
+            return $this->render('create', ['model' => $model,]);
+          }
+        } else {
+          return $this->render('create', ['model' => $model,]);
+        }
+      }
+
+
     /**
      * Updates an existing Archivoprograma model.
      * If update is successful, the browser will be redirected to the 'view' page.

@@ -11,21 +11,21 @@ use kartik\file\FileInput;
 
 <div class="archivoprograma-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'programa_id')->textInput() ?>
 
-    <?= $form->field($model, 'usuario_id')->textInput() ?>
+    <!--?= $form->field($model, 'usuario_id')->textInput() ?>-->
 
     <?= $form->field($model, 'estado_id')->textInput() ?>
 
-	
-	<!--?= $form->field($model, 'archivo')->textInput(['maxlength' => true]) ?-->
+    <!--?= $form->field($model, 'archivo')->textInput(['maxlength' => true]) ?-->
 
+    <?= $form->field($model, 'archivo')->widget(FileInput::classname(),
+        ['options' => ['accept' => 'upload/*'],])
+    ?>
 
-    <?php echo $form->field($model, 'archivo')->widget(FileInput::classname(), ['options' => ['accept'=> 'upload/*'],]); ?>
-
-    <?= $form->field($model, 'fecha')->textInput() ?>
+    <!--?= $form->field($model, 'fecha')->textInput() ?>-->
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
