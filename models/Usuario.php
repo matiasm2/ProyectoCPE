@@ -21,21 +21,18 @@ use yii\web\IdentityInterface;
  * @property Sector $sector
  * @property Usuariocarrera[] $usuariocarreras
  */
-class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
-{
+class Usuario extends \yii\db\ActiveRecord implements IdentityInterface {
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName(){
         return 'usuario';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules(){
         return [
             [['sector_id', 'activuser'], 'integer'],
             [['passworduser', 'mailuser'], 'required'],
@@ -48,8 +45,7 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels(){
         return [
             'usuario_id' => 'Usuario ID',
             'sector_id' => 'Sector',
@@ -65,24 +61,21 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getArchivoprogramas()
-    {
+    public function getArchivoprogramas(){
         return $this->hasMany(Archivoprograma::className(), ['usuario_id' => 'usuario_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuerya
      */
-    public function getSector()
-    {
+    public function getSector(){
         return $this->hasOne(Sector::className(), ['sector_id' => 'sector_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuariocarreras()
-    {
+    public function getUsuariocarreras(){
         return $this->hasMany(Usuariocarrera::className(), ['usuario_id' => 'usuario_id']);
     }
 
@@ -90,12 +83,11 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
      * @inheritdoc
      * @return UsuarioQuery the active query used by this AR class.
      */
-    public static function find()
-    {
+    public static function find(){
         return new UsuarioQuery(get_called_class());
     }
 
-    public function getAuthKey(): string {
+    public function getAuthKey() {
         return $this->authkeyuser;
     }
 
@@ -103,7 +95,7 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->usuario_id;
     }
 
-    public function validateAuthKey($authKey): bool {
+    public function validateAuthKey($authKey) {
         $usr=Usuario::find()->where ( "authkeyuser=:authkeyuser", [":authkeyuser" =>
             crypt($authkeyuser, Yii::$app->params["salt"])]);
         if ($usr->count() == 1) {
@@ -112,19 +104,19 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
         return false;
     }
 
-    public static function findIdentity($id): IdentityInterface {
+    public static function findIdentity($id) {
         return Usuario::findOne($id);
     }
 
-    public static function findIdentityByAccessToken($token, $type = null): IdentityInterface {
+    public static function findIdentityByAccessToken($token, $type = null) {
         return Usuario::findOne(['authkeyuser' => $token]);
     }
 
-    // public static function findByUsername($username){
-    //     return Usuario::findOne(['nombre' => $username]);
-    // }
+    public static function findByUsername($username){
+        return Usuario::findOne(['nombre' => $username]);
+    }
 
     public static function findByEmail($mailuser) {
-      return Usuario::findOne(['mailuser' => $mailuser]);
+	return Usuario::findOne(['mailuser' => $mailuser]);
     }
 }
