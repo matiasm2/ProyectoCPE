@@ -173,4 +173,5 @@ BEGIN;
       WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingeniería en Informática')
       AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
     (SELECT materia_id FROM materia WHERE nombre='Matemática III'));
+	END;
 COMMIT;

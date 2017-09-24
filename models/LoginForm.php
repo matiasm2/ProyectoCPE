@@ -13,7 +13,7 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
-    public $username;
+    public $EmailRegistrado;
     public $password;
     public $rememberMe = true;
 
@@ -27,7 +27,7 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            [['EmailRegistrado', 'password'], 'required'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
@@ -47,7 +47,7 @@ class LoginForm extends Model
       $table = Usuario::find()
           ->where ( "passworduser=:passworduser",
           [":passworduser"=>crypt($this->password, Yii::$app->params["salt"])] )
-          ->andWhere("mailuser=:mailuser", [":mailuser"=>$this->username]);
+          ->andWhere("mailuser=:mailuser", [":mailuser"=>$this->EmailRegistrado]);
       if ($table->count() == 1)return true;
       else $this->addError( $attribute, "El password es erroneo" );
     }
@@ -72,7 +72,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = Usuario::findByEmail($this->username);
+            $this->_user = Usuario::findByEmail( $this->EmailRegistrado );
         }
 
         return $this->_user;

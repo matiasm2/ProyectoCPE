@@ -117,6 +117,6 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface {
     }
 
     public static function findByEmail($mailuser) {
-	return Usuario::findOne(['mailuser' => $mailuser]);
+		return Usuario::findOne(['mailuser' => $mailuser]);
     }
 }

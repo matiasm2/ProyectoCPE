@@ -157,8 +157,8 @@ class SiteController extends Controller
           $table = new Usuario();
           $table->loadDefaultValues();
           $table->sector_id = $model->sector_id;
-          $table->nombre = $model->username;
-          $table->apellido = $model->usersurname;
+          $table->nombre = $model->Nombre;
+          $table->apellido = $model->Apellido;
           $table->passworduser = crypt($model->password, Yii::$app->params["salt"]);
           $table->mailuser = $model->email;
           $table->authkeyuser = RandKey::randKey("abcdef0123456789", 200);
@@ -169,7 +169,7 @@ class SiteController extends Controller
             $authKey = urlencode($user->authkeyuser);
             $subject = "Confirmar registro";
             $body = "<h1>Haga click en el siguiente enlace para finalizar tu registro</h1>";
-            $link = Intranet::getUrlHead() . "/web/index.php?r=site/confirm&id=" . $id . "&authKey=" . $authKey;
+            $link = Intranet::getUrlHead() . "/ProyectoCPE/web/index.php?r=site/confirm&id=" . $id . "&authKey=" . $authKey;
             $body .= "<a href='" . $link . "'>Confirmar</a>";
 
             if (Yii::$app->params["adminEmail"] != 'email@gmail.com') {
@@ -186,8 +186,8 @@ class SiteController extends Controller
                 "\nClick aquí para reenviar confirmación vía mailto:");
             }
 
-            $model->username = null;
-            $model->usersurname = null;
+            $model->Nombre = null;
+            $model->Apellido = null;
             $model->email = null;
             $model->password = null;
             $model->password_repeat = null;
@@ -216,10 +216,10 @@ class SiteController extends Controller
                                     ->andWhere("authkeyuser=:authkeyuser", [":authkeyuser" => $authKey])->one();
                     $activar->activuser = 1;
                     if ($activar->update() !== false) {
-                        echo "Registro ok en chatpf, redireccionando..";
+                        echo "Registro ok, redireccionando..";
                         echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
                     } else {
-                        echo "Registro fallido en chatpf, redireccionando..";
+                        echo "Registro fallido, redireccionando..";
                         echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
                     }
                 } else

@@ -24,9 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="row">
 
 
-				<?= $form->field($model, "username")->input("text") ?>
+				<?= $form->field($model, "Nombre")->input("text") ?>
 
-				<?= $form->field($model, "usersurname")->input("text") ?>
+				<?= $form->field($model, "Apellido")->input("text") ?>
 
 				<?= $form->field($model, "email")->input("email") ?>
 
