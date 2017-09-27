@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Programa;
 use app\models\ProgramaSearch;
+use app\models\Ano;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -64,12 +65,13 @@ class ProgramaController extends Controller
     public function actionCreate()
     {
         $model = new Programa();
-
+        $subModel=new Ano();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->programa_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'subModel'=> $subModel,
             ]);
         }
     }
@@ -83,12 +85,13 @@ class ProgramaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->programa_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+
             ]);
         }
     }
