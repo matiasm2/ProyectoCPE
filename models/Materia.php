@@ -62,4 +62,7 @@ class Materia extends \yii\db\ActiveRecord
     {
         return new MateriaQuery(get_called_class());
     }
+     public static function getAllMaterias(){
+        return Materia::find()->all();
+    }
 }

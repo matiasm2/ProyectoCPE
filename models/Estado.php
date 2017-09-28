@@ -59,4 +59,7 @@ class Estado extends \yii\db\ActiveRecord
     {
         return new EstadoQuery(get_called_class());
     }
+      public static function getAllEstados(){
+        return Estado::find()->all();
+    }
 }

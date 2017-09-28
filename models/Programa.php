@@ -81,4 +81,7 @@ class Programa extends \yii\db\ActiveRecord
     {
         return new ProgramaQuery(get_called_class());
     }
+      public static function getAllProgramas(){
+        return Programa::find()->all();
+    }
 }

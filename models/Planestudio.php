@@ -81,4 +81,7 @@ class Planestudio extends \yii\db\ActiveRecord
     {
         return new PlanestudioQuery(get_called_class());
     }
+      public static function getAllPlanestudio(){
+        return Planestudio::find()->all();
+    }
 }

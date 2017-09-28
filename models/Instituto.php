@@ -59,4 +59,7 @@ class Instituto extends \yii\db\ActiveRecord
     {
         return new InstitutoQuery(get_called_class());
     }
+      public static function getAllInstitutos(){
+        return Instituto::find()->all();
+    }
 }
