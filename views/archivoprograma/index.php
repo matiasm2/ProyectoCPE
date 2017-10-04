@@ -30,7 +30,25 @@ $this->params['breadcrumbs'][] = $this->title;
             'estado_id',
             'archivo',
             // 'fecha',
-
+            // IMAGEN DEL DOCUMENTO
+				[
+					'attribute'	=> 'archivo',
+					'format' => 'html',
+					'label' => 'ImageColumnLabel',
+					'value' => function ($data){
+							return Html::img('uploadas/'.$data['archivo'],['widht' => '100px']);
+						},
+						
+				],
+			// URL DEL DOCUMENTO
+				[
+					'label' => 'File',
+					'format' => 'raw',
+					'value' => function ($data) {
+						$url = "uploads/" . $data ->archivo;
+						return Html::a($data->archivo, $url);
+					},
+				],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
