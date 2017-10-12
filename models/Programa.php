@@ -78,4 +78,11 @@ class Programa extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Planmateria::className(), ['planmateria_id' => 'planmateria_id']);
     }
+    
+    /**
+     * No generada por Gii: Tener en cuenta al reescribir el modelo
+     */
+     public static function getAllProgramas(){
+		 return Programa::find()->all();
+	 }
 }
