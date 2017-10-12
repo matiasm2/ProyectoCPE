@@ -21,7 +21,7 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, "programa_id")
                     ->dropDownList(
-            ArrayHelper::map($subModel2->getAllProgramas(), 'programa_id', 'programa_id'))
+            ArrayHelper::map($subModel2->getAllProgramas(), 'programa_id', 'descripcion'))
             ?>
 
    
