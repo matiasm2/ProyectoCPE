@@ -19,6 +19,7 @@ class ProgramaSearch extends Programa
     {
         return [
             [['programa_id', 'planmateria_id', 'ano_id'], 'integer'],
+            [['fecha', 'descripcion'], 'safe'],
         ];
     }
 
@@ -61,7 +62,10 @@ class ProgramaSearch extends Programa
             'programa_id' => $this->programa_id,
             'planmateria_id' => $this->planmateria_id,
             'ano_id' => $this->ano_id,
+            'fecha' => $this->fecha,
         ]);
+
+        $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
 
         return $dataProvider;
     }

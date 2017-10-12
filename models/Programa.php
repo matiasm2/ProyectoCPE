@@ -10,6 +10,8 @@ use Yii;
  * @property integer $programa_id
  * @property integer $planmateria_id
  * @property integer $ano_id
+ * @property string $fecha
+ * @property string $descripcion
  *
  * @property Archivoprograma[] $archivoprogramas
  * @property Ano $ano
@@ -32,6 +34,8 @@ class Programa extends \yii\db\ActiveRecord
     {
         return [
             [['planmateria_id', 'ano_id'], 'integer'],
+            [['fecha'], 'safe'],
+            [['descripcion'], 'string', 'max' => 75],
             [['ano_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ano::className(), 'targetAttribute' => ['ano_id' => 'ano_id']],
             [['planmateria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Planmateria::className(), 'targetAttribute' => ['planmateria_id' => 'planmateria_id']],
         ];
@@ -46,6 +50,8 @@ class Programa extends \yii\db\ActiveRecord
             'programa_id' => 'Programa ID',
             'planmateria_id' => 'Planmateria ID',
             'ano_id' => 'Ano ID',
+            'fecha' => 'Fecha',
+            'descripcion' => 'Descripcion',
         ];
     }
 
@@ -71,17 +77,5 @@ class Programa extends \yii\db\ActiveRecord
     public function getPlanmateria()
     {
         return $this->hasOne(Planmateria::className(), ['planmateria_id' => 'planmateria_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return ProgramaQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new ProgramaQuery(get_called_class());
-    }
-      public static function getAllProgramas(){
-        return Programa::find()->all();
     }
 }
