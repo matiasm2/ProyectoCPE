@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Carrera;
 use app\models\CarreraSearch;
+use app\models\Instituto;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -64,12 +65,13 @@ class CarreraController extends Controller
     public function actionCreate()
     {
         $model = new Carrera();
-
+        $subModel=new Instituto();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->carrera_id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                                'model' => $model,
+                'subModel'=> $subModel,
             ]);
         }
     }
@@ -83,12 +85,15 @@ class CarreraController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model=new Carrera();
+        $subModel=new Instituto();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->carrera_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'subModel'=> $subModel,
             ]);
         }
     }

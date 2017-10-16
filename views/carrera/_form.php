@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\Carrera */
 /* @var $form yii\widgets\ActiveForm */
@@ -12,7 +12,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'instituto_id')->textInput() ?>
+    <?= $form->field($model, "instituto_id")
+				    ->dropDownList(
+            ArrayHelper::map($subModel->getAllInstitutos(), 'instituto_id', 'nombre'))
+    		?>
 
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
 

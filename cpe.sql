@@ -122,7 +122,8 @@ CREATE DATABASE cpe_db;
 		programa_id  SERIAL PRIMARY KEY,
 		planmateria_id  integer REFERENCES planmateria,
 		ano_id  integer REFERENCES ano,
-		fecha date
+		fecha date,
+	    descripcion   varchar(75)
 	);
 	GRANT SELECT, INSERT, UPDATE  ON public.programa TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE programa_programa_id_seq TO cpewebuser;

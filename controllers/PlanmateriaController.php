@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Planmateria;
+use app\models\Planestudio;
+use app\models\Materia;
 use app\models\PlanemateriaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -64,12 +66,15 @@ class PlanmateriaController extends Controller
     public function actionCreate()
     {
         $model = new Planmateria();
-
+        $subModel= new Planestudio();
+        $subModel2= new Materia();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->planmateria_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'subModel' => $subModel,
+                'subModel2' => $subModel2,
             ]);
         }
     }

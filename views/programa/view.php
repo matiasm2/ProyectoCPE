@@ -31,6 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'programa_id',
             'planmateria_id',
             'ano_id',
+            'fecha',
+            'descripcion',
         ],
     ]) ?>
 

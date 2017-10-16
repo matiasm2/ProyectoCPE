@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Programa;
 use app\models\ProgramaSearch;
+use app\models\Ano;
+use app\models\Planmateria;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -63,6 +65,8 @@ class ProgramaController extends Controller
      */
     public function actionCreate()
     {
+        $subModelAno=new Ano();
+        $subModelPlanmateria=new Planmateria();
         $model = new Programa();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -70,6 +74,8 @@ class ProgramaController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'subModelAno' => $subModelAno,
+                'subModelPlanmateria' => $subModelPlanmateria
             ]);
         }
     }

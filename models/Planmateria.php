@@ -81,4 +81,7 @@ class Planmateria extends \yii\db\ActiveRecord
     {
         return new PlanmateriaQuery(get_called_class());
     }
+    public static function getAllPlanesmateria(){
+        return Planmateria::find()->all();
+    }
 }

@@ -68,4 +68,7 @@ class Ano extends \yii\db\ActiveRecord
     {
         return new AnoQuery(get_called_class());
     }
+    public static function getAllAnos(){
+        return Ano::find()->all();
+    }
 }

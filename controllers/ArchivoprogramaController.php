@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Archivoprograma;
+use app\models\Estado;
+use app\models\Programa;
 use app\models\ArchivoprogramaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -65,7 +67,8 @@ class ArchivoprogramaController extends Controller
     public function actionCreate()
     {
         $model = new Archivoprograma();
-
+        $subModel= new Estado();
+        $subModel2= new Programa();
         //if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
         //} else {
@@ -84,10 +87,14 @@ class ArchivoprogramaController extends Controller
               return $this->render('errorup');
             }
           } else {
-            return $this->render('create', ['model' => $model,]);
+            return $this->render('create', ['model' => $model,
+                'subModel' => $subModel,
+                'subModel2' => $subModel2,]);
           }
         } else {
-          return $this->render('create', ['model' => $model,]);
+          return $this->render('create', ['model' => $model,
+      'subModel' => $subModel,
+                'subModel2' => $subModel2,]);
         }
       }
 

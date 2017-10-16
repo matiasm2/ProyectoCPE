@@ -81,4 +81,8 @@ class Carrera extends \yii\db\ActiveRecord
     {
         return new CarreraQuery(get_called_class());
     }
+        public static function getAllCarreras(){
+        return Carrera::find()->all();
+    }
+
 }

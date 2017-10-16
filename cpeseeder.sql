@@ -174,4 +174,41 @@ BEGIN;
       AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
     (SELECT materia_id FROM materia WHERE nombre='Matemática III'));
 	END;
+
+  INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
+  VALUES (1,14,(SELECT CURRENT_DATE),'Programa de la materia XX');
+	END;
+	
+  INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
+  VALUES (2,14,(SELECT CURRENT_DATE),'Programa de la materia YY');
+	END;
+	
+  INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
+  VALUES (3,14,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
+	END;
+	
+  INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
+  VALUES (1,15,(SELECT CURRENT_DATE),'Programa de la materia XX');
+	END;
+	
+  INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
+  VALUES (2,15,(SELECT CURRENT_DATE),'Programa de la materia YY');
+	END;
+	
+  INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
+  VALUES (3,15,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
+	END;
+	
+  INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
+  VALUES (1,16,(SELECT CURRENT_DATE),'Programa de la materia XX');
+	END;
+	
+  INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
+  VALUES (2,16,(SELECT CURRENT_DATE),'Programa de la materia YY');
+	END;
+	
+  INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
+  VALUES (3,16,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
+	END;
+
 COMMIT;
