@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Usuario\cpeadmin */
+/* @var $model app\models\Usuario */
 
 $this->title = $model->usuario_id;
 $this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="carrera-view">
+<div class="usuario-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -32,7 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'sector_id',
             'nombre',
             'apellido',
+            'passworduser',
             'mailuser',
+            'authkeyuser',
+            'activuser',
         ],
     ]) ?>
 

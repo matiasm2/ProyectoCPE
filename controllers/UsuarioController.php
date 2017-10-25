@@ -10,9 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CPEAdminController implements the CRUD actions for Usuario model.
+ * UsuarioController implements the CRUD actions for Usuario model.
  */
-class CPEAdminController extends Controller
+class UsuarioController extends Controller
 {
     /**
      * @inheritdoc
