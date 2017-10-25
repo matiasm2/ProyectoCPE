@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 ?>
-<h1>usuario-cpe/error</h1>
+<h1>cpe-admin/error</h1>
 
 <p>
     You may change the content of this page by modifying

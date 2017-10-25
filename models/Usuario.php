@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-use yii\web\IdentityInterface;
+//use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "usuario".
@@ -21,7 +21,7 @@ use yii\web\IdentityInterface;
  * @property Sector $sector
  * @property Usuariocarrera[] $usuariocarreras
  */
-class Usuario extends \yii\db\ActiveRecord implements IdentityInterface {
+class Usuario extends \yii\db\ActiveRecord  {/*implements IdentityInterface {*/
     /**
      * @inheritdoc
      */
@@ -86,7 +86,12 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface {
     public static function find(){
         return new UsuarioQuery(get_called_class());
     }
-
+    /*
+    public static function getAllUsuarios(){
+        return Sector::find()->all();
+    }
+    */
+    
     public function getAuthKey() {
         return $this->authkeyuser;
     }
@@ -119,4 +124,5 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface {
     public static function findByEmail($mailuser) {
 		return Usuario::findOne(['mailuser' => $mailuser]);
     }
+    
 }
