@@ -28,7 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'sector_id',
             'nombre',
             'apellido',
-            'mailuser',
+            'passworduser',
+            // 'mailuser',
+            // 'authkeyuser',
+            // 'activuser',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
