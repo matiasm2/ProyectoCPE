@@ -8,7 +8,7 @@ class Intranet extends Controller{
 		if(isset($_SERVER['HTTP_POST']))
 			return "http://".$_SERVER['HTTP_POST'];
 		else
-			return "http://localhost";
+			return "http://159.203.122.91";
 	}
 }
 ?>

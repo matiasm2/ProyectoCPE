@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-//use yii\web\IdentityInterface;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "usuario".
@@ -21,7 +21,7 @@ use Yii;
  * @property Sector $sector
  * @property Usuariocarrera[] $usuariocarreras
  */
-class Usuario extends \yii\db\ActiveRecord  {/*implements IdentityInterface {*/
+class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface {
     /**
      * @inheritdoc
      */
