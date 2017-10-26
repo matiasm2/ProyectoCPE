@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Usuario;
-use app\models\UsuarioSearch;
+use app\models\Usuarioinstituto;
+use app\models\UsuarioinstitutoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CPEAdminController implements the CRUD actions for Usuario model.
+ * UsuarioinstitutoController implements the CRUD actions for Usuarioinstituto model.
  */
-class CPEAdminController extends Controller
+class UsuarioinstitutoController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class CPEAdminController extends Controller
     }
 
     /**
-     * Lists all Usuario models.
+     * Lists all Usuarioinstituto models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new UsuarioSearch();
+        $searchModel = new UsuarioinstitutoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class CPEAdminController extends Controller
     }
 
     /**
-     * Displays a single Usuario model.
+     * Displays a single Usuarioinstituto model.
      * @param integer $id
      * @return mixed
      */
@@ -57,16 +57,16 @@ class CPEAdminController extends Controller
     }
 
     /**
-     * Creates a new Usuario model.
+     * Creates a new Usuarioinstituto model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Usuario();
+        $model = new Usuarioinstituto();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->usuario_id]);
+            return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -75,7 +75,7 @@ class CPEAdminController extends Controller
     }
 
     /**
-     * Updates an existing Usuario model.
+     * Updates an existing Usuarioinstituto model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -85,7 +85,7 @@ class CPEAdminController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->usuario_id]);
+            return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -94,7 +94,7 @@ class CPEAdminController extends Controller
     }
 
     /**
-     * Deletes an existing Usuario model.
+     * Deletes an existing Usuarioinstituto model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -107,15 +107,15 @@ class CPEAdminController extends Controller
     }
 
     /**
-     * Finds the Usuario model based on its primary key value.
+     * Finds the Usuarioinstituto model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Usuario the loaded model
+     * @return Usuarioinstituto the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Usuario::findOne($id)) !== null) {
+        if (($model = Usuarioinstituto::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

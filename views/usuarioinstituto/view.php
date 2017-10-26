@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Usuario */
+/* @var $model app\models\Usuarioinstituto */
 
-$this->title = $model->usuario_id;
-$this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
+$this->title = $model->archivoprograma_id;
+$this->params['breadcrumbs'][] = ['label' => 'Usuarioinstitutos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="usuario-view">
+<div class="usuarioinstituto-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->usuario_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->usuario_id], [
+        <?= Html::a('Update', ['update', 'id' => $model->archivoprograma_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->archivoprograma_id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -28,14 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            'archivoprograma_id',
+            'programa_id',
             'usuario_id',
-            'sector_id',
-            'nombre',
-            'apellido',
-            'passworduser',
-            'mailuser',
-            'authkeyuser',
-            'activuser',
+            'estado_id',
+            'archivo',
+            'fecha',
         ],
     ]) ?>
 

@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-//use yii\web\IdentityInterface;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "usuario".
@@ -21,10 +21,13 @@ use Yii;
  * @property Sector $sector
  * @property Usuariocarrera[] $usuariocarreras
  */
-class Usuario extends \yii\db\ActiveRecord  {/*implements IdentityInterface {*/
+class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface {
     /**
      * @inheritdoc
      */
+    public $password;    
+	public $sectorID;	 
+	
     public static function tableName(){
         return 'usuario';
     }
@@ -108,6 +111,20 @@ class Usuario extends \yii\db\ActiveRecord  {/*implements IdentityInterface {*/
         }
         return false;
     }
+	
+    public function validatePassword($password)
+    {
+        if ($this->sectorID==4 or $this->sectorID==1){
+            if (hash_equals($this->password, crypt($Password, $this->password))) {           //Compara el hash con el password ingresado, si son iguales devuelve true
+                return true;
+            }
+            else{
+                return false;
+            }
+        }else{
+            return $this->password === $password;
+        }
+    }	
 
     public static function findIdentity($id) {
         return Usuario::findOne($id);
