@@ -32,7 +32,6 @@
     <Compile Include="controllers\AnoController.php" />
     <Compile Include="controllers\ArchivoprogramaController.php" />
     <Compile Include="controllers\CarreraController.php" />
-    <Compile Include="controllers\CPEAdminController.php" />
     <Compile Include="controllers\EstadoController.php" />
     <Compile Include="controllers\InstitutoController.php" />
     <Compile Include="controllers\MateriaController.php" />
@@ -41,9 +40,8 @@
     <Compile Include="controllers\ProgramaController.php" />
     <Compile Include="controllers\SectorController.php" />
     <Compile Include="controllers\SiteController.php" />
-    <Compile Include="controllers\usuarioCPEController.php" />
-    <Compile Include="controllers\usuarioInstitutoController.php" />
-    <Compile Include="controllers\usuarioPrensaController.php" />
+    <Compile Include="controllers\UsuarioController.php" />
+    <Compile Include="controllers\UsuarioinstitutoController.php" />
     <Compile Include="mail\layouts\html.php" />
     <Compile Include="models\Ano.php" />
     <Compile Include="models\AnoQuery.php" />
@@ -54,6 +52,9 @@
     <Compile Include="models\Carrera.php" />
     <Compile Include="models\CarreraQuery.php" />
     <Compile Include="models\CarreraSearch.php" />
+    <Compile Include="models\InvalidoUsuarioModel.php" />
+    <Compile Include="models\UsuarioInstituto.php" />
+    <Compile Include="models\UsuarioInstitutoSearch.php" />
     <Compile Include="models\UsuarioSearch.php" />
     <Compile Include="models\ContactForm.php" />
     <Compile Include="models\Estado.php" />
@@ -82,6 +83,7 @@
     <Compile Include="models\SectorSearch.php" />
     <Compile Include="models\Usuario.php" />
     <Compile Include="models\UsuarioQuery.php" />
+    <Compile Include="models\Usuariotipo.php" />
     <Compile Include="runtime\.gitignore" />
     <Compile Include="tests\acceptance\AboutCest.php" />
     <Compile Include="tests\acceptance\ContactCest.php" />
@@ -173,6 +175,13 @@
     <Compile Include="views\site\index.php" />
     <Compile Include="views\site\login.php" />
     <Compile Include="views\site\register.php" />
+    <Compile Include="views\usuarioinstituto\create.php" />
+    <Compile Include="views\usuarioinstituto\error.php" />
+    <Compile Include="views\usuarioinstituto\index.php" />
+    <Compile Include="views\usuarioinstituto\update.php" />
+    <Compile Include="views\usuarioinstituto\view.php" />
+    <Compile Include="views\usuarioinstituto\_form.php" />
+    <Compile Include="views\usuarioinstituto\_search.php" />
     <Compile Include="views\usuario\cpeadmin\about.php" />
     <Compile Include="views\usuario\cpeadmin\contact.php" />
     <Compile Include="views\usuario\cpeadmin\create.php" />
@@ -275,6 +284,7 @@
     <Folder Include="views\instituto" />
     <Folder Include="views\layouts" />
     <Folder Include="views\materia" />
+    <Folder Include="views\usuarioinstituto\" />
     <Folder Include="views\usuario\" />
     <Folder Include="views\planestudio" />
     <Folder Include="views\planmateria" />
@@ -297,5 +307,15 @@
     <Folder Include="web\assets" />
     <Folder Include="web\css" />
     <Folder Include="web" />
+    <Folder Include="web\cssCPEAdmin\" />
+    <Folder Include="web\cssCPE\" />
+    <Folder Include="web\cssInstituto\" />
+    <Folder Include="web\cssPrensa\" />
+    <Folder Include="web\img\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web\img\avatarUser.png" />
+    <Content Include="web\img\Loading.gif" />
+    <Content Include="web\img\warning.jpg" />
   </ItemGroup>
 </Project>

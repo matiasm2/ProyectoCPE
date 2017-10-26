@@ -14,16 +14,108 @@ use app\models\ContactForm;
 use app\models\Usuario;
 use app\models\RegisterForm;
 use app\models\Sector;
+use app\models\Usuariotipo;
+use app\models\InvalidoUsuarioModel;
 use app\commands\Mailto;
 use app\commands\Intranet;
 use app\commands\RandKey;
 
+
 class SiteController extends Controller
 {
+	public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['login', 'logout', 'CPEAdmin', 'instituto', 'prensa', 'CPE', 'register', 'contact', 'about' /*, 'alguna_accion'*/], //solo debe aplicarse a las acciones login, logout , admin, instituto, prensa y cpe. Todas las demas acciones no estan sujetas al control de acceso
+                'rules' => [                              //reglas
+                    [
+                        'actions' => ['login', 'logout', 'register', 'contact', 'about',  /*, 'alguna_accion'*/], //para la accion login
+                        'allow' => true, //Todos los permisos aceptados
+                        'roles' => ['?'], //Tienen acceso a esta accion todos los usuarios invitados
+                    ],
+                    [
+                        //el administrador tiene permisos sobre las siguientes acciones
+                        'allow' => true,
+                        'actions' => ['logout','contact', 'CPEAdmin'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        //el administrador no tiene permisos sobre las siguientes acciones
+                        'actions' => ['register', 'about', 'login'],
+                        'allow' => false,
+                        'roles' => ['@'], //El arroba es para el usuario autenticado
+                        'matchCallback' => function ($rule, $action) {                    //permite escribir la l?gica de comprobaci?n de acceso arbitraria, las paginas que se intentan acceder solo pueden ser permitidas si es un...
+                    return Usuariotipo::CPEAdmin(Yii::$app->user->identity->sectorID);
+                    //Llamada al m?todo que comprueba si es un administrador
+                    //Retorno el metodo del modelo que comprueba el tipo de usuario que es por el rol (1,2,3,4) etc y que devuelve true o false
+                },
+                    ],
+                    [
+                        //usuario de instituto tiene permisos sobre las siguientes acciones
+                        'actions' => ['logout', 'contact', 'instituto'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        //usuario instituto no tiene permisos sobre las siguientes acciones
+                        'actions' => ['register', 'about', 'login'],
+                        'allow' => false,
+                        'roles' => ['@'], //El arroba es para el usuario autenticado
+                        'matchCallback' => function ($rule, $action) {
+                    return Usuariotipo::usuarioInstituto(Yii::$app->user->identity->sectorID);
+                    //Llamada al m?todo que comprueba si es un usuario de instituto
+                },
+                    ],
+                    [
+                        //prensa tiene permisos sobre las siguientes acciones
+                        'actions' => ['logout', 'contact', 'prensa'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        //prensa no tiene permisos sobre las siguientes acciones
+                        'actions' => ['register', 'about', 'login'],
+                        'allow' => false,
+                        'roles' => ['@'], //El arroba es para el usuario autenticado
+                        'matchCallback' => function ($rule, $action) {
+                    return Usuariotipo::usuarioPrensa(Yii::$app->user->identity->sectorID);
+                    //Llamada al m?todo que comprueba si es un usuario prensa
+                },
+                    ],
+                    [
+                        //CPE tiene permisos sobre las siguientes acciones
+                        'actions' => ['logout', 'contact', 'CPE'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        //CPE no tiene permisos sobre las siguientes acciones
+                        'actions' => ['register', 'about', 'login'],
+                        'allow' => false,
+                        'roles' => ['@'], //El arroba es para el usuario autenticado
+                        'matchCallback' => function ($rule, $action) {
+                    return Usuariotipo::usuarioCPE(Yii::$app->user->identity->sectorID);
+                    //Llamada al m?todo que comprueba si es un usuario CPE
+                },
+                    ],
+                ],
+            ],
+            //Controla el modo en que se accede a las acciones, en este caso a la acci?n logout
+            //s?lo se puede acceder a trav?s del m?todo post
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
+    }
     /**
      * @inheritdoc
      */
-     public function behaviors() {
+     /*public function behaviors() //behaviors viejo
+	 {
          return [
              'access' => [
                  'class' => AccessControl::className(),
@@ -53,13 +145,30 @@ class SiteController extends Controller
                  ],
              ],
          ];
-     }
+     }*/
+	 
 
     /**
      * @inheritdoc
      */
-    public function actions()
-    {
+	 
+    public function actions() {
+        //Control de errores en caso de que se quiera acceder a las acciones de este controlador
+        if (!Yii::$app->user->isGuest) {                                                                              //si el usuario esta logeado, o sea no es invitado
+            if (Yii::$app->user->identity->sectorID == 1) {                                                                //si el usuario es administrador
+                Yii::$app->errorHandler->errorAction = 'CPEAdmin/error';                                               //se muestra la pantalla de error de agencia y su respectivo layout
+            } elseif (Yii::$app->user->identity->sectorID == 2) {
+                Yii::$app->errorHandler->errorAction = 'CPE/error';
+            } elseif (Yii::$app->user->identity->sectorID == 3) {
+                Yii::$app->errorHandler->errorAction = 'instituto/error';
+            } elseif (Yii::$app->user->identity->sectorID == 4) {
+                Yii::$app->errorHandler->errorAction = 'prensa/error';
+            } else {
+                Yii::$app->errorHandler->errorAction = 'site/error';
+            }
+        } else {                                                                                                      //sino (si el usuario es invitado) se muestra la pagina de error del site
+            Yii::$app->errorHandler->errorAction = 'site/error';
+        }
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -70,6 +179,19 @@ class SiteController extends Controller
             ],
         ];
     }
+	/*
+    public function actions() //viejo action
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+        ];
+    }*/
 
     /**
      * Displays homepage.
@@ -81,6 +203,25 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+	/*
+    // funciones para las vistas dependiendo el tipo de usuario para agregar luego
+    public function actionCPEAdmin() {
+        return $this->redirect(['cpeadmin/index']);
+    }
+
+    public function actionInstituto() {
+        return $this->redirect(['instituto/index']);
+    }
+
+    public function actionPrensa() {
+        return $this->redirect(['prensa/index']);
+    }
+
+    public function actionCPE() {
+        return $this->redirect(['cpe/index']);
+    }
+	*/
+	
     /**
      * Login action.
      *
