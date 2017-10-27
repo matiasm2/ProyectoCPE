@@ -63,9 +63,9 @@ class SiteController extends Controller
                         'allow' => false,
                         'roles' => ['@'], //El arroba es para el usuario autenticado
                         'matchCallback' => function ($rule, $action) {
-                    return Usuariotipo::usuarioInstituto(Yii::$app->user->identity->sectorID);
-                    //Llamada al m?todo que comprueba si es un usuario de instituto
-                },
+								return Usuariotipo::usuarioInstituto(Yii::$app->user->identity->sectorID);
+								//Llamada al m?todo que comprueba si es un usuario de instituto
+							},
                     ],
                     [
                         //prensa tiene permisos sobre las siguientes acciones
@@ -79,9 +79,9 @@ class SiteController extends Controller
                         'allow' => false,
                         'roles' => ['@'], //El arroba es para el usuario autenticado
                         'matchCallback' => function ($rule, $action) {
-                    return Usuariotipo::usuarioPrensa(Yii::$app->user->identity->sectorID);
-                    //Llamada al m?todo que comprueba si es un usuario prensa
-                },
+								return Usuariotipo::usuarioPrensa(Yii::$app->user->identity->sectorID);
+								//Llamada al m?todo que comprueba si es un usuario prensa
+							},
                     ],
                     [
                         //CPE tiene permisos sobre las siguientes acciones
@@ -95,9 +95,9 @@ class SiteController extends Controller
                         'allow' => false,
                         'roles' => ['@'], //El arroba es para el usuario autenticado
                         'matchCallback' => function ($rule, $action) {
-                    return Usuariotipo::usuarioCPE(Yii::$app->user->identity->sectorID);
-                    //Llamada al m?todo que comprueba si es un usuario CPE
-                },
+								return Usuariotipo::usuarioCPE(Yii::$app->user->identity->sectorID);
+								//Llamada al m?todo que comprueba si es un usuario CPE
+							},
                     ],
                 ],
             ],
