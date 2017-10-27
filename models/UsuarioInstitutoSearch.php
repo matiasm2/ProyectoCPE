@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Usuarioinstituto;
+use app\models\UsuarioInstituto;
 
 /**
  * UsuarioinstitutoSearch represents the model behind the search form about `app\models\Usuarioinstituto`.
  */
-class UsuarioinstitutoSearch extends Usuarioinstituto
+class UsuarioInstitutoSearch extends UsuarioInstituto
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class UsuarioinstitutoSearch extends Usuarioinstituto
      */
     public function search($params)
     {
-        $query = Usuarioinstituto::find();
+        $query = UsuarioInstituto::find();
 
         // add conditions that should always apply here
 

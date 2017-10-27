@@ -3,8 +3,8 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Usuarioinstituto;
-use app\models\UsuarioinstitutoSearch;
+use app\models\UsuarioInstituto;
+use app\models\UsuarioInstitutoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,7 +35,7 @@ class UsuarioinstitutoController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UsuarioinstitutoSearch();
+        $searchModel = new UsuarioInstitutoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -63,7 +63,7 @@ class UsuarioinstitutoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Usuarioinstituto();
+        $model = new UsuarioInstituto();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
@@ -115,7 +115,7 @@ class UsuarioinstitutoController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Usuarioinstituto::findOne($id)) !== null) {
+        if (($model = UsuarioInstituto::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
