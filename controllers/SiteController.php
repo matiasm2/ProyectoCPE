@@ -46,10 +46,10 @@ class SiteController extends Controller
                         'allow' => false,
                         'roles' => ['@'], //El arroba es para el usuario autenticado
                         'matchCallback' => function ($rule, $action) {                    //permite escribir la l?gica de comprobaci?n de acceso arbitraria, las paginas que se intentan acceder solo pueden ser permitidas si es un...
-                    return Usuariotipo::CPEAdmin(Yii::$app->user->identity->sectorID);
-                    //Llamada al m?todo que comprueba si es un administrador
-                    //Retorno el metodo del modelo que comprueba el tipo de usuario que es por el rol (1,2,3,4) etc y que devuelve true o false
-                },
+								return Usuariotipo::CPEAdmin(Yii::$app->user->identity->sectorID);
+								//Llamada al m?todo que comprueba si es un administrador
+								//Retorno el metodo del modelo que comprueba el tipo de usuario que es por el rol (1,2,3,4) etc y que devuelve true o false
+							},
                     ],
                     [
                         //usuario de instituto tiene permisos sobre las siguientes acciones
