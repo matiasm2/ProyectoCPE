@@ -295,8 +295,11 @@ class SiteController extends Controller
      */
     public function actionRegister() {
         $model = new RegisterForm();
-		$subModel=new Sector();
-        $msg = null;
+        $numUsr=Usuario::find()->count();$ref=new Sector();
+		if ($numUsr == 0){$subModel=$ref->find()->where('sector_id=:sector_id',[':sector_id'=> 1]);}
+		else {$subModel=$ref->find()->where('sector_id>:sector_id',[':sector_id'=>2]);
+			}
+        $msg = "Cantidad de usuarios= ". $numUsr;
         if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
