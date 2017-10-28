@@ -1,4 +1,4 @@
-CREATE DATABASE cpe_db;
+﻿CREATE DATABASE cpe_db;
 	DO
 	$body$
 	BEGIN
@@ -147,5 +147,28 @@ CREATE DATABASE cpe_db;
 	);
 	GRANT SELECT, INSERT, UPDATE  ON public.archivoprograma TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE archivoprograma_archivoprograma_id_seq TO cpewebuser;
+
+---
+-- Acciones registradas de todo el circuito administrativo (tabla fija)
+-- El objetivo de esta tabla es poder completar la tabla asignsector que hace funcionar al 
+-- comando app\commands\RoleAccessChecker
+	CREATE TABLE public.actionrole (
+		actionrole_id SERIAL PRIMARY KEY,
+		action_disp       varchar(100) not null,
+	    descripcion   varchar(40)
+	);
+	GRANT SELECT, INSERT, UPDATE  ON public.actionrole TO cpewebuser;
+	GRANT SELECT, USAGE, UPDATE ON SEQUENCE actionrole_actionrole_id_seq TO cpewebuser;
+---
+-- Acciones registradas de todo el circuito administrativo (tabla fija)
+-- El objetivo de esta tabla es poder completar la tabla asignsector que hace funcionar al 
+-- comando app\commands\RoaleAccessChecker
+	CREATE TABLE public.asignsector (
+		asignsector_id SERIAL PRIMARY KEY,
+		actionrole_id  integer REFERENCES actionrole,
+	    sector_id   integer REFERENCES sector
+	);
+	GRANT SELECT, INSERT, UPDATE  ON public.asignsector TO cpewebuser;
+	GRANT SELECT, USAGE, UPDATE ON SEQUENCE asignsector_asignsector_id_seq TO cpewebuser;
 
 COMMIT;

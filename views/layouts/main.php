@@ -42,7 +42,17 @@ AppAsset::register($this);
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'Register', 'url' => ['/site/register']],
-            Yii::$app->user->isGuest ? (
+/*descomentar si se quiere eliminar el dropdown del menu*/
+            //~ ['label' => 'Archivo', 'url' => ['/archivoprograma/index'],'visible' => !(Yii::$app->user->isGuest)],
+/*comentar desde aca si se quiere eliminar el dropdown del menu*/
+			['label' => 'Dropdown','items'=> [
+				['label' => 'Archivo', 'url' => ['/archivoprograma/index']],
+				'<li class="divider"></li>',
+				],
+			'visible' => !(Yii::$app->user->isGuest),
+			],
+/*comentar hasta aca si se quiere eliminar el dropdown del menu*/
+Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
                 '<li>'

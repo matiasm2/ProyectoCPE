@@ -156,13 +156,13 @@ class SiteController extends Controller
         //Control de errores en caso de que se quiera acceder a las acciones de este controlador
         if (!Yii::$app->user->isGuest) {                                                                              //si el usuario esta logeado, o sea no es invitado
             if (Yii::$app->user->identity->sectorID == 1) {                                                                //si el usuario es administrador
-                Yii::$app->errorHandler->errorAction = 'CPEAdmin/error';                                               //se muestra la pantalla de error de agencia y su respectivo layout
+                Yii::$app->errorHandler->errorAction = 'error/error';                                               //se muestra la pantalla de error de agencia y su respectivo layout
             } elseif (Yii::$app->user->identity->sectorID == 2) {
-                Yii::$app->errorHandler->errorAction = 'CPE/error';
+                Yii::$app->errorHandler->errorAction = 'error/error';
             } elseif (Yii::$app->user->identity->sectorID == 3) {
-                Yii::$app->errorHandler->errorAction = 'instituto/error';
+                Yii::$app->errorHandler->errorAction = 'error/error';
             } elseif (Yii::$app->user->identity->sectorID == 4) {
-                Yii::$app->errorHandler->errorAction = 'prensa/error';
+                Yii::$app->errorHandler->errorAction = 'error/error';
             } else {
                 Yii::$app->errorHandler->errorAction = 'site/error';
             }
@@ -202,25 +202,6 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
-
-	/*
-    // funciones para las vistas dependiendo el tipo de usuario para agregar luego
-    public function actionCPEAdmin() {
-        return $this->redirect(['cpeadmin/index']);
-    }
-
-    public function actionInstituto() {
-        return $this->redirect(['instituto/index']);
-    }
-
-    public function actionPrensa() {
-        return $this->redirect(['prensa/index']);
-    }
-
-    public function actionCPE() {
-        return $this->redirect(['cpe/index']);
-    }
-	*/
 	
     /**
      * Login action.
@@ -283,72 +264,11 @@ class SiteController extends Controller
     }
 
 
-    public function actionRegister(){
-      $model=new RegisterForm();
-      $subModel=new Sector();
-      $msg=null;
-
-      if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ActiveForm::validate($model);
-      }
-
-      if ($model->load(Yii::$app->request->post())) {
-        if ($model->validate()){
-          $table = new Usuario();
-          $table->loadDefaultValues();
-          $table->sector_id = $model->sector_id;
-          $table->nombre = $model->Nombre;
-          $table->apellido = $model->Apellido;
-          $table->passworduser = crypt($model->password, Yii::$app->params["salt"]);
-          $table->mailuser = $model->email;
-          $table->authkeyuser = RandKey::randKey("abcdef0123456789", 200);
-
-          if ($table->insert()){
-            $user = Usuario::find()->Where("authkeyuser=:authkeyuser", [":authkeyuser" => $table->authkeyuser])->one();
-            $id = urlencode($user->usuario_id);
-            $authKey = urlencode($user->authkeyuser);
-            $subject = "Confirmar registro";
-            $body = "<h1>Haga click en el siguiente enlace para finalizar tu registro</h1>";
-            $link = Intranet::getUrlHead() . "/ProyectoCPE/web/index.php?r=site/confirm&id=" . $id . "&authKey=" . $authKey;
-            $body .= "<a href='" . $link . "'>Confirmar</a>";
-
-            if (Yii::$app->params["adminEmail"] != 'email@gmail.com') {
-              Yii::$app->mailer->compose()
-                    ->setTo($user->mailuser)
-                    ->setFrom([Yii::$app->params["adminEmail"] => Yii::$app->params["title"]])
-                    ->setSubject($subject)
-                    ->setHtmlBody($body)
-                    ->send();
-                    $msg = "Enhorabuena, ahora sólo falta que confirmes tu registro en tu cuenta de correo ";
-            } else {
-              $msg = "Confirmación alternativa " . Mailto::getUrlMailto(
-                $user->mailUser, $subject, "", "", "Haga click en el siguiente enlace para finalizar tu registro", $link,
-                "\nClick aquí para reenviar confirmación vía mailto:");
-            }
-
-            $model->Nombre = null;
-            $model->Apellido = null;
-            $model->email = null;
-            $model->password = null;
-            $model->password_repeat = null;
-          } else {
-            $msg = "Ha ocurrido un error al llevar a cabo tu  registro\n";
-          }
-        } else {
-          $model->getErrors();
-        }
-      }
-      return $this->render("register", ["model" => $model,"subModel" => $subModel, "msg" => $msg]);
-    }
-
-
     public function actionConfirm() {
         if (Yii::$app->request->get()) {
-            $id = Html::encode($_GET["id"]);
-            $authKey = $_GET["authKey"];
+            $id = Html::encode($_GET["id"]);$authKey = $_GET["authKey"];
             if ((int) $id) {
-                $usr = Usuario::find()
+				$usr = Usuario::find()
                         ->where("usuario_id=:usuario_id", [":usuario_id" => $id])
                         ->andWhere("authkeyuser=:authkeyuser", [":authkeyuser" => $authKey]);
                 if ($usr->count() == 1) {
@@ -356,19 +276,90 @@ class SiteController extends Controller
                                     ->where("usuario_id=:usuario_id", [":usuario_id" => $id])
                                     ->andWhere("authkeyuser=:authkeyuser", [":authkeyuser" => $authKey])->one();
                     $activar->activuser = 1;
-                    if ($activar->update() !== false) {
-                        echo "Registro ok, redireccionando..";
-                        echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
-                    } else {
-                        echo "Registro fallido, redireccionando..";
-                        echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
-                    }
-                } else
-                    return $this->redirect(["site/login"]);
-            } else
-                return $this->redirect(["site/login"]);
+				if ($activar->update() !== false) {
+					echo "Registro ok, redireccionando..";
+					echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
+				} else {
+					echo "Registro fallido, redireccionando..";
+					echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
+				}
+			}
+            } else return $this->redirect(["site/login"]);
         }
     }
 
+    /**
+     * Displays about page.
+     *
+     * @return string
+     */
+    public function actionRegister() {
+        $model = new RegisterForm();
+		$subModel=new Sector();
+        $msg = null;
+        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                $table = new Usuario();
+                $this->fillModelUsuario($table, $model);
+                if ($table->insert()) {
+                    $msg = $this->sendConfirm($table);
+                    $this->nullModelRegister($model);
+                } else {
+                    $msg = "Ha ocurrido un error al llevar a cabo tu  registro\n";
+                }
+            } else {
+                $model->getErrors();
+            }
+        }
+        return $this->render("register", ["model" => $model,"subModel" => $subModel, "msg" => $msg]);
+    }
+
+	private function nullModelRegister($model){
+		$model->Nombre = null;
+		$model->Apellido = null;
+		$model->email = null;
+		$model->password = null;
+		$model->password_repeat = null;
+    }
+
+    private function fillModelUsuario($src,$src2){
+		$src->loadDefaultValues();
+		$src->sector_id = $src2->sector_id;
+		$src->nombre = $src2->Nombre;
+		$src->apellido = $src2->Apellido;
+		$src->passworduser = crypt($src2->password, Yii::$app->params["salt"]);
+		$src->mailuser = $src2->email;
+		$src->authkeyuser = RandKey::randKey("abcdef0123456789", 200);
+
+    }
+
+    private function sendConfirm($table){
+		$user = Usuario::find()->Where("authkeyuser=:authkeyuser", [":authkeyuser" => $table->authkeyuser])->one();
+		$id = urlencode($user->usuario_id);
+		$authKey = urlencode($user->authkeyuser);
+		$subject = "Confirmar registro";
+		$body = "<h1>Haga click en el siguiente enlace para finalizar tu registro</h1>";
+		$link = Intranet::getUrlHead() . "/ProyectoCPE/web/index.php?r=site/confirm&id=" . $id . "&authKey=" . $authKey;
+		$body .= "<a href='" . $link . "'>Confirmar</a>";
+
+		if (Yii::$app->params["adminEmail"] != 'email@gmail.com') {
+		  Yii::$app->mailer->compose()
+				->setTo($user->mailuser)
+				->setFrom([Yii::$app->params["adminEmail"] => Yii::$app->params["title"]])
+				->setSubject($subject)
+				->setHtmlBody($body)
+				->send();
+				return "Enhorabuena, ahora sólo falta que confirmes tu registro en tu cuenta de correo ";
+		} else {
+		  return "Confirmación alternativa " . Mailto::getUrlMailto(
+			$user->mailUser, $subject, "", "", "Haga click en el siguiente enlace para finalizar tu registro", $link,
+			"\nClick aquí para reenviar confirmación vía mailto:");
+		}
+    
+    }
 
 }
