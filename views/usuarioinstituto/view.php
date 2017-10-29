@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Usuarioinstituto */
 
 $this->title = $model->archivoprograma_id;
-$this->params['breadcrumbs'][] = ['label' => 'Usuarioinstitutos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Usuario institutos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuarioinstituto-view">
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Delete', ['delete', 'id' => $model->archivoprograma_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Está seguro que quiere eliminar este item?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'programa_id',
             'usuario_id',
             'estado_id',
+            //'descripcion'
             'archivo',
             'fecha',
         ],

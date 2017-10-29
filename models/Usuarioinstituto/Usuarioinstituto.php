@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\models\Usuarioinstituto;
 
 use Yii;
 
@@ -15,11 +15,11 @@ use Yii;
  * @property string $archivo
  * @property string $fecha
  *
- * @property Estado $estado 
+ * @property Estado $estado
+ * @property Descripcion $descripcion
  * @property Programa $programa
  * @property Usuario $usuario
  */
- //Descripcion $descripcion
 class Usuarioinstituto extends \yii\db\ActiveRecord
 {
     /**
@@ -41,7 +41,7 @@ class Usuarioinstituto extends \yii\db\ActiveRecord
             [['fecha'], 'safe'],
             [['archivo'], 'string', 'max' => 100],
             [['estado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::className(), 'targetAttribute' => ['estado_id' => 'estado_id']],
-            //[['descripcion'], 'exist', 'skipOnError' => true, 'targetClass' => Descripcion::className(), 'targetAttribute' => ['descripcion' => 'descripcion']],
+            [['descripcion'], 'exist', 'skipOnError' => true, 'targetClass' => Descripcion::className(), 'targetAttribute' => ['descripcion' => 'descripcion']],
             [['programa_id'], 'exist', 'skipOnError' => true, 'targetClass' => Programa::className(), 'targetAttribute' => ['programa_id' => 'programa_id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usuario_id' => 'usuario_id']],
         ];
@@ -57,7 +57,7 @@ class Usuarioinstituto extends \yii\db\ActiveRecord
             'programa_id' => 'Programa ID',
             'usuario_id' => 'Usuario ID',
             'estado_id' => 'Estado ID',
-            //'descripcion' => 'descripcion',
+            'descripcion' => 'descripcion',
             'archivo' => 'Archivo',
             'fecha' => 'Fecha',
         ];
@@ -71,10 +71,10 @@ class Usuarioinstituto extends \yii\db\ActiveRecord
         return $this->hasOne(Estado::className(), ['estado_id' => 'estado_id']);
     }
 
-    /*public function getDescripcion()
+    public function getDescripcion()
     {
         return $this->hasOne(Descripcion::className(), ['descripcion' => 'descripcion']);
-    }*/
+    }
 
     /**
      * @return \yii\db\ActiveQuery
