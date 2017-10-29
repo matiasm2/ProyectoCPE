@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models;
+namespace app\models\Usuarioinstituto;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Usuarioinstituto;
+use app\models\Usuarioinstituto\Usuarioinstituto;
 
 /**
  * UsuarioinstitutoSearch represents the model behind the search form about `app\models\Usuarioinstituto`.
@@ -19,7 +19,7 @@ class UsuarioinstitutoSearch extends Usuarioinstituto
     {
         return [
             [['archivoprograma_id', 'programa_id', 'usuario_id', 'estado_id'], 'integer'],
-            //[['descripcion'], 'string'],
+            [['descripcion'], 'string'],
             [['archivo', 'fecha'], 'safe'],
         ];
     }
@@ -64,7 +64,7 @@ class UsuarioinstitutoSearch extends Usuarioinstituto
             'programa_id' => $this->programa_id,
             'usuario_id' => $this->usuario_id,
             'estado_id' => $this->estado_id,
-            //'descripcion' => $this->descripcion,
+            'descripcion' => $this->descripcion,
             'fecha' => $this->fecha,
         ]);
 

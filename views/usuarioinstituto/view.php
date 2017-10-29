@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Usuarioinstituto */
 
 $this->title = $model->archivoprograma_id;
-$this->params['breadcrumbs'][] = ['label' => 'Usuarioinstitutos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Usuario institutos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuarioinstituto-view">
@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'programa_id',
             'usuario_id',
             'estado_id',
+            //'descripcion'
             'archivo',
             'fecha',
         ],

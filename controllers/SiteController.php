@@ -27,11 +27,16 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['login', 'logout', 'CPEAdmin', 'instituto', 'prensa', 'CPE', 'register', 'contact', 'about' /*, 'alguna_accion'*/], //solo debe aplicarse a las acciones login, logout , admin, instituto, prensa y cpe. Todas las demas acciones no estan sujetas al control de acceso
+                'only' => ['login', 'logout', 'register', 'contact', 'about', 'instituto' /*, 'alguna_accion'*/], //solo debe aplicarse a las acciones login, logout , admin, instituto, prensa y cpe. Todas las demas acciones no estan sujetas al control de acceso
                 'rules' => [                              //reglas
                     [
-                        'actions' => ['login', 'logout', 'register', 'contact', 'about',  /*, 'alguna_accion'*/], //para la accion login
+                        'actions' => ['login', 'logout', 'register', 'contact', 'about'], //para la accion login
                         'allow' => true, //Todos los permisos aceptados
+                        'roles' => ['?'], //Tienen acceso a esta accion todos los usuarios invitados
+                    ],
+                    [
+                        'actions' => ['instituto'], //para la accion login
+                        'allow' => false, //Todos los permisos aceptados
                         'roles' => ['?'], //Tienen acceso a esta accion todos los usuarios invitados
                     ],
                     [
@@ -42,18 +47,19 @@ class SiteController extends Controller
                     ],
                     [
                         //el administrador no tiene permisos sobre las siguientes acciones
-                        'actions' => ['register', 'about', 'login'],
+                        'actions' => ['register', 'about', 'login'.'instituto'],
                         'allow' => false,
                         'roles' => ['@'], //El arroba es para el usuario autenticado
                         'matchCallback' => function ($rule, $action) {                    //permite escribir la l?gica de comprobaci?n de acceso arbitraria, las paginas que se intentan acceder solo pueden ser permitidas si es un...
                     return Usuariotipo::CPEAdmin(Yii::$app->user->identity->sectorID);
                     //Llamada al m?todo que comprueba si es un administrador
                     //Retorno el metodo del modelo que comprueba el tipo de usuario que es por el rol (1,2,3,4) etc y que devuelve true o false
-                },
+                    },
                     ],
+
                     [
                         //usuario de instituto tiene permisos sobre las siguientes acciones
-                        'actions' => ['logout', 'contact', 'instituto'],
+                        'actions' => ['logout', 'contact', 'create', 'instituto'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -75,7 +81,7 @@ class SiteController extends Controller
                     ],
                     [
                         //prensa no tiene permisos sobre las siguientes acciones
-                        'actions' => ['register', 'about', 'login'],
+                        'actions' => ['register', 'about', 'login', 'instituto'],
                         'allow' => false,
                         'roles' => ['@'], //El arroba es para el usuario autenticado
                         'matchCallback' => function ($rule, $action) {
@@ -91,7 +97,7 @@ class SiteController extends Controller
                     ],
                     [
                         //CPE no tiene permisos sobre las siguientes acciones
-                        'actions' => ['register', 'about', 'login'],
+                        'actions' => ['register', 'about', 'login', 'instituto'],
                         'allow' => false,
                         'roles' => ['@'], //El arroba es para el usuario autenticado
                         'matchCallback' => function ($rule, $action) {
@@ -158,11 +164,11 @@ class SiteController extends Controller
             if (Yii::$app->user->identity->sectorID == 1) {                                                                //si el usuario es administrador
                 Yii::$app->errorHandler->errorAction = 'CPEAdmin/error';                                               //se muestra la pantalla de error de agencia y su respectivo layout
             } elseif (Yii::$app->user->identity->sectorID == 2) {
-                Yii::$app->errorHandler->errorAction = 'CPE/error';
+                Yii::$app->errorHandler->errorAction = 'usuarioCPE/error';
             } elseif (Yii::$app->user->identity->sectorID == 3) {
-                Yii::$app->errorHandler->errorAction = 'instituto/error';
+                Yii::$app->errorHandler->errorAction = 'usuarioinstituto/error';
             } elseif (Yii::$app->user->identity->sectorID == 4) {
-                Yii::$app->errorHandler->errorAction = 'prensa/error';
+                Yii::$app->errorHandler->errorAction = 'usuarioprensa/error';
             } else {
                 Yii::$app->errorHandler->errorAction = 'site/error';
             }
@@ -198,29 +204,50 @@ class SiteController extends Controller
      *
      * @return string
      */
+
+   public function actionIndex() {
+        //En caso de que cierre el usuario cierre la pagina y haya cerrado sesion, al abrir la aplicacion la pagina que se le presente va a ser la de su home (la que depende de su rol)
+
+        if (!Yii::$app->user->isGuest) {                                                                              //si el usuario esta logeado, o sea no es invitado
+            if (Usuariotipo::CPEAdmin(Yii::$app->user->identity->sectorID)) {         //Se evalua el tipo de usuario enviandole el rolID del usuario logueado, que se almaceno en una variable de sesion de yii y se accede de esta manera Yii::$app->user->identity->RolID
+                return $this->redirect(['cpeadmin/index']);
+            } elseif (Usuariotipo::usuarioInstituto(Yii::$app->user->identity->sectorID)) {
+                return $this->redirect(['usuarioinstituto/index']);
+            } elseif (Usuariotipo::usuarioPrensa(Yii::$app->user->identity->sectorID)) {
+                return $this->redirect(['usuarioprensa/index']);
+            } elseif (Usuariotipo::usuarioCPE(Yii::$app->user->identity->sectorID)) {
+                return $this->redirect(['usuariocpe/index']);
+            } else {
+                return $this->render('index');
+            }
+        } else {
+            return $this->render('index');
+        }
+    }
+    /*
     public function actionIndex()
     {
         return $this->render('index');
-    }
+    }*/
 
-	/*
+	
     // funciones para las vistas dependiendo el tipo de usuario para agregar luego
     public function actionCPEAdmin() {
         return $this->redirect(['cpeadmin/index']);
     }
 
     public function actionInstituto() {
-        return $this->redirect(['instituto/index']);
+        return $this->redirect(['usuarioinstituto/index']);
     }
 
     public function actionPrensa() {
-        return $this->redirect(['prensa/index']);
+        return $this->redirect(['usuarioprensa/index']);
     }
 
     public function actionCPE() {
-        return $this->redirect(['cpe/index']);
+        return $this->redirect(['usuariocpe/index']);
     }
-	*/
+	
 	
     /**
      * Login action.

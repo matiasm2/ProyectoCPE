@@ -19,12 +19,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="assets\AppAsset.php" />
+    <Compile Include="assets\BootswatchAsset.php" />
     <Compile Include="commands\HelloController.php" />
     <Compile Include="commands\Intranet.php" />
     <Compile Include="commands\Mailto.php" />
     <Compile Include="commands\RandKey.php" />
     <Compile Include="config\console.php" />
     <Compile Include="config\db.php" />
+    <Compile Include="config\main.php" />
     <Compile Include="config\params.php" />
     <Compile Include="config\test.php" />
     <Compile Include="config\test_db.php" />
@@ -53,8 +55,8 @@
     <Compile Include="models\CarreraQuery.php" />
     <Compile Include="models\CarreraSearch.php" />
     <Compile Include="models\InvalidoUsuarioModel.php" />
-    <Compile Include="models\UsuarioInstituto.php" />
-    <Compile Include="models\UsuarioInstitutoSearch.php" />
+    <Compile Include="models\Usuarioinstituto\Usuarioinstituto.php" />
+    <Compile Include="models\Usuarioinstituto\UsuarioinstitutoSearch.php" />
     <Compile Include="models\UsuarioSearch.php" />
     <Compile Include="models\ContactForm.php" />
     <Compile Include="models\Estado.php" />
@@ -139,6 +141,7 @@
     <Compile Include="views\instituto\_form.php" />
     <Compile Include="views\instituto\_search.php" />
     <Compile Include="views\layouts\main.php" />
+    <Compile Include="views\layouts\mainUsuarioInstituto.php" />
     <Compile Include="views\materia\create.php" />
     <Compile Include="views\materia\index.php" />
     <Compile Include="views\materia\update.php" />
@@ -177,7 +180,7 @@
     <Compile Include="views\site\register.php" />
     <Compile Include="views\usuarioinstituto\create.php" />
     <Compile Include="views\usuarioinstituto\error.php" />
-    <Compile Include="views\usuarioinstituto\index.php" />
+    <Compile Include="views\usuarioinstituto\indexInstituto.php" />
     <Compile Include="views\usuarioinstituto\update.php" />
     <Compile Include="views\usuarioinstituto\view.php" />
     <Compile Include="views\usuarioinstituto\_form.php" />
@@ -267,6 +270,7 @@
     <Folder Include="mail\layouts" />
     <Folder Include="mail" />
     <Folder Include="models" />
+    <Folder Include="models\Usuarioinstituto\" />
     <Folder Include="runtime" />
     <Folder Include="tests\acceptance" />
     <Folder Include="tests\bin" />

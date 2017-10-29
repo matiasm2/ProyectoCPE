@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarioinstituto */
 
-$this->title = 'Create Usuarioinstituto';
-$this->params['breadcrumbs'][] = ['label' => 'Usuarioinstitutos', 'url' => ['index']];
+$this->title = 'Crear archivo de programa';
+$this->params['breadcrumbs'][] = ['label' => 'Usuario institutos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuarioinstituto-create">
