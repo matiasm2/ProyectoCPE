@@ -1,14 +1,10 @@
 \c cpe_db;
 BEGIN;
   --Datos que deben quedar
-  INSERT INTO sector(descripcion)
-  VALUES ('CPE Admin');
-  INSERT INTO sector(descripcion)
-  VALUES ('Usuario de la CPE');
-  INSERT INTO sector(descripcion)
-  VALUES ('Usuario de instituto');
-  INSERT INTO sector(descripcion)
-  VALUES ('Usuario de Prensa');
+  INSERT INTO sector(descripcion)VALUES ('CPE Admin');
+  INSERT INTO sector(descripcion)VALUES ('Usuario de la CPE');
+  INSERT INTO sector(descripcion)VALUES ('Usuario de instituto');
+  INSERT INTO sector(descripcion)VALUES ('Usuario de Prensa');
 
   INSERT INTO instituto(nombre)
   VALUES ('Instituto de Estudios Iniciales');
@@ -173,42 +169,81 @@ BEGIN;
       WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingeniería en Informática')
       AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
     (SELECT materia_id FROM materia WHERE nombre='Matemática III'));
-	END;
 
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (1,14,(SELECT CURRENT_DATE),'Programa de la materia XX');
-	END;
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (2,14,(SELECT CURRENT_DATE),'Programa de la materia YY');
-	END;
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (3,14,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
-	END;
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (1,15,(SELECT CURRENT_DATE),'Programa de la materia XX');
-	END;
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (2,15,(SELECT CURRENT_DATE),'Programa de la materia YY');
-	END;
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (3,15,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
-	END;
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (1,16,(SELECT CURRENT_DATE),'Programa de la materia XX');
-	END;
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (2,16,(SELECT CURRENT_DATE),'Programa de la materia YY');
-	END;
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (3,16,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
+---
+-- Acciones registradas de todo el circuito administrativo (tabla fija), sera parte del modelo proporcionando descripciones.
+-- El objetivo de esta tabla es poder completar la tabla actionrole que hace funcionar al 
+-- comando app\commands\RoleAccessChecker a travez de la tabla asignsector que depende de esta
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (1,'error/error','muestra error');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (2,'site/register','crea usuario');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (3,'archivoprograma/delete','borra documento');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (4,'archivoprograma/index','lista documento');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (5,'archivoprograma/update','actualiza documento');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (6,'archivoprograma/create','nuevo documento');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (7,'archivoprograma/view','muestra documento');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (8,'estado/delete','borra estado');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (9,'estado/index','lista estados de documentos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (10,'estado/update','actualiza estado de documento');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (11,'estado/create','nuevo tipo de estado dedocumentos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (12,'estado/view','muestra tipo de estado dedocumentos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (13,'instituto/delete','borra instituto');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (14,'instituto/index','lista institutos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (15,'instituto/update','actualiza instituto');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (16,'instituto/create','nuevo instituto');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (17,'instituto/view','muestra instituto');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (18,'carrera/delete','borra carrera');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (19,'carrera/index','lista carreras');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (20,'carrera/update','actualiza carrera');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (21,'carrera/create','nueva carrera');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (22,'carrera/view','muestra carrera');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (23,'materia/delete','borra materia');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (24,'materia/index','lista materias');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (25,'materia/update','actualiza materia');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (26,'materia/create','nueva materia');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (27,'materia/view','muestra materia');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (28,'ano/delete','borra anio');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (29,'ano/index','lista anios');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (30,'ano/update','actualiza anio');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (31,'ano/create','nuevo anio');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (32,'ano/view','muestra anio');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (33,'sector/delete','borra sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (34,'sector/index','lista sectores');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (35,'sector/update','actualiza sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (36,'sector/create','nuevo sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (37,'sector/view','muestra sector');
+---
+-- Acciones configurables para cada sector a travez del usuario CPE Admin.
+-- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
+-- comando app\commands\RoleAccessChecker
+	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (1,1,1);
 	END;
+
+
 
 COMMIT;

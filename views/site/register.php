@@ -31,9 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= $form->field($model, "email")->input("email") ?>
 
 				<?= $form->field($model, "sector_id")
-				    ->dropDownList(
-            ArrayHelper::map($subModel->getAllSectors(), 'sector_id', 'descripcion'))
-    		?>
+				    ->dropDownList(ArrayHelper::map($subModel->all(), 'sector_id', 'descripcion'))
+				?>
 
 				<?= $form->field($model, "password")->input("password") ?>
 

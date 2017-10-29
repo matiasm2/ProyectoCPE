@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\Sector;
 
 AppAsset::register($this);
 ?>
@@ -28,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Gestion CPE',
+        'brandLabel' => 'CPE UNAJ',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -41,20 +42,28 @@ AppAsset::register($this);
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'Register', 'url' => ['/site/register']],
-            //['label' => 'Instituto', 'url' => ['/usuarioinstituto/index']],
-            Yii::$app->user->isGuest ? (
+/*descomentar si se quiere eliminar el dropdown del menu*/
+            //~ ['label' => 'Archivo', 'url' => ['/archivoprograma/index'],'visible' => !(Yii::$app->user->isGuest)],
+/*comentar desde aca si se quiere eliminar el dropdown del menu*/
+			['label' => 'Dropdown','items'=> [
+				['label' => 'Archivo', 'url' => ['/archivoprograma/index']],
+				'<li class="divider"></li>',
+				],
+			'visible' => !(Yii::$app->user->isGuest),
+			],
+/*comentar hasta aca si se quiere eliminar el dropdown del menu*/
+Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->mailuser . ')',
+                    'Logout (' . '  [' . Yii::$app->user->identity->getSector()->one()->descripcion.'] ' . Yii::$app->user->identity->nombre . ' )',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
                 . '</li>'
-            ),
-
+            )
         ],
     ]);
     NavBar::end();
