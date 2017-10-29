@@ -34,6 +34,7 @@
     <Compile Include="controllers\AnoController.php" />
     <Compile Include="controllers\ArchivoprogramaController.php" />
     <Compile Include="controllers\CarreraController.php" />
+    <Compile Include="controllers\ErrorController.php" />
     <Compile Include="controllers\EstadoController.php" />
     <Compile Include="controllers\InstitutoController.php" />
     <Compile Include="controllers\MateriaController.php" />
@@ -55,6 +56,8 @@
     <Compile Include="models\CarreraQuery.php" />
     <Compile Include="models\CarreraSearch.php" />
     <Compile Include="models\InvalidoUsuarioModel.php" />
+    <Compile Include="models\UsuarioInstituto.php" />
+    <Compile Include="models\UsuarioInstitutoSearch.php" />
     <Compile Include="models\Usuarioinstituto\Usuarioinstituto.php" />
     <Compile Include="models\Usuarioinstituto\UsuarioinstitutoSearch.php" />
     <Compile Include="models\UsuarioSearch.php" />
@@ -128,6 +131,7 @@
     <Compile Include="views\carrera\view.php" />
     <Compile Include="views\carrera\_form.php" />
     <Compile Include="views\carrera\_search.php" />
+    <Compile Include="views\error\error.php" />
     <Compile Include="views\estado\create.php" />
     <Compile Include="views\estado\index.php" />
     <Compile Include="views\estado\update.php" />
@@ -180,7 +184,7 @@
     <Compile Include="views\site\register.php" />
     <Compile Include="views\usuarioinstituto\create.php" />
     <Compile Include="views\usuarioinstituto\error.php" />
-    <Compile Include="views\usuarioinstituto\indexInstituto.php" />
+    <Compile Include="views\usuarioinstituto\index.php" />
     <Compile Include="views\usuarioinstituto\update.php" />
     <Compile Include="views\usuarioinstituto\view.php" />
     <Compile Include="views\usuarioinstituto\_form.php" />
@@ -195,6 +199,9 @@
     <Compile Include="views\usuario\cpeadmin\view.php" />
     <Compile Include="views\usuario\cpeadmin\_form.php" />
     <Compile Include="views\usuario\cpeadmin\_search.php" />
+    <Compile Include="views\usuario\create.php" />
+    <Compile Include="views\usuario\index.php" />
+    <Compile Include="views\usuario\update.php" />
     <Compile Include="views\usuario\usuariocpe\about.php" />
     <Compile Include="views\usuario\usuariocpe\contact.php" />
     <Compile Include="views\usuario\usuariocpe\error.php" />
@@ -210,6 +217,9 @@
     <Compile Include="views\usuario\usuarioprensa\error.php" />
     <Compile Include="views\usuario\usuarioprensa\index.php" />
     <Compile Include="views\usuario\usuarioprensa\lista-de-envios.php" />
+    <Compile Include="views\usuario\view.php" />
+    <Compile Include="views\usuario\_form.php" />
+    <Compile Include="views\usuario\_search.php" />
     <Compile Include="web\assets\50ac15ba\bloodhound.js" />
     <Compile Include="web\assets\50ac15ba\bloodhound.min.js" />
     <Compile Include="web\assets\50ac15ba\typeahead.bundle.js" />
@@ -284,6 +294,7 @@
     <Folder Include="views\ano" />
     <Folder Include="views\archivoprograma" />
     <Folder Include="views\carrera" />
+    <Folder Include="views\error\" />
     <Folder Include="views\estado" />
     <Folder Include="views\instituto" />
     <Folder Include="views\layouts" />
@@ -320,6 +331,8 @@
   <ItemGroup>
     <Content Include="web\img\avatarUser.png" />
     <Content Include="web\img\Loading.gif" />
+    <Content Include="web\img\unaj.png" />
+    <Content Include="web\img\unaj2.png" />
     <Content Include="web\img\warning.jpg" />
   </ItemGroup>
 </Project>

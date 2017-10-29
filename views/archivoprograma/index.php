@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ArchivoprogramaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Archivoprogramas';
+$this->title = 'Archivos de programas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="archivoprograma-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Archivoprograma', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear ', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'format' => 'html',
 					'label' => 'ImageColumnLabel',
 					'value' => function ($data){
-							return Html::img('uploadas/'.$data['archivo'],['widht' => '100px']);
+							return Html::img('uploads/'.$data['archivo'],['widht' => '100px']);
 						},
 						
 				],

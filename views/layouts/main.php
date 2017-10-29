@@ -29,7 +29,8 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'CPE UNAJ',
+        //'brandLabel' => 'CPE UNAJ',
+        'brandLabel' => '<img src="img/unaj.png" style="display:inline; margin-top: -20px; vertical-align: top; width:150px; height:55px;">&nbsp&nbsp&nbsp&nbsp<b style="size:15px">CPE UNAJ</b>',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -46,7 +47,8 @@ AppAsset::register($this);
             //~ ['label' => 'Archivo', 'url' => ['/archivoprograma/index'],'visible' => !(Yii::$app->user->isGuest)],
 /*comentar desde aca si se quiere eliminar el dropdown del menu*/
 			['label' => 'Dropdown','items'=> [
-				['label' => 'Archivo', 'url' => ['/archivoprograma/index']],
+				['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
+                ['label' => 'Usuarios', 'url' => ['/usuario/index']],
 				'<li class="divider"></li>',
 				],
 			'visible' => !(Yii::$app->user->isGuest),
