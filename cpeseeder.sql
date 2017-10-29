@@ -240,8 +240,12 @@ BEGIN;
 ---
 -- Acciones configurables para cada sector a travez del usuario CPE Admin.
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
--- comando app\commands\RoleAccessChecker
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (1,1,1);
+-- comando app\commands\RoleAccessChecker se insertan los valores para que CPE Admin tenga todos los accesos
+	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (1,1,1);--acceso a error/error
+	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (2,2,1);--acceso a site/register
+	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (3,1,1);--
+	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (4,1,1);
+	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (5,1,1);
 	END;
 
 
