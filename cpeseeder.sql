@@ -231,12 +231,12 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (29,'ano/index','lista anios');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (30,'ano/update','actualiza anio');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (31,'ano/create','nuevo anio');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (31,'ano/view','muestra anio');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (32,'sector/delete','borra sector');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (33,'sector/index','lista sectores');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (34,'sector/update','actualiza sector');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (35,'sector/create','nuevo sector');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (36,'sector/view','muestra sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (32,'ano/view','muestra anio');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (33,'sector/delete','borra sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (34,'sector/index','lista sectores');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (35,'sector/update','actualiza sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (36,'sector/create','nuevo sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (37,'sector/view','muestra sector');
 ---
 -- Acciones configurables para cada sector a travez del usuario CPE Admin.
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
