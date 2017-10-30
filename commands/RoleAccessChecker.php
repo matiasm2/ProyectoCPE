@@ -28,7 +28,7 @@ class RoleAccessChecker extends Controller{
 	 * @param $currentAction: nombre de la acción que se evalúa según lo
 	 * indicado durante el contexto de ejecición
 	 **/
-	public function actionIsAsignSector($currentAction){
+	public static function actionIsAsignSector($currentAction){
 		/**
 		 * $allAsignsector is the model class for table "asignsector".
 		 * @property integer $asignsector_id
@@ -48,14 +48,14 @@ class RoleAccessChecker extends Controller{
 		$allActionRoles=new Actionrole();
 		//){$subModel=$ref->find()->where('sector_id=:sector_id',[':sector_id'=> 1]);}
 		//Filtra el Actionole con vista/accion que viene por parametro
-		$actionIsEnable=$allActionRoles->find()
-			->where('action_disp=:action_disp',[':action_disp'=> $currentAction ]);
-		if ( $actionIsEnabled === null ) return false;//Si no exise vista/accion pasada por parametro
+		$actionIsEnable = $allActionRoles->find()
+			->where('action_disp=:action_disp',[':action_disp'=> $currentAction ])->one();
+		if ( $actionIsEnable === null ) return false;//Si no exise vista/accion pasada por parametro
 		//Filtra el Asignsector con el sector_id de identity interface (el logoneado) y el action_id
 		//antes encontrado por actionIsEnabled
-		$asign=$allAsignsector->find()
+		$asign = $allAsignsector->find()
 			->where('sector_id=:sector_id',[':sector_id'=> 
-				Yii::$app->user->identity->getSector()->sector_id ])
+				Yii::$app->user->identity->sectorID ])
 			->andWhere('actionrole_id=:actionrole_id',[':actionrole_id'=> $actionIsEnable->actionrole_id])
 			->one();
 		if ( $asign === null ) return false; // si CPE Admin no asigno el actionrole_id al sector_id actual

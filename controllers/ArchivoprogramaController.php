@@ -11,7 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
-use app\command\RoleAccessChecker;
+use app\commands\RoleAccessChecker;
 
 /**
  * ArchivoprogramaController implements the CRUD actions for Archivoprograma model.
@@ -38,8 +38,7 @@ class ArchivoprogramaController extends Controller
      * @return mixed
      */
     public function actionIndex(){
-		$ctrl = new RoleAccessChecker();
-		if ($ctl.actionIsAsignSector('archivoprograma/index')) {
+		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/index')) {
 			$searchModel = new ArchivoprogramaSearch();
 			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -48,7 +47,7 @@ class ArchivoprogramaController extends Controller
 				'dataProvider' => $dataProvider,
 			]);
 		}else{
-			return $this->render('error/error');
+			return $this->redirect(['error/error']);
 		}
     }
 

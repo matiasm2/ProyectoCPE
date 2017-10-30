@@ -8,6 +8,7 @@ use app\models\AsignSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\commands\RoleAccessChecker;
 
 /**
  * AsignsectorController implements the CRUD actions for Asignsector model.
@@ -33,15 +34,19 @@ class AsignsectorController extends Controller
      * Lists all Asignsector models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $searchModel = new AsignSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    public function actionIndex(){
+		//$ctrl = new RoleAccessChecker();
+		if (RoleAccessChecker::actionIsAsignSector('asignsector/index')) {
+			$searchModel = new AsignSearch();
+			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+			]);		
+        }else{
+			return $this->redirect(['error/error']);
+		}
     }
 
     /**
@@ -49,11 +54,15 @@ class AsignsectorController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+    public function actionView($id){
+		//$ctrl = new RoleAccessChecker();
+		if (RoleAccessChecker::actionIsAsignSector('asignsector/view')) {
+			return $this->render('view', [
+				'model' => $this->findModel($id),
+			]);
+        }else{
+			return $this->render('error/error');
+		}
     }
 
     /**
@@ -61,17 +70,21 @@ class AsignsectorController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Asignsector();
+    public function actionCreate(){
+		//~ $ctrl = new RoleAccessChecker();
+		if (RoleAccessChecker::actionIsAsignSector('asignsector/create')) {
+			$model = new Asignsector();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->asignsector_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->asignsector_id]);
+			} else {
+				return $this->render('create', [
+					'model' => $model,
+				]);
+			}
+        }else{
+			return $this->render('error/error');
+		}
     }
 
     /**
@@ -80,17 +93,21 @@ class AsignsectorController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    public function actionUpdate($id){
+		//~ $ctrl = new RoleAccessChecker();
+		if (RoleAccessChecker::actionIsAsignSector('asignsector/update')) {
+			$model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->asignsector_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->asignsector_id]);
+			} else {
+				return $this->render('update', [
+					'model' => $model,
+				]);
+			}
+        }else{
+			return $this->render('error/error');
+		}
     }
 
     /**
@@ -99,11 +116,15 @@ class AsignsectorController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+    public function actionDelete($id){
+		//~ $ctrl = new RoleAccessChecker();
+		if (RoleAccessChecker::actionIsAsignSector('asignsector/delete')) {
+			$this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+			return $this->redirect(['index']);
+        }else{
+			return $this->render('error/error');
+		}
     }
 
     /**
