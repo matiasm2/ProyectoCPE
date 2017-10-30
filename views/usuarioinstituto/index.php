@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\UsuarioinstitutoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Usuarioinstitutos';
+$this->title = 'Usuario institutos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuarioinstituto-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Usuarioinstituto', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear archivo de programa', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -28,8 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'programa_id',
             'usuario_id',
             'estado_id',
+            //'descripcion',
             'archivo',
-            // 'fecha',
+            'fecha',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

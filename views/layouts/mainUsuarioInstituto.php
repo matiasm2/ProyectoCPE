@@ -8,7 +8,6 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-use app\models\Sector;
 
 AppAsset::register($this);
 ?>
@@ -29,8 +28,8 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        //'brandLabel' => 'CPE UNAJ',
-        'brandLabel' => '<img src="img/unaj.png" style="display:inline; margin-top: -20px; vertical-align: top; width:150px; height:55px;">&nbsp&nbsp&nbsp&nbsp<b style="size:15px">CPE UNAJ</b>',
+        'brandLabel' => '<img src="img/avatarUser.png" style="display:inline; margin-top: -20px; vertical-align: top; width:120px; height:55px;">&nbsp&nbsp&nbsp&nbsp<b styel="size:15px">USUARIO INSTITUTO</b>',
+        //'brandLabel' => 'USUARIO INSTITUTOS',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -40,27 +39,19 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Instituto', 'url' => ['/usuarioinstituto/indexInstituto']],
+            /*
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => 'Register', 'url' => ['/site/register']],
-/*descomentar si se quiere eliminar el dropdown del menu*/
-            //~ ['label' => 'Archivo', 'url' => ['/archivoprograma/index'],'visible' => !(Yii::$app->user->isGuest)],
-/*comentar desde aca si se quiere eliminar el dropdown del menu*/
-			['label' => 'Dropdown','items'=> [
-				['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
-                ['label' => 'Usuarios', 'url' => ['/usuario/index']],
-				'<li class="divider"></li>',
-				],
-			'visible' => !(Yii::$app->user->isGuest),
-			],
-/*comentar hasta aca si se quiere eliminar el dropdown del menu*/
-Yii::$app->user->isGuest ? (
+            ['label' => 'Register', 'url' => ['/site/register']],*/
+            Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . '  [' . Yii::$app->user->identity->getSector()->one()->descripcion.'] ' . Yii::$app->user->identity->nombre . ' )',
+                    'Logout (' . Yii::$app->user->identity->mailuser . ')',
+                    //['class' => 'btn btn-link logout'],
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()

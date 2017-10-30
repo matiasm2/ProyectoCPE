@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Archivoprograma */
 
-$this->title = 'Update Archivoprograma: ' . $model->archivoprograma_id;
-$this->params['breadcrumbs'][] = ['label' => 'Archivoprogramas', 'url' => ['index']];
+$this->title = 'Actualizar Archivo de programa: ' . $model->archivoprograma_id;
+$this->params['breadcrumbs'][] = ['label' => 'Archivos de programas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->archivoprograma_id, 'url' => ['view', 'id' => $model->archivoprograma_id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

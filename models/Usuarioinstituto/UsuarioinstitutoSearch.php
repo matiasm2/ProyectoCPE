@@ -1,16 +1,16 @@
 <?php
 
-namespace app\models;
+namespace app\models\Usuarioinstituto;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\UsuarioInstituto;
+use app\models\Usuarioinstituto\Usuarioinstituto;
 
 /**
  * UsuarioinstitutoSearch represents the model behind the search form about `app\models\Usuarioinstituto`.
  */
-class UsuarioInstitutoSearch extends UsuarioInstituto
+class UsuarioinstitutoSearch extends Usuarioinstituto
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class UsuarioInstitutoSearch extends UsuarioInstituto
     {
         return [
             [['archivoprograma_id', 'programa_id', 'usuario_id', 'estado_id'], 'integer'],
-            //[['descripcion'], 'string'],
+            [['descripcion'], 'string'],
             [['archivo', 'fecha'], 'safe'],
         ];
     }
@@ -42,7 +42,7 @@ class UsuarioInstitutoSearch extends UsuarioInstituto
      */
     public function search($params)
     {
-        $query = UsuarioInstituto::find();
+        $query = Usuarioinstituto::find();
 
         // add conditions that should always apply here
 
@@ -64,7 +64,7 @@ class UsuarioInstitutoSearch extends UsuarioInstituto
             'programa_id' => $this->programa_id,
             'usuario_id' => $this->usuario_id,
             'estado_id' => $this->estado_id,
-            //'descripcion' => $this->descripcion,
+            'descripcion' => $this->descripcion,
             'fecha' => $this->fecha,
         ]);
 

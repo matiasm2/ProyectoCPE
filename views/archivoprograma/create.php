@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Archivoprograma */
 
-$this->title = 'Create Archivoprograma';
-$this->params['breadcrumbs'][] = ['label' => 'Archivoprogramas', 'url' => ['index']];
+$this->title = 'Crear un Archivo de programa';
+$this->params['breadcrumbs'][] = ['label' => 'Archivos de programas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="archivoprograma-create">

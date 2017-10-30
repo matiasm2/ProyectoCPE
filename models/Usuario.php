@@ -69,7 +69,7 @@ class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface {
     }
 
     /**
-     * @return \yii\db\ActiveQuerya
+     * @return \yii\db\ActiveQuery
      */
     public function getSector(){
         return $this->hasOne(Sector::className(), ['sector_id' => 'sector_id']);
