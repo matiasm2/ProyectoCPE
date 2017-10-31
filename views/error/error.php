@@ -1,6 +1,8 @@
 <?php
 /* @var $this yii\web\View */
 ?>
+<h3> <?= $msg ?></h3>
+
 <h1>error/error</h1>
 
 <p>

@@ -246,13 +246,13 @@ BEGIN;
 -- Acciones configurables para cada sector a travez del usuario CPE Admin.
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
 -- comando app\commands\RoleAccessChecker se insertan los valores para que CPE Admin tenga todos los accesos
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (1,1,1);--acceso a error/error
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (2,2,1);--acceso a site/register
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (3,38,1);--acceso a asignsector/delete
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (4,39,1);--acceso a asignsector/index
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (5,40,1);--acceso a asignsector/update
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (6,41,1);--acceso a asignsector/create
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (7,42,1);--acceso a asignsector/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (1,1);--acceso a error/error
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (2,1);--acceso a site/register
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (38,1);--acceso a asignsector/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (39,1);--acceso a asignsector/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (40,1);--acceso a asignsector/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (41,1);--acceso a asignsector/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (42,1);--acceso a asignsector/view
 	END;
 
 

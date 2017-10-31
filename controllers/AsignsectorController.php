@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\commands\RoleAccessChecker;
+use app\controllers\ErrorController;
 
 /**
  * AsignsectorController implements the CRUD actions for Asignsector model.
@@ -34,18 +35,27 @@ class AsignsectorController extends Controller
      * Lists all Asignsector models.
      * @return mixed
      */
-    public function actionIndex(){
-		//$ctrl = new RoleAccessChecker();
-		if (RoleAccessChecker::actionIsAsignSector('asignsector/index')) {
+    public function actionIndex(){	
+
 			$searchModel = new AsignSearch();
 			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+			$msg=
+			//RoleAccessChecker::testQery('asignsector/index');
+			'';
+		//$ctrl = new RoleAccessChecker();
+		if (RoleAccessChecker::actionIsAsignSector('asignsector/index')) {
 			return $this->render('index', [
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
+				"msg" => $msg ,
 			]);		
         }else{
-			return $this->redirect(['error/error']);
+			return $this->redirect(['error/error',["msg" => $msg ]]);
+			//return $this->render('index', [
+				//'searchModel' => $searchModel,
+				//'dataProvider' => $dataProvider,
+				//"msg" => $msg ,
+			//]);
 		}
     }
 
@@ -61,6 +71,7 @@ class AsignsectorController extends Controller
 				'model' => $this->findModel($id),
 			]);
         }else{
+			
 			return $this->render('error/error');
 		}
     }
