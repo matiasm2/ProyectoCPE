@@ -83,16 +83,11 @@ class RoleAccessChecker extends Controller{
 		 * @property Asignsector[] $asignsectors
 		 */
 		$allActionRoles=new Actionrole();
-		//){$subModel=$ref->find()->where('sector_id=:sector_id',[':sector_id'=> 1]);}
-		//Filtra el Actionole con vista/accion que viene por parametro
 		$actionIsEnable = $allActionRoles->find()
 			->where('action_disp=:action_disp',[':action_disp'=> $currentAction, ])->one();
 		$out .= $actionIsEnable->actionrole_id.'|';
 		$out .= $actionIsEnable->action_disp.'|';
 		$out .= $actionIsEnable->descripcion.'|, sec =';
-			
-		//Filtra el Asignsector con el sector_id de identity interface (el logoneado) y el action_id
-		//antes encontrado por actionIsEnabled
 		$asign = $allAsignsector->find()
 			-> where('actionrole_id=:actionrole_id',[':actionrole_id'=> $actionIsEnable->actionrole_id, ])
 			-> andWhere('sector_id=:sector_id',[':sector_id'=> 
@@ -102,10 +97,7 @@ class RoleAccessChecker extends Controller{
 		$out .= $asign->actionrole_id.'|';
 		$out .= $asign->sector_id.'|';
 		
-		return $out; // si CPE Admin no asigno el actionrole_id al sector_id actual
-		//si encuentra el registro ya esta filtrado por el sector_id del identityInterface y
-						 //tambien por el actionrole_id encontrado por el parametro, entonces significa que la
-						 //accion esta registrada en Actionrole  
+		return $out;
 	}
 	
 }

@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Asignsector;
 use app\models\AsignSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -17,11 +18,62 @@ use app\controllers\ErrorController;
 class AsignsectorController extends Controller
 {
     /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
+     * Ejemplo de SiteController
+     * public function behaviors() //behaviors viejo{
+     *    return [
+     *        'access' => [
+     *            'class' => AccessControl::className(),
+     *            'only' => ['logout', 'contact', 'register', 'login',],
+     *            'rules' => [
+     *                [
+     *                    'allow' => true,
+     *                    'actions' => ['login', 'logout', 'contact', 'register',],
+     *                    'roles' => ['?'],
+     *                ],
+     *                [
+     *                    'allow' => true,
+     *                    'actions' => ['logout', 'register',],
+     *                    'roles' => ['@'],
+     *                ],
+     *                [
+     *                    'allow' => false,
+     *                    'actions' => ['contact', 'login'],
+     *                    'roles' => ['@'],
+     *                ],
+     *            ],
+     *        ],
+     *        'verbs' => [
+     *            'class' => VerbFilter::className(),
+     *            'actions' => [
+     *                'logout' => ['post'],
+     *            ],
+     *        ],
+     *    ];
+     *}
+     **/
+    public function behaviors(){
         return [
+              'access' => [
+                 'class' => AccessControl::className(),
+                 'only' => ['index', 'view', 'update', 'create', 'delete',],
+                 'rules' => [
+                     [
+                         'allow' => true,
+                         'actions' => ['',],
+                         'roles' => ['?'],
+                     ],
+                     [
+                         'allow' => true,
+                         'actions' => ['index', 'view', 'update', 'create', 'delete',],
+                         'roles' => ['@'],
+                     ],
+                     [
+                         'allow' => false,
+                         'actions' => ['',],
+                         'roles' => ['@'],
+                     ],
+                 ],
+             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -37,26 +89,16 @@ class AsignsectorController extends Controller
      */
     public function actionIndex(){	
 
-			$searchModel = new AsignSearch();
-			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-			$msg=
-			//RoleAccessChecker::testQery('asignsector/index');
-			'';
-		//$ctrl = new RoleAccessChecker();
+		$searchModel = new AsignSearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/index')) {
 			return $this->render('index', [
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 				"msg" => $msg ,
 			]);		
-        }else{
-			return $this->redirect(['error/error',["msg" => $msg ]]);
-			//return $this->render('index', [
-				//'searchModel' => $searchModel,
-				//'dataProvider' => $dataProvider,
-				//"msg" => $msg ,
-			//]);
-		}
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
