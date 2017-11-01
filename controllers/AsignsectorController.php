@@ -5,9 +5,12 @@ namespace app\controllers;
 use Yii;
 use app\models\Asignsector;
 use app\models\AsignSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\commands\RoleAccessChecker;
+use app\controllers\ErrorController;
 
 /**
  * AsignsectorController implements the CRUD actions for Asignsector model.
@@ -15,11 +18,62 @@ use yii\filters\VerbFilter;
 class AsignsectorController extends Controller
 {
     /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
+     * Ejemplo de SiteController
+     * public function behaviors() //behaviors viejo{
+     *    return [
+     *        'access' => [
+     *            'class' => AccessControl::className(),
+     *            'only' => ['logout', 'contact', 'register', 'login',],
+     *            'rules' => [
+     *                [
+     *                    'allow' => true,
+     *                    'actions' => ['login', 'logout', 'contact', 'register',],
+     *                    'roles' => ['?'],
+     *                ],
+     *                [
+     *                    'allow' => true,
+     *                    'actions' => ['logout', 'register',],
+     *                    'roles' => ['@'],
+     *                ],
+     *                [
+     *                    'allow' => false,
+     *                    'actions' => ['contact', 'login'],
+     *                    'roles' => ['@'],
+     *                ],
+     *            ],
+     *        ],
+     *        'verbs' => [
+     *            'class' => VerbFilter::className(),
+     *            'actions' => [
+     *                'logout' => ['post'],
+     *            ],
+     *        ],
+     *    ];
+     *}
+     **/
+    public function behaviors(){
         return [
+              'access' => [
+                 'class' => AccessControl::className(),
+                 'only' => ['index', 'view', 'update', 'create', 'delete',],
+                 'rules' => [
+                     [
+                         'allow' => true,
+                         'actions' => ['',],
+                         'roles' => ['?'],
+                     ],
+                     [
+                         'allow' => true,
+                         'actions' => ['index', 'view', 'update', 'create', 'delete',],
+                         'roles' => ['@'],
+                     ],
+                     [
+                         'allow' => false,
+                         'actions' => ['',],
+                         'roles' => ['@'],
+                     ],
+                 ],
+             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -33,15 +87,18 @@ class AsignsectorController extends Controller
      * Lists all Asignsector models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $searchModel = new AsignSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    public function actionIndex(){	
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+		$searchModel = new AsignSearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('asignsector/index')) {
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+				"msg" => $msg ,
+			]);		
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -49,11 +106,12 @@ class AsignsectorController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+    public function actionView($id){
+		if (RoleAccessChecker::actionIsAsignSector('asignsector/view')) {
+			return $this->render('view', [
+				'model' => $this->findModel($id),
+			]);
+        }else return $this->redirect(['error/error']);
     }
 
     /**
@@ -61,17 +119,17 @@ class AsignsectorController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Asignsector();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->asignsector_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+    public function actionCreate(){
+		if (RoleAccessChecker::actionIsAsignSector('asignsector/create')) {
+			$model = new Asignsector();
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->asignsector_id]);
+			} else {
+				return $this->render('create', [
+					'model' => $model,
+				]);
+			}
+        }else return $this->redirect(['error/error',]);
     }
 
     /**
@@ -80,17 +138,18 @@ class AsignsectorController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    public function actionUpdate($id){
+		if (RoleAccessChecker::actionIsAsignSector('asignsector/update')) {
+			$model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->asignsector_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->asignsector_id]);
+			} else {
+				return $this->render('update', [
+					'model' => $model,
+				]);
+			}
+        }else return $this->redirect(['error/error']);
     }
 
     /**
@@ -99,11 +158,12 @@ class AsignsectorController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+    public function actionDelete($id){
+		if (RoleAccessChecker::actionIsAsignSector('asignsector/delete')) {
+			$this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+			return $this->redirect(['index']);
+        }else return $this->redirect(['error/error']);
     }
 
     /**

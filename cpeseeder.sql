@@ -237,15 +237,22 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (35,'sector/update','actualiza sector');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (36,'sector/create','nuevo sector');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (37,'sector/view','muestra sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (38,'asignsector/delete','borra sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (39,'asignsector/index','lista sectores');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (40,'asignsector/update','actualiza sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (41,'asignsector/create','nuevo sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (42,'asignsector/view','muestra sector');
 ---
 -- Acciones configurables para cada sector a travez del usuario CPE Admin.
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
 -- comando app\commands\RoleAccessChecker se insertan los valores para que CPE Admin tenga todos los accesos
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (1,1,1);--acceso a error/error
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (2,2,1);--acceso a site/register
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (3,1,1);--
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (4,1,1);
-	INSERT INTO asignsector(asignsector_id,actionrole_id,sector_id)VALUES (5,1,1);
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (1,1);--acceso a error/error
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (2,1);--acceso a site/register
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (38,1);--acceso a asignsector/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (39,1);--acceso a asignsector/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (40,1);--acceso a asignsector/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (41,1);--acceso a asignsector/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (42,1);--acceso a asignsector/view
 	END;
 
 

@@ -19,18 +19,19 @@ use app\models\InvalidoUsuarioModel;
 use app\commands\Mailto;
 use app\commands\Intranet;
 use app\commands\RandKey;
-
+use app\commands\RoleAccessChecker;
+use app\controllers\ErrorController;
 
 class SiteController extends Controller
 {
-	public function behaviors() {
+	/*public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['login', 'logout', 'CPEAdmin', 'instituto', 'prensa', 'CPE', 'register', 'contact', 'about' /*, 'alguna_accion'*/], //solo debe aplicarse a las acciones login, logout , admin, instituto, prensa y cpe. Todas las demas acciones no estan sujetas al control de acceso
+                'only' => ['login', 'logout', 'CPEAdmin', 'instituto', 'prensa', 'CPE', 'register', 'contact', 'about' ], //solo debe aplicarse a las acciones login, logout , admin, instituto, prensa y cpe. Todas las demas acciones no estan sujetas al control de acceso
                 'rules' => [                              //reglas
                     [
-                        'actions' => ['login', 'logout', 'register', 'contact', 'about',  /*, 'alguna_accion'*/], //para la accion login
+                        'actions' => ['login', 'logout', 'register', 'contact', 'about',  ], //para la accion login
                         'allow' => true, //Todos los permisos aceptados
                         'roles' => ['?'], //Tienen acceso a esta accion todos los usuarios invitados
                     ],
@@ -110,11 +111,11 @@ class SiteController extends Controller
                 ],
             ],
         ];
-    }
+    }*/
     /**
      * @inheritdoc
      */
-     /*public function behaviors() //behaviors viejo
+     public function behaviors() //behaviors viejo
 	 {
          return [
              'access' => [
@@ -145,14 +146,14 @@ class SiteController extends Controller
                  ],
              ],
          ];
-     }*/
+     }
 	 
 
     /**
      * @inheritdoc
      */
 	 
-    public function actions() {
+    /*public function actions() {
         //Control de errores en caso de que se quiera acceder a las acciones de este controlador
         if (!Yii::$app->user->isGuest) {                                                                              //si el usuario esta logeado, o sea no es invitado
             if (Yii::$app->user->identity->sectorID == 1) {                                                                //si el usuario es administrador
@@ -178,8 +179,8 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
-    }
-	/*
+    }*/
+	
     public function actions() //viejo action
     {
         return [
@@ -191,7 +192,7 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
-    }*/
+    }
 
     /**
      * Displays homepage.
@@ -231,7 +232,6 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 
@@ -294,31 +294,34 @@ class SiteController extends Controller
      * @return string
      */
     public function actionRegister() {
-        $model = new RegisterForm();
-        $numUsr=Usuario::find()->count();$ref=new Sector();
-		if ($numUsr == 0){$subModel=$ref->find()->where('sector_id=:sector_id',[':sector_id'=> 1]);}
-		else {$subModel=$ref->find()->where('sector_id>:sector_id',[':sector_id'=>2]);
+		$numUsr=Usuario::find()->count();
+		if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/register'))) {
+			$model = new RegisterForm();
+			$ref=new Sector();
+			if ($numUsr == 0){$subModel=$ref->find()->where('sector_id=:sector_id',[':sector_id'=> 1]);}
+			else {$subModel=$ref->find()->where('sector_id>:sector_id',[':sector_id'=>2]);
+				}
+			$msg = "Cantidad de usuarios= ". $numUsr;
+			if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
+				Yii::$app->response->format = Response::FORMAT_JSON;
+				return ActiveForm::validate($model);
 			}
-        $msg = "Cantidad de usuarios= ". $numUsr;
-        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                $table = new Usuario();
-                $this->fillModelUsuario($table, $model);
-                if ($table->insert()) {
-                    $msg = $this->sendConfirm($table);
-                    $this->nullModelRegister($model);
-                } else {
-                    $msg = "Ha ocurrido un error al llevar a cabo tu  registro\n";
-                }
-            } else {
-                $model->getErrors();
-            }
-        }
-        return $this->render("register", ["model" => $model,"subModel" => $subModel, "msg" => $msg]);
+			if ($model->load(Yii::$app->request->post())) {
+				if ($model->validate()) {
+					$table = new Usuario();
+					$this->fillModelUsuario($table, $model);
+					if ($table->insert()) {
+						$msg = $this->sendConfirm($table);
+						$this->nullModelRegister($model);
+					} else {
+						$msg = "Ha ocurrido un error al llevar a cabo tu  registro\n";
+					}
+				} else {
+					$model->getErrors();
+				}
+			}
+			return $this->render("register", ["model" => $model,"subModel" => $subModel, "msg" => $msg]);
+        }else return $this->redirect(['error/error']);
     }
 
 	private function nullModelRegister($model){

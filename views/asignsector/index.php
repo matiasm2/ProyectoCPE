@@ -11,6 +11,7 @@ $this->title = 'Asignsectors';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="asignsector-index">
+<h3> <?= $msg ?></h3>
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
