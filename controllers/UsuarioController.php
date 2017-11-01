@@ -8,6 +8,8 @@ use app\models\UsuarioSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\commands\RoleAccessChecker;
+use app\controllers\ErrorController;
 
 /**
  * UsuarioController implements the CRUD actions for Usuario model.
@@ -33,15 +35,17 @@ class UsuarioController extends Controller
      * Lists all Usuario models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $searchModel = new UsuarioSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    public function actionIndex(){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('usuario/index')) {
+			$searchModel = new UsuarioSearch();
+			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+			]);
+        }else return $this->redirect(['error/error']);
     }
 
     /**

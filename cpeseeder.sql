@@ -242,6 +242,7 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (40,'asignsector/update','actualiza sector');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (41,'asignsector/create','nuevo sector');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (42,'asignsector/view','muestra sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (43,'usuario/index','lista usuarios');
 ---
 -- Acciones configurables para cada sector a travez del usuario CPE Admin.
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
@@ -253,6 +254,7 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (40,1);--acceso a asignsector/update
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (41,1);--acceso a asignsector/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (42,1);--acceso a asignsector/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (43,1);--acceso a usuario/view
 	END;
 
 

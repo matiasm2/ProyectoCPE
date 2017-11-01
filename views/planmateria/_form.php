@@ -1,4 +1,4 @@
-<?php
+a<?php
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -14,13 +14,13 @@ use yii\helpers\ArrayHelper;
     <?php $form = ActiveForm::begin(); ?>
 	<?= $form->field($model, "planestudio_id")
 				    ->dropDownList(
-            ArrayHelper::map($subModel->getAllPlanestudio(), 'carrera_id', 'planestudio_id'))
+            ArrayHelper::map($subModel->find()->all(), 'carrera_id', 'planestudio_id'))
     		?>
 
 
 <?= $form->field($model, "materia_id")
 				    ->dropDownList(
-            ArrayHelper::map($subModel2->getAllMaterias(), 'materia_id', 'nombre'))
+            ArrayHelper::map($subModel2->find()->all(), 'materia_id', 'nombre'))
     		?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
