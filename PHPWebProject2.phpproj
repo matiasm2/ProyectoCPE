@@ -33,6 +33,7 @@
     <Compile Include="config\web.php" />
     <Compile Include="controllers\AnoController.php" />
     <Compile Include="controllers\ArchivoprogramaController.php" />
+    <Compile Include="controllers\AsignsectorController.php" />
     <Compile Include="controllers\CarreraController.php" />
     <Compile Include="controllers\ErrorController.php" />
     <Compile Include="controllers\EstadoController.php" />
@@ -46,12 +47,15 @@
     <Compile Include="controllers\UsuarioController.php" />
     <Compile Include="controllers\UsuarioinstitutoController.php" />
     <Compile Include="mail\layouts\html.php" />
+    <Compile Include="models\Actionrole.php" />
     <Compile Include="models\Ano.php" />
     <Compile Include="models\AnoQuery.php" />
     <Compile Include="models\AnoSearch.php" />
     <Compile Include="models\Archivoprograma.php" />
     <Compile Include="models\ArchivoprogramaQuery.php" />
     <Compile Include="models\ArchivoprogramaSearch.php" />
+    <Compile Include="models\AsignSearch.php" />
+    <Compile Include="models\Asignsector.php" />
     <Compile Include="models\Carrera.php" />
     <Compile Include="models\CarreraQuery.php" />
     <Compile Include="models\CarreraSearch.php" />
@@ -125,6 +129,12 @@
     <Compile Include="views\archivoprograma\view.php" />
     <Compile Include="views\archivoprograma\_form.php" />
     <Compile Include="views\archivoprograma\_search.php" />
+    <Compile Include="views\asignsector\create.php" />
+    <Compile Include="views\asignsector\index.php" />
+    <Compile Include="views\asignsector\update.php" />
+    <Compile Include="views\asignsector\view.php" />
+    <Compile Include="views\asignsector\_form.php" />
+    <Compile Include="views\asignsector\_search.php" />
     <Compile Include="views\carrera\create.php" />
     <Compile Include="views\carrera\index.php" />
     <Compile Include="views\carrera\update.php" />
@@ -293,6 +303,7 @@
     <Folder Include="tests" />
     <Folder Include="views\ano" />
     <Folder Include="views\archivoprograma" />
+    <Folder Include="views\asignsector\" />
     <Folder Include="views\carrera" />
     <Folder Include="views\error\" />
     <Folder Include="views\estado" />
