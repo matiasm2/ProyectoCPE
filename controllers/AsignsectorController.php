@@ -11,6 +11,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\commands\RoleAccessChecker;
 use app\controllers\ErrorController;
+use app\models\Sector;
+use app\models\Actionrole;
 
 /**
  * AsignsectorController implements the CRUD actions for Asignsector model.
@@ -122,11 +124,15 @@ class AsignsectorController extends Controller
     public function actionCreate(){
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/create')) {
 			$model = new Asignsector();
+			$subModel =  new Actionrole();
+			$subModel2 = new Sector();
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
 				return $this->redirect(['view', 'id' => $model->asignsector_id]);
 			} else {
 				return $this->render('create', [
 					'model' => $model,
+					'subModel' => $subModel,
+					'subModel2' => $subModel2,
 				]);
 			}
         }else return $this->redirect(['error/error',]);

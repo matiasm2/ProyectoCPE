@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Asignsector */
@@ -12,9 +13,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'actionrole_id')->textInput() ?>
+    <?= $form->field($model, 'actionrole_id')->dropDownList(ArrayHelper::map($subModel->find()->all(),'actionrole_id','descripcion' )) ?>
 
-    <?= $form->field($model, 'sector_id')->textInput() ?>
+    <?= $form->field($model, 'sector_id')->dropDownList(ArrayHelper::map($subModel2->find()->all(),'sector_id','descripcion')) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
