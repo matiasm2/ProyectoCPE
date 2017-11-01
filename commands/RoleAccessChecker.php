@@ -30,6 +30,7 @@ class RoleAccessChecker extends Controller{
 	 * indicado durante el contexto de ejecición
 	 **/
 	public static function actionIsAsignSector($currentAction){
+		if(Yii::$app->user->isGuest)return false;
 		/**
 		 * $allAsignsector is the model class for table "asignsector".
 		 * @property integer $asignsector_id

@@ -19,7 +19,8 @@ use app\models\InvalidoUsuarioModel;
 use app\commands\Mailto;
 use app\commands\Intranet;
 use app\commands\RandKey;
-
+use app\commands\RoleAccessChecker;
+use app\controllers\ErrorController;
 
 class SiteController extends Controller
 {
@@ -231,7 +232,6 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 
@@ -294,31 +294,34 @@ class SiteController extends Controller
      * @return string
      */
     public function actionRegister() {
-        $model = new RegisterForm();
-        $numUsr=Usuario::find()->count();$ref=new Sector();
-		if ($numUsr == 0){$subModel=$ref->find()->where('sector_id=:sector_id',[':sector_id'=> 1]);}
-		else {$subModel=$ref->find()->where('sector_id>:sector_id',[':sector_id'=>2]);
+		$numUsr=Usuario::find()->count();
+		if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/register'))) {
+			$model = new RegisterForm();
+			$ref=new Sector();
+			if ($numUsr == 0){$subModel=$ref->find()->where('sector_id=:sector_id',[':sector_id'=> 1]);}
+			else {$subModel=$ref->find()->where('sector_id>:sector_id',[':sector_id'=>2]);
+				}
+			$msg = "Cantidad de usuarios= ". $numUsr;
+			if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
+				Yii::$app->response->format = Response::FORMAT_JSON;
+				return ActiveForm::validate($model);
 			}
-        $msg = "Cantidad de usuarios= ". $numUsr;
-        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                $table = new Usuario();
-                $this->fillModelUsuario($table, $model);
-                if ($table->insert()) {
-                    $msg = $this->sendConfirm($table);
-                    $this->nullModelRegister($model);
-                } else {
-                    $msg = "Ha ocurrido un error al llevar a cabo tu  registro\n";
-                }
-            } else {
-                $model->getErrors();
-            }
-        }
-        return $this->render("register", ["model" => $model,"subModel" => $subModel, "msg" => $msg]);
+			if ($model->load(Yii::$app->request->post())) {
+				if ($model->validate()) {
+					$table = new Usuario();
+					$this->fillModelUsuario($table, $model);
+					if ($table->insert()) {
+						$msg = $this->sendConfirm($table);
+						$this->nullModelRegister($model);
+					} else {
+						$msg = "Ha ocurrido un error al llevar a cabo tu  registro\n";
+					}
+				} else {
+					$model->getErrors();
+				}
+			}
+			return $this->render("register", ["model" => $model,"subModel" => $subModel, "msg" => $msg]);
+        }else return $this->redirect(['error/error']);
     }
 
 	private function nullModelRegister($model){

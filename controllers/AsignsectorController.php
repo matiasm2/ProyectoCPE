@@ -107,15 +107,11 @@ class AsignsectorController extends Controller
      * @return mixed
      */
     public function actionView($id){
-		//$ctrl = new RoleAccessChecker();
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/view')) {
 			return $this->render('view', [
 				'model' => $this->findModel($id),
 			]);
-        }else{
-			
-			return $this->render('error/error');
-		}
+        }else return $this->redirect(['error/error']);
     }
 
     /**
@@ -124,10 +120,8 @@ class AsignsectorController extends Controller
      * @return mixed
      */
     public function actionCreate(){
-		//~ $ctrl = new RoleAccessChecker();
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/create')) {
 			$model = new Asignsector();
-
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
 				return $this->redirect(['view', 'id' => $model->asignsector_id]);
 			} else {
@@ -135,9 +129,7 @@ class AsignsectorController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else{
-			return $this->render('error/error');
-		}
+        }else return $this->redirect(['error/error',]);
     }
 
     /**
@@ -147,7 +139,6 @@ class AsignsectorController extends Controller
      * @return mixed
      */
     public function actionUpdate($id){
-		//~ $ctrl = new RoleAccessChecker();
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/update')) {
 			$model = $this->findModel($id);
 
@@ -158,9 +149,7 @@ class AsignsectorController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else{
-			return $this->render('error/error');
-		}
+        }else return $this->redirect(['error/error']);
     }
 
     /**
@@ -170,14 +159,11 @@ class AsignsectorController extends Controller
      * @return mixed
      */
     public function actionDelete($id){
-		//~ $ctrl = new RoleAccessChecker();
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/delete')) {
 			$this->findModel($id)->delete();
 
 			return $this->redirect(['index']);
-        }else{
-			return $this->render('error/error');
-		}
+        }else return $this->redirect(['error/error']);
     }
 
     /**
