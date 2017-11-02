@@ -147,12 +147,15 @@ class AsignsectorController extends Controller
     public function actionUpdate($id){
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/update')) {
 			$model = $this->findModel($id);
-
+			$subModel =  new Actionrole();
+			$subModel2 = new Sector();
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
 				return $this->redirect(['view', 'id' => $model->asignsector_id]);
 			} else {
 				return $this->render('update', [
 					'model' => $model,
+					'subModel' => $subModel,
+					'subModel2' => $subModel2,
 				]);
 			}
         }else return $this->redirect(['error/error']);

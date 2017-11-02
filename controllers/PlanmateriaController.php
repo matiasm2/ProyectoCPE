@@ -99,7 +99,6 @@ class PlanmateriaController extends Controller
                 'model' => $model,
                 'subModel' => $subModel,
                 'subModel2' => $subModel2,
-                
             ]);
         }
     }
