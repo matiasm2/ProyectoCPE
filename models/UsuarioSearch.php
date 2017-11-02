@@ -12,6 +12,8 @@ use app\models\Usuario;
  */
 class UsuarioSearch extends Usuario
 {
+
+  public $descripcion_sector;
     /**
      * @inheritdoc
      */
@@ -20,6 +22,7 @@ class UsuarioSearch extends Usuario
         return [
             [['usuario_id', 'sector_id', 'activuser'], 'integer'],
             [['nombre', 'apellido', 'passworduser', 'mailuser', 'authkeyuser'], 'safe'],
+            [['descripcion_sector'],'safe'],
         ];
     }
 
@@ -60,7 +63,7 @@ class UsuarioSearch extends Usuario
         // grid filtering conditions
         $query->andFilterWhere([
             'usuario_id' => $this->usuario_id,
-            'sector_id' => $this->sector_id,
+            'descripcion_sector' => $this->descripcion_sector,
             'activuser' => $this->activuser,
         ]);
 
