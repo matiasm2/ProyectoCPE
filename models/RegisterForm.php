@@ -33,13 +33,9 @@ class RegisterForm extends Model{
 	}
 
 	public function email_existe($attribute, $params){
-		$table = Usuario::find()->where("mailuser=:mailuser",[":mailuser" =>$this->email]);
-		if($table->count() != 0)
-				$this->addError($attribute, "El email ingresado ya esta registrado...");
+		$ref = Usuario::find()->where("mailuser=:mailuser",[":mailuser" =>$this->email]);
+		if($ref->count() != 0){
+			if ($ref->one()->activuser == 0)return;//se reenvia email
+			else $this->addError($attribute, "El email ingresado ya esta registrado...");}
 	}
-/*
-	public function username_existe($attribute, $params)	{
-		$table = Userchat::find()->where("nameUser=:nameUser",[":nameUser" =>$this->username]);
-		if ($table->count() >= 1)$this->addError($attribute, "El usuario seleccionado existe");
-	}*/
 }
