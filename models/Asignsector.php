@@ -56,6 +56,14 @@ class Asignsector extends \yii\db\ActiveRecord
         return $this->hasOne(Actionrole::className(), ['actionrole_id' => 'actionrole_id']);
     }
 
+    public function getDescripcion(){
+      return $this->actionrole->descripcion;
+    }
+
+    public function getDescripcionSector(){
+      return $this->sector->descripcion;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
