@@ -64,7 +64,7 @@ class UsuarioSearch extends Usuario
         $query->andFilterWhere([
             'usuario_id' => $this->usuario_id,
             'descripcion_sector' => $this->descripcion_sector,
-            'activuser' => $this->activuser,
+            'activuser' => 1,
         ]);
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre])
