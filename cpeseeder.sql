@@ -201,7 +201,7 @@ BEGIN;
 -- El objetivo de esta tabla es poder completar la tabla actionrole que hace funcionar al 
 -- comando app\commands\RoleAccessChecker a travez de la tabla asignsector que depende de esta
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (1,'error/error','muestra error');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (2,'site/register','crea usuario');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (2,'site/register','registra nuevo usuario');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (3,'archivoprograma/delete','borra documento');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (4,'archivoprograma/index','lista documento');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (5,'archivoprograma/update','actualiza documento');
@@ -237,12 +237,16 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (35,'sector/update','actualiza sector');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (36,'sector/create','nuevo sector');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (37,'sector/view','muestra sector');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (38,'asignsector/delete','borra sector');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (39,'asignsector/index','lista sectores');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (40,'asignsector/update','actualiza sector');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (41,'asignsector/create','nuevo sector');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (42,'asignsector/view','muestra sector');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (43,'usuario/index','lista usuarios');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (38,'asignsector/delete','borra asignación sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (39,'asignsector/index','lista de asignación sectores');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (40,'asignsector/update','actualiza  asignación de sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (41,'asignsector/create','nueva  asignación de sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (42,'asignsector/view','muestra  asignación de sector');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (43,'usuario/delete','borra usuario');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (44,'usuario/index','lista usuarios');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (45,'usuario/update','edita usuario');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (46,'usuario/create','crea usuario');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (47,'usuario/view','muestra usuario');
 ---
 -- Acciones configurables para cada sector a travez del usuario CPE Admin.
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
@@ -254,7 +258,11 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (40,1);--acceso a asignsector/update
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (41,1);--acceso a asignsector/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (42,1);--acceso a asignsector/view
-	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (43,1);--acceso a usuario/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (43,1);--acceso a usuario/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (44,1);--acceso a usuario/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (45,1);--acceso a usuario/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (46,1);--acceso a usuario/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (47,1);--acceso a usuario/view
 	END;
 
 

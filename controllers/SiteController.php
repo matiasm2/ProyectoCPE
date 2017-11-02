@@ -22,101 +22,11 @@ use app\commands\RandKey;
 use app\commands\RoleAccessChecker;
 use app\controllers\ErrorController;
 
-class SiteController extends Controller
-{
-	/*public function behaviors() {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['login', 'logout', 'CPEAdmin', 'instituto', 'prensa', 'CPE', 'register', 'contact', 'about' ], //solo debe aplicarse a las acciones login, logout , admin, instituto, prensa y cpe. Todas las demas acciones no estan sujetas al control de acceso
-                'rules' => [                              //reglas
-                    [
-                        'actions' => ['login', 'logout', 'register', 'contact', 'about',  ], //para la accion login
-                        'allow' => true, //Todos los permisos aceptados
-                        'roles' => ['?'], //Tienen acceso a esta accion todos los usuarios invitados
-                    ],
-                    [
-                        //el administrador tiene permisos sobre las siguientes acciones
-                        'allow' => true,
-                        'actions' => ['logout','contact', 'CPEAdmin'],
-                        'roles' => ['@'],
-                    ],
-                    [
-                        //el administrador no tiene permisos sobre las siguientes acciones
-                        'actions' => ['register', 'about', 'login'],
-                        'allow' => false,
-                        'roles' => ['@'], //El arroba es para el usuario autenticado
-                        'matchCallback' => function ($rule, $action) {                    //permite escribir la l?gica de comprobaci?n de acceso arbitraria, las paginas que se intentan acceder solo pueden ser permitidas si es un...
-								return Usuariotipo::CPEAdmin(Yii::$app->user->identity->sectorID);
-								//Llamada al m?todo que comprueba si es un administrador
-								//Retorno el metodo del modelo que comprueba el tipo de usuario que es por el rol (1,2,3,4) etc y que devuelve true o false
-							},
-                    ],
-                    [
-                        //usuario de instituto tiene permisos sobre las siguientes acciones
-                        'actions' => ['logout', 'contact', 'instituto'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        //usuario instituto no tiene permisos sobre las siguientes acciones
-                        'actions' => ['register', 'about', 'login'],
-                        'allow' => false,
-                        'roles' => ['@'], //El arroba es para el usuario autenticado
-                        'matchCallback' => function ($rule, $action) {
-								return Usuariotipo::usuarioInstituto(Yii::$app->user->identity->sectorID);
-								//Llamada al m?todo que comprueba si es un usuario de instituto
-							},
-                    ],
-                    [
-                        //prensa tiene permisos sobre las siguientes acciones
-                        'actions' => ['logout', 'contact', 'prensa'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        //prensa no tiene permisos sobre las siguientes acciones
-                        'actions' => ['register', 'about', 'login'],
-                        'allow' => false,
-                        'roles' => ['@'], //El arroba es para el usuario autenticado
-                        'matchCallback' => function ($rule, $action) {
-								return Usuariotipo::usuarioPrensa(Yii::$app->user->identity->sectorID);
-								//Llamada al m?todo que comprueba si es un usuario prensa
-							},
-                    ],
-                    [
-                        //CPE tiene permisos sobre las siguientes acciones
-                        'actions' => ['logout', 'contact', 'CPE'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        //CPE no tiene permisos sobre las siguientes acciones
-                        'actions' => ['register', 'about', 'login'],
-                        'allow' => false,
-                        'roles' => ['@'], //El arroba es para el usuario autenticado
-                        'matchCallback' => function ($rule, $action) {
-								return Usuariotipo::usuarioCPE(Yii::$app->user->identity->sectorID);
-								//Llamada al m?todo que comprueba si es un usuario CPE
-							},
-                    ],
-                ],
-            ],
-            //Controla el modo en que se accede a las acciones, en este caso a la acci?n logout
-            //s?lo se puede acceder a trav?s del m?todo post
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }*/
+class SiteController extends Controller{
     /**
      * @inheritdoc
      */
-     public function behaviors() //behaviors viejo
-	 {
+     public function behaviors() {
          return [
              'access' => [
                  'class' => AccessControl::className(),
@@ -147,42 +57,8 @@ class SiteController extends Controller
              ],
          ];
      }
-	 
-
-    /**
-     * @inheritdoc
-     */
-	 
-    /*public function actions() {
-        //Control de errores en caso de que se quiera acceder a las acciones de este controlador
-        if (!Yii::$app->user->isGuest) {                                                                              //si el usuario esta logeado, o sea no es invitado
-            if (Yii::$app->user->identity->sectorID == 1) {                                                                //si el usuario es administrador
-                Yii::$app->errorHandler->errorAction = 'error/error';                                               //se muestra la pantalla de error de agencia y su respectivo layout
-            } elseif (Yii::$app->user->identity->sectorID == 2) {
-                Yii::$app->errorHandler->errorAction = 'error/error';
-            } elseif (Yii::$app->user->identity->sectorID == 3) {
-                Yii::$app->errorHandler->errorAction = 'error/error';
-            } elseif (Yii::$app->user->identity->sectorID == 4) {
-                Yii::$app->errorHandler->errorAction = 'error/error';
-            } else {
-                Yii::$app->errorHandler->errorAction = 'site/error';
-            }
-        } else {                                                                                                      //sino (si el usuario es invitado) se muestra la pagina de error del site
-            Yii::$app->errorHandler->errorAction = 'site/error';
-        }
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
-    }*/
-	
-    public function actions() //viejo action
-    {
+	 	
+    public function actions(){
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -296,34 +172,44 @@ class SiteController extends Controller
     public function actionRegister() {
 		$numUsr=Usuario::find()->count();
 		if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/register'))) {
-			$model = new RegisterForm();
-			$ref=new Sector();
+			$model = new RegisterForm();/*model= formulario de registro
+										public $Nombre;
+										public $Apellido;
+										public $email;
+										public $password;
+										public $password_repeat;
+										public $sector_id*/
+			$ref=new Sector();/*$ref=  referencia de la descripcion de sector_id para la lista dropdown
+							* @property integer $sector_id
+							* @property string $descripcion
+							*/
 			if ($numUsr == 0){$subModel=$ref->find()->where('sector_id=:sector_id',[':sector_id'=> 1]);}
-			else {$subModel=$ref->find()->where('sector_id>:sector_id',[':sector_id'=>2]);
-				}
+				/*$subModel= contenido de la lista desplegable si es el primer registro habilita CPE Admin*/
+			else $subModel=$ref->find()->where('sector_id>:sector_id',[':sector_id'=>2]);
+				/* $subModel= contenido de la lista desplegable si no es el primer registro muestra los demas e impide CPE Admin
+				 * existiría un solo CPE Admin, si se quiere mas de uno cambiar =>2 por =>1 */
 			$msg = "Cantidad de usuarios= ". $numUsr;
 			if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
 				Yii::$app->response->format = Response::FORMAT_JSON;
-				return ActiveForm::validate($model);
+				return ActiveForm::validate($model);/* ejecuta formulario de entrada*/
 			}
-			if ($model->load(Yii::$app->request->post())) {
-				if ($model->validate()) {
-					$table = new Usuario();
-					$this->fillModelUsuario($table, $model);
-					if ($table->insert()) {
-						$msg = $this->sendConfirm($table);
-						$this->nullModelRegister($model);
-					} else {
-						$msg = "Ha ocurrido un error al llevar a cabo tu  registro\n";
-					}
-				} else {
-					$model->getErrors();
-				}
+			if ($model->load(Yii::$app->request->post())) {/*lee respuesta*/
+				if ($model->validate()) {/*si valida ok:*/
+					$table = new Usuario();/*se crea nuevo registro de la tabla usuario*/
+					$this->fillModelUsuario($table, $model);/*llena nuevo registro con valores del formulario*/
+					if ($table->insert()) {/*si inserta nuevo registro a la tabla usuario: */
+						$msg = $this->sendConfirm($table);/* llama a la funcion que envía email de confirmación */
+						$this->nullModelRegister($model);/* llama a la funcion que borra el formulario */
+					} else $msg = "Ha ocurrido un error al llevar a cabo tu  registro\n";/* error causado porque falla la base de datos */
+				} else $model->getErrors();/* error detectado por la validacion del formulario */
 			}
-			return $this->render("register", ["model" => $model,"subModel" => $subModel, "msg" => $msg]);
-        }else return $this->redirect(['error/error']);
+			return $this->render("register", ["model" => $model,"subModel" => $subModel, "msg" => $msg]);/* Sin errores detectados */
+        }else return $this->redirect(['error/error']);/* error detectado por RoleAccessChecker: Sin acceso. */
     }
-
+    
+	/**
+	 * Borra campos del formulario.
+	 * */
 	private function nullModelRegister($model){
 		$model->Nombre = null;
 		$model->Apellido = null;
@@ -331,7 +217,12 @@ class SiteController extends Controller
 		$model->password = null;
 		$model->password_repeat = null;
     }
-
+    
+	/**
+	 * Completa campos del modelo usuario con los datos del formulario de registro
+	 * @param $src2: instancia del modelo RegisterForm
+	 * @param $src: instancia del modelo Usuario
+	 * */
     private function fillModelUsuario($src,$src2){
 		$src->loadDefaultValues();
 		$src->sector_id = $src2->sector_id;
@@ -342,7 +233,11 @@ class SiteController extends Controller
 		$src->authkeyuser = RandKey::randKey("abcdef0123456789", 200);
 
     }
-
+	
+	/**
+	 * Envía un email de confirmacion conteniendo un token de seguridad para que el destinatario active el registro
+	 * clickeando en el link recibido. 
+	 * */
     private function sendConfirm($table){
 		$user = Usuario::find()->Where("authkeyuser=:authkeyuser", [":authkeyuser" => $table->authkeyuser])->one();
 		$id = urlencode($user->usuario_id);
@@ -351,7 +246,6 @@ class SiteController extends Controller
 		$body = "<h1>Haga click en el siguiente enlace para finalizar tu registro</h1>";
 		$link = Intranet::getUrlHead() . "/ProyectoCPE/web/index.php?r=site/confirm&id=" . $id . "&authKey=" . $authKey;
 		$body .= "<a href='" . $link . "'>Confirmar</a>";
-
 		if (Yii::$app->params["adminEmail"] != 'email@gmail.com') {
 		  Yii::$app->mailer->compose()
 				->setTo($user->mailuser)
@@ -359,13 +253,10 @@ class SiteController extends Controller
 				->setSubject($subject)
 				->setHtmlBody($body)
 				->send();
-				return "Enhorabuena, ahora sólo falta que confirmes tu registro en tu cuenta de correo ";
-		} else {
-		  return "Confirmación alternativa " . Mailto::getUrlMailto(
+				return "Enhorabuena, ahora sólo falta que confirmes tu registro en tu cuenta de correo";
+		} else return "Confirmación alternativa " . Mailto::getUrlMailto(
 			$user->mailUser, $subject, "", "", "Haga click en el siguiente enlace para finalizar tu registro", $link,
 			"\nClick aquí para reenviar confirmación vía mailto:");
-		}
-    
     }
 
 }
