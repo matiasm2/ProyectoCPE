@@ -56,7 +56,7 @@ AppAsset::register($this);
             //~ ['label' => 'Archivo', 'url' => ['/archivoprograma/index'],'visible' => !(Yii::$app->user->isGuest)],
 /*comentar desde aca si se quiere eliminar el dropdown del menu*/
 
-			   ['label' => 'Dropdown','items'=> [
+			   ['label' => 'Herramientas','items'=> [
 				       ['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
                ['label' => 'Usuarios', 'url' => ['/usuario/index']],
                ['label' => 'Institutos', 'url' => ['/instituto/index']],
