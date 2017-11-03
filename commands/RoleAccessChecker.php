@@ -64,6 +64,11 @@ class RoleAccessChecker extends Controller{
 						 //tambien por el actionrole_id encontrado por el parametro, entonces significa que la
 						 //accion esta registrada en Actionrole  
 	}
+	
+	public static function listAccess(){
+		$list=[''];
+		return $list;
+	}
 
 	public static function testQery($currentAction){
 		$out='TestOut in = '.$currentAction.' ,IsAcEn= ';

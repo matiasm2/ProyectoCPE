@@ -89,17 +89,19 @@ class AsignsectorController extends Controller
      * Lists all Asignsector models.
      * @return mixed
      */
-    public function actionIndex(){	
+    public function actionIndex(){
 
 		$searchModel = new AsignSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$msg='';
+    //$dataProvider = $
+    $msg='';
+
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/index')) {
 			return $this->render('index', [
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 				"msg" => $msg ,
-			]);		
+			]);
         }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
@@ -110,8 +112,11 @@ class AsignsectorController extends Controller
      */
     public function actionView($id){
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/view')) {
+    
+
 			return $this->render('view', [
 				'model' => $this->findModel($id),
+
 			]);
         }else return $this->redirect(['error/error']);
     }
@@ -147,12 +152,15 @@ class AsignsectorController extends Controller
     public function actionUpdate($id){
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/update')) {
 			$model = $this->findModel($id);
-
+			$subModel =  new Actionrole();
+			$subModel2 = new Sector();
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
 				return $this->redirect(['view', 'id' => $model->asignsector_id]);
 			} else {
 				return $this->render('update', [
 					'model' => $model,
+					'subModel' => $subModel,
+					'subModel2' => $subModel2,
 				]);
 			}
         }else return $this->redirect(['error/error']);

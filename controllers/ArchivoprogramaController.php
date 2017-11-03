@@ -46,9 +46,7 @@ class ArchivoprogramaController extends Controller
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);
-		}else{
-			return $this->redirect(['error/error']);
-		}
+		} else return $this->redirect(['error/error']);
     }
 
     /**
@@ -56,11 +54,12 @@ class ArchivoprogramaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+    public function actionView($id){
+		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/view')) {
+			return $this->render('view', [
+				'model' => $this->findModel($id),
+			]);
+		} else return $this->redirect(['error/error']);
     }
 
     /**
@@ -68,38 +67,28 @@ class ArchivoprogramaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Archivoprograma();
-        $subModel= new Estado();
-        $subModel2= new Programa();
-        //if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
-        //} else {
-            //return $this->render('create', [
-                //'model' => $model,
-            //]);
-        //}
-        if ($model->load(Yii::$app->request->post())){
-    			$model->usuario_id=Yii::$app->user->identity->usuario_id;
-          $model->archivo= UploadedFile::getInstance($model,'archivo');
-    			$model->fecha=date('Y-m-d');
-          if ($model->save()) {
-            if ($model->upload()) {
-              return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
-            } else {
-              return $this->render('errorup');
-            }
-          } else {
-            return $this->render('create', ['model' => $model,
-                'subModel' => $subModel,
-                'subModel2' => $subModel2,]);
-          }
-        } else {
-          return $this->render('create', ['model' => $model,
-      'subModel' => $subModel,
-                'subModel2' => $subModel2,]);
-        }
+    public function actionCreate(){
+		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/create')) {
+			$model = new Archivoprograma();
+			$subModel= new Estado();
+			$subModel2= new Programa();
+			if ($model->load(Yii::$app->request->post())){
+					$model->usuario_id=Yii::$app->user->identity->usuario_id;
+					$model->archivo= UploadedFile::getInstance($model,'archivo');
+					$model->fecha=date('Y-m-d');
+			  if ($model->save()) {
+				if ($model->upload()) {
+				  return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
+				} else {
+				  return $this->render('errorup');
+				}
+			  } else return $this->render('create', ['model' => $model,
+					'subModel' => $subModel,
+					'subModel2' => $subModel2,]);
+			} else return $this->render('create', ['model' => $model,
+									'subModel' => $subModel,
+									'subModel2' => $subModel2,]);
+		} else return $this->redirect(['error/error']);
       }
 
 
@@ -109,17 +98,21 @@ class ArchivoprogramaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+    public function actionUpdate($id){
+		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/update')) {
+			$model = $this->findModel($id);
+			$subModel= new Estado();
+			$subModel2= new Programa();
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
+			} else {
+				return $this->render('update', [
+					'model' => $model,
+					'subModel' => $subModel,
+					'subModel2' => $subModel2,
+				]);
+			}
+		} else return $this->redirect(['error/error']);
     }
 
     /**
@@ -128,11 +121,11 @@ class ArchivoprogramaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+    public function actionDelete($id){
+		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/delete')) {
+			$this->findModel($id)->delete();
+			return $this->redirect(['index']);
+		} else return $this->redirect(['error/error']);
     }
 
     /**

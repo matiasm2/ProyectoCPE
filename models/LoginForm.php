@@ -44,12 +44,13 @@ class LoginForm extends Model
      */
     public function validatePassword($attribute, $params)
     {
-      $table = Usuario::find()
-          ->where ( "passworduser=:passworduser",
+      $ref = Usuario::find()
+          -> where ( "passworduser=:passworduser",
           [":passworduser"=>crypt($this->password, Yii::$app->params["salt"])] )
           ->andWhere("mailuser=:mailuser", [":mailuser"=>$this->EmailRegistrado]);
-      if ($table->count() == 1)return true;
-      else $this->addError( $attribute, "El password es erroneo" );
+      if ($ref->count() != 1) $this->addError( $attribute, "El password es erroneo" );
+      else if ($ref->one()->activuser != 1) $this->addError( $attribute, "Validacion por email en progreso, contactar al CPE Admin si no recibio el link de confirmacion..." );
+      else return true;
     }
 
     /**

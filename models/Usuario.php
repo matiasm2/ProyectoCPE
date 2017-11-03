@@ -25,9 +25,9 @@ class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface {
     /**
      * @inheritdoc
      */
-    public $password;    
-	public $sectorID;	 
-	
+    public $password;
+	public $sectorID;
+
     public static function tableName(){
         return 'usuario';
     }
@@ -94,7 +94,7 @@ class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface {
         return Sector::find()->all();
     }
     */
-    
+
     public function getAuthKey() {
         return $this->authkeyuser;
     }
@@ -111,7 +111,7 @@ class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface {
         }
         return false;
     }
-	
+
     public function validatePassword($password)
     {
         if ($this->sectorID==4 or $this->sectorID==1){
@@ -124,7 +124,7 @@ class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface {
         }else{
             return $this->password === $password;
         }
-    }	
+    }
 
     public static function findIdentity($id) {
         return Usuario::findOne($id);
@@ -141,5 +141,9 @@ class Usuario extends \yii\db\ActiveRecord  implements IdentityInterface {
     public static function findByEmail($mailuser) {
 		return Usuario::findOne(['mailuser' => $mailuser]);
     }
-    
+
+    public function getDescripcionSector(){
+      return $this->sector->descripcion;
+    }
+
 }

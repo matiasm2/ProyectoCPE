@@ -19,15 +19,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Asignsector', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'asignsector_id',
-            'actionrole_id',
-            'sector_id',
+            //'asignsector_id',
+            'descripcion',
+            'descripcionSector',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -6,19 +6,27 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Asignsector;
+use app\models\Sector;
+use app\models\Actionrole;
 
 /**
  * AsignSearch represents the model behind the search form about `app\models\Asignsector`.
  */
 class AsignSearch extends Asignsector
 {
+
+    public $descripcion;
+    public $descripcion_sector;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['asignsector_id', 'actionrole_id', 'sector_id'], 'integer'],
+            [['asignsector_id', 'sector_id'], 'integer'],
+            [['actionrole_id'], 'string'],
+            [['descripcion'],'safe'],
+
         ];
     }
 
@@ -43,10 +51,8 @@ class AsignSearch extends Asignsector
         $query = Asignsector::find();
 
         // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+            'query' => $query,]);
 
         $this->load($params);
 
@@ -58,10 +64,12 @@ class AsignSearch extends Asignsector
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'asignsector_id' => $this->asignsector_id,
-            'actionrole_id' => $this->actionrole_id,
-            'sector_id' => $this->sector_id,
-        ]);
+
+            'descripcion' => $this->descripcion,
+            'descripcion_sector' =>$this->descripcion_sector,
+
+          ]);
+
 
         return $dataProvider;
     }

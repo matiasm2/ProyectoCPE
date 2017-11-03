@@ -88,12 +88,17 @@ class PlanmateriaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $subModel= new Planestudio();
+        $subModel2= new Materia();
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->planmateria_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'subModel' => $subModel,
+                'subModel2' => $subModel2,
             ]);
         }
     }

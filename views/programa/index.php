@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
@@ -28,6 +29,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'planmateria_id',
             'ano_id',
             'fecha',
+            [
+                'format' => 'raw',
+                'value' => function($model, $key, $index, $column) {
+                        return Html::a(
+                            '<i class="fa fa-euro">Ver archivos</i>',
+                            Url::to(['mycontroller/myaction', 'id' => $model->programa_id]),
+                            [
+                                'id'=>'grid-custom-button',
+                                'data-pjax'=>true,
+                                'action'=>Url::to(['mycontroller/myaction', 'id' => $model->programa_id]),
+                                'class'=>'button btn btn-default',
+                            ]
+                        );
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
