@@ -32,6 +32,7 @@ class ComposerStaticInitb5d01526171d3f8d3d3e6e94dcd32c2e
         ),
         'k' => 
         array (
+            'kartik\\sidenav\\' => 15,
             'kartik\\plugins\\fileinput\\' => 25,
             'kartik\\file\\' => 12,
             'kartik\\base\\' => 12,
@@ -120,6 +121,10 @@ class ComposerStaticInitb5d01526171d3f8d3d3e6e94dcd32c2e
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'kartik\\sidenav\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-sidenav',
         ),
         'kartik\\plugins\\fileinput\\' => 
         array (

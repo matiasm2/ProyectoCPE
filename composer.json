@@ -19,7 +19,8 @@
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-	"kartik-v/yii2-widget-fileinput": "@dev"
+	"kartik-v/yii2-widget-fileinput": "@dev",
+        "kartik-v/yii2-widget-sidenav": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
