@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model app\models\Estado */
 
 $this->title = 'Update Estado: ' . $model->estado_id;
-$this->params['breadcrumbs'][] = ['label' => 'Estados', 'url' => ['index']];
+/*$this->params['breadcrumbs'][] = ['label' => 'Estados', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->estado_id, 'url' => ['view', 'id' => $model->estado_id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Update';*/
 ?>
 <div class="estado-update">
 
@@ -18,4 +18,5 @@ $this->params['breadcrumbs'][] = 'Update';
         'model' => $model,
     ]) ?>
 
+</div>
 </div>

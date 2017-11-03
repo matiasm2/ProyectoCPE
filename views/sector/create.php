@@ -7,9 +7,10 @@ use yii\helpers\Html;
 /* @var $model app\models\Sector */
 
 $this->title = 'Create Sector';
-$this->params['breadcrumbs'][] = ['label' => 'Sectors', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+/*$this->params['breadcrumbs'][] = ['label' => 'Sectors', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;*/
 ?>
+<div class="col-lg-10">
 <div class="sector-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -18,4 +19,5 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
     ]) ?>
 
+</div>
 </div>

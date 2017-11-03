@@ -10,6 +10,7 @@ $this->title = $model->ano_id;
 $this->params['breadcrumbs'][] = ['label' => 'Anos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="col-lg-10">
 <div class="ano-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -33,4 +34,5 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+</div>
 </div>

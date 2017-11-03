@@ -7,9 +7,10 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Archivoprograma */
 
 $this->title = $model->archivoprograma_id;
-$this->params['breadcrumbs'][] = ['label' => 'Archivos de programas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+/*$this->params['breadcrumbs'][] = ['label' => 'Archivos de programas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;*/
 ?>
+<div class="col-lg-10">
 <div class="archivoprograma-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -19,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Eliminar', ['delete', 'id' => $model->archivoprograma_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => '¿Está seguro que quiere eliminar este item?',
+                'confirm' => 'ï¿½Estï¿½ seguro que quiere eliminar este item?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -37,4 +38,5 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+</div>
 </div>

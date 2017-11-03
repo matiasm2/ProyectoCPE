@@ -7,9 +7,10 @@ use yii\helpers\Html;
 /* @var $model app\models\Materia */
 
 $this->title = 'Create Materia';
-$this->params['breadcrumbs'][] = ['label' => 'Materias', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+/*$this->params['breadcrumbs'][] = ['label' => 'Materias', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;*/
 ?>
+<div class="col-lg-10">
 <div class="materia-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -18,4 +19,5 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
     ]) ?>
 
+</div>
 </div>

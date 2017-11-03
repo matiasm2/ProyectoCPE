@@ -5,6 +5,8 @@ label { font-weight: normal; color: #286090; }
 /* ### CHANGE NAVBAR COLORS ### */
 .navbar-default { background-color: #286090; border-color: #204d74; }
 /* title */
+
+
 .navbar-default .navbar-brand { color: #E7E7E7; }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus { color: #FFFFFF; }
 /* link */
@@ -28,4 +30,4 @@ label { font-weight: normal; color: #286090; }
     .navbar-default .navbar-nav .open .dropdown-menu > li > a { color: #E7E7E7; }
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus { color: #FFFFFF; }
 }
-/* ### CHANGE NAVBAR COLORS END ### */ 
+/* ### CHANGE NAVBAR COLORS END ### */

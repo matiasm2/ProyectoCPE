@@ -9,11 +9,13 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 
 $this->title = 'Register';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-<h3> <?= $msg ?></h3>
+
+
+
 
 <div class="site-about">
 
@@ -23,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?php $form = ActiveForm::begin(); ?>
 		<div class="row">
 
+      <div class="col-lg-8">
 
 				<?= $form->field($model, "Nombre")->input("text") ?>
 
@@ -42,6 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		</div>
 
+
 		  <?php ActiveForm::end(); ?>
 
+</div>
+</div>
 </div>

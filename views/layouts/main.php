@@ -36,14 +36,12 @@ AppAsset::register($this);
 
 /*
     NavBar::begin([
-        //'brandLabel' => 'CPE UNAJ',
-        'brandLabel' => '<img src="img/unaj.png" style="display:inline; margin-top: -20px; vertical-align: top; width:150px; height:55px;">&nbsp&nbsp&nbsp&nbsp<b style="size:15px">CPE UNAJ</b>',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-default navbar-fixed-left',
+        'brandLabel' =>'<but',
+            'options' => [
+            'class' => 'navbar-default ',
         ],
-
     ]);
+
     NavBar::end();
 */
     echo Nav::widget([
@@ -58,13 +56,19 @@ AppAsset::register($this);
             //~ ['label' => 'Archivo', 'url' => ['/archivoprograma/index'],'visible' => !(Yii::$app->user->isGuest)],
 /*comentar desde aca si se quiere eliminar el dropdown del menu*/
 
-			['label' => 'Dropdown','items'=> [
-				['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
-                ['label' => 'Usuarios', 'url' => ['/usuario/index']],
-				'<li class="divider"></li>',
+			   ['label' => 'Dropdown','items'=> [
+				       ['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
+               ['label' => 'Usuarios', 'url' => ['/usuario/index']],
+               ['label' => 'Institutos', 'url' => ['/instituto/index']],
+               ['label' => 'Carreras', 'url' => ['/carrera/index']],
+               ['label' => 'Materias', 'url' => ['/materia/index']],
+               ['label' => 'Sectores', 'url' => ['/sector/index']],
+               ['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
+               ['label' => 'Permisos', 'url' => ['/asignsector/index']],
+
 				],
-			'visible' => !(Yii::$app->user->isGuest),
-			],
+			     'visible' => !(Yii::$app->user->isGuest),
+			  ],
 /*comentar hasta aca si se quiere eliminar el dropdown del menu*/
 
 Yii::$app->user->isGuest ? (

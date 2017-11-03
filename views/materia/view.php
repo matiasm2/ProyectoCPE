@@ -7,9 +7,10 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Materia */
 
 $this->title = $model->materia_id;
-$this->params['breadcrumbs'][] = ['label' => 'Materias', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+/*$this->params['breadcrumbs'][] = ['label' => 'Materias', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;*/
 ?>
+<div class="col-lg-10">
 <div class="materia-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -34,4 +35,5 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+</div>
 </div>
