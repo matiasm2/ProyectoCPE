@@ -6,6 +6,7 @@ use Yii;
 use app\models\Materia;
 use app\models\MateriaSearch;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\commands\RoleAccessChecker;

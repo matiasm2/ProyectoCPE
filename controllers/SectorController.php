@@ -8,6 +8,7 @@ use app\models\SectorSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use app\commands\RoleAccessChecker;
 use app\controllers\ErrorController;
 
@@ -49,6 +50,7 @@ class SectorController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+		];
     }
 
     /**
