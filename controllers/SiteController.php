@@ -16,6 +16,7 @@ use app\models\RegisterForm;
 use app\models\Sector;
 use app\models\Usuariotipo;
 use app\models\InvalidoUsuarioModel;
+use app\models\Asignsector;
 use app\commands\Mailto;
 use app\commands\Intranet;
 use app\commands\RandKey;
@@ -77,7 +78,10 @@ class SiteController extends Controller{
      */
     public function actionIndex()
     {
-        return $this->render('index');
+		if(Yii::$app->user->isGuest) {$msg='No logoneado...';} 
+		else {$msg=RoleAccessChecker::listNavItemsAccess();
+			}
+        return $this->render('index',['msg' => $msg,]);
     }
 	
     /**
@@ -87,17 +91,11 @@ class SiteController extends Controller{
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        if (!Yii::$app->user->isGuest) return $this->goHome();
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+        if ($model->load(Yii::$app->request->post()) && $model->login()) return $this->goBack();
+        return $this->render('login', ['model' => $model, ]);
     }
 
     /**
