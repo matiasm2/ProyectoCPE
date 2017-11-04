@@ -91,15 +91,16 @@ class UsuarioController extends Controller
     public function actionCreate(){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('usuario/create')) {
-			$model = new Usuario();
+			//~ $model = new Usuario();
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->usuario_id]);
-			} else {
-				return $this->render('create', [
-					'model' => $model,
-				]);
-			}
+			//~ if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				//~ return $this->redirect(['view', 'id' => $model->usuario_id]);
+			//~ } else {
+				//~ return $this->render('create', [
+					//~ 'model' => $model,
+				//~ ]);
+			//~ }
+			$this->redirect(['site/register']);
         }else return $this->redirect(['error/error']);
     }
 
