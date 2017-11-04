@@ -8,6 +8,8 @@ use app\models\SectorSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\commands\RoleAccessChecker;
+use app\controllers\ErrorController;
 
 /**
  * SectorController implements the CRUD actions for Sector model.
@@ -20,28 +22,50 @@ class SectorController extends Controller
     public function behaviors()
     {
         return [
+              'access' => [
+                 'class' => AccessControl::className(),
+                 'only' => ['index', 'view', 'update', 'create', 'delete',],
+                 'rules' => [
+                     [
+                         'allow' => true,
+                         'actions' => ['',],
+                         'roles' => ['?'],
+                     ],
+                     [
+                         'allow' => true,
+                         'actions' => ['index', 'view', 'update', 'create', 'delete',],
+                         'roles' => ['@'],
+                     ],
+                     [
+                         'allow' => false,
+                         'actions' => ['',],
+                         'roles' => ['@'],
+                     ],
+                 ],
+             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
-        ];
     }
 
     /**
      * Lists all Sector models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $searchModel = new SectorSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    public function actionIndex(){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('sector/index')) {
+			$searchModel = new SectorSearch();
+			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+			]);
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -49,11 +73,12 @@ class SectorController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+    public function actionView($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('sector/view')) {
+			return $this->render('view', [
+				'model' => $this->findModel($id),]);
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -61,17 +86,18 @@ class SectorController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Sector();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->sector_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+    public function actionCreate(){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('sector/create')) {
+			$model = new Sector();
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->sector_id]);
+			} else {
+				return $this->render('create', [
+					'model' => $model,
+				]);
+			}
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -80,17 +106,19 @@ class SectorController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    public function actionUpdate($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('sector/update')) {
+			$model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->sector_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->sector_id]);
+			} else {
+				return $this->render('update', [
+					'model' => $model,
+				]);
+			}
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -99,11 +127,12 @@ class SectorController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+    public function actionDelete($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('sector/delete')) {
+			$this->findModel($id)->delete();
+			return $this->redirect(['index']);
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**

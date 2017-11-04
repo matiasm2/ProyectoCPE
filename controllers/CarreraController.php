@@ -9,6 +9,8 @@ use app\models\Instituto;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\commands\RoleAccessChecker;
+use app\controllers\ErrorController;
 
 /**
  * CarreraController implements the CRUD actions for Carrera model.
@@ -18,9 +20,29 @@ class CarreraController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors(){
         return [
+              'access' => [
+                 'class' => AccessControl::className(),
+                 'only' => ['index', 'view', 'update', 'create', 'delete',],
+                 'rules' => [
+                     [
+                         'allow' => true,
+                         'actions' => ['',],
+                         'roles' => ['?'],
+                     ],
+                     [
+                         'allow' => true,
+                         'actions' => ['index', 'view', 'update', 'create', 'delete',],
+                         'roles' => ['@'],
+                     ],
+                     [
+                         'allow' => false,
+                         'actions' => ['',],
+                         'roles' => ['@'],
+                     ],
+                 ],
+             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -34,15 +56,16 @@ class CarreraController extends Controller
      * Lists all Carrera models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex(){
         $searchModel = new CarreraSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('carrera/index')) {
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+			]);
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -50,11 +73,13 @@ class CarreraController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+    public function actionView($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('carrera/view')) {
+			return $this->render('view', [
+				'model' => $this->findModel($id),
+			]);
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -62,18 +87,20 @@ class CarreraController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Carrera();
-        $subModel=new Instituto();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->carrera_id]);
-        } else {
-            return $this->render('create', [
-                                'model' => $model,
-                'subModel'=> $subModel,
-            ]);
-        }
+    public function actionCreate(){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('carrera/create')) {
+			$model = new Carrera();
+			$subModel=new Instituto();
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->carrera_id]);
+			} else {
+				return $this->render('create', [
+									'model' => $model,
+					'subModel'=> $subModel,
+				]);
+			}
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -82,20 +109,23 @@ class CarreraController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-        $model=new Carrera();
-        $subModel=new Instituto();
+    public function actionUpdate($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('carrera/create')) {
+			$model = $this->findModel($id);
+			$model=new Carrera();
+			$subModel=new Instituto();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->carrera_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-                'subModel'=> $subModel,
-            ]);
-        }
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->carrera_id]);
+			} else {
+				return $this->render('update', [
+					'model' => $model,
+					'subModel'=> $subModel,
+				]);
+			}
+		}else return $this->redirect(['error/error',["msg" => $msg ]]);
+
     }
 
     /**
@@ -104,11 +134,12 @@ class CarreraController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+    public function actionDelete($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('carrera/delete')) {
+			$this->findModel($id)->delete();
+			return $this->redirect(['index']);
+		}else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
