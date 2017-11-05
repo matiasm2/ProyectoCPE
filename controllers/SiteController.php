@@ -183,9 +183,9 @@ class SiteController extends Controller{
 							*/
 			if ($numUsr == 0){$subModel=$ref->find()->where('sector_id=:sector_id',[':sector_id'=> 1]);}
 				/*$subModel= contenido de la lista desplegable si es el primer registro habilita CPE Admin*/
-			else $subModel=$ref->find()->where('sector_id>:sector_id',[':sector_id'=>2]);
+			else $subModel=$ref->find()->where('sector_id>:sector_id',[':sector_id'=>1]);
 				/* $subModel= contenido de la lista desplegable si no es el primer registro muestra los demas e impide CPE Admin
-				 * existiría un solo CPE Admin, si se quiere mas de uno cambiar =>2 por =>1 */
+				 * existiría un solo CPE Admin, si se quiere mas de uno cambiar =>1 por =>0 */
 			$msg = "Cantidad de usuarios= ". $numUsr;
 			if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
 				Yii::$app->response->format = Response::FORMAT_JSON;
