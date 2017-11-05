@@ -8,6 +8,7 @@ use app\models\EstadoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use app\commands\RoleAccessChecker;
 use app\controllers\ErrorController;
 
@@ -19,16 +20,36 @@ class EstadoController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors(){
         return [
+              'access' => [
+                 'class' => AccessControl::className(),
+                 'only' => ['index', 'view', 'update', 'create', 'delete',],
+                 'rules' => [
+                     [
+                         'allow' => true,
+                         'actions' => ['',],
+                         'roles' => ['?'],
+                     ],
+                     [
+                         'allow' => true,
+                         'actions' => ['index', 'view', 'update', 'create', 'delete',],
+                         'roles' => ['@'],
+                     ],
+                     [
+							 'allow' => false,
+                         'actions' => ['',],
+                         'roles' => ['@'],
+                     ],
+                 ],
+             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
-        ];
+		];
     }
 
     /**

@@ -90,19 +90,16 @@ class AsignsectorController extends Controller
      * @return mixed
      */
     public function actionIndex(){
-
 		$searchModel = new AsignSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-    //$dataProvider = $
-    $msg='';
-
+		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/index')) {
 			return $this->render('index', [
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 				"msg" => $msg ,
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+		}else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -112,12 +109,8 @@ class AsignsectorController extends Controller
      */
     public function actionView($id){
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/view')) {
-
-
 			return $this->render('view', [
-				'model' => $this->findModel($id),
-
-			]);
+				'model' => $this->findModel($id),]);
         }else return $this->redirect(['error/error']);
     }
 
