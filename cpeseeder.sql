@@ -278,6 +278,11 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (45,1);--acceso a usuario/update
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (46,1);--acceso a usuario/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (47,1);--acceso a usuario/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,1);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,1);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (60,1);--acceso a programa/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (61,1);--acceso a programa/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (62,1);--acceso a programa/delete
 	END;
 
 
