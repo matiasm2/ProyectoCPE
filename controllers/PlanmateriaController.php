@@ -69,7 +69,7 @@ class PlanmateriaController extends Controller
         $subModel= new Planestudio();
         $subModel2= new Materia();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->planmateria_id]);
+            return $this->redirect(['index', 'id' => $model->planmateria_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -93,7 +93,7 @@ class PlanmateriaController extends Controller
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->planmateria_id]);
+            return $this->redirect(['index', 'id' => $model->planmateria_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

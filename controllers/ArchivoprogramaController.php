@@ -78,7 +78,7 @@ class ArchivoprogramaController extends Controller
 					$model->fecha=date('Y-m-d');
 			  if ($model->save()) {
 				if ($model->upload()) {
-				  return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
+				  return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
 				} else {
 				  return $this->render('errorup');
 				}
@@ -104,7 +104,7 @@ class ArchivoprogramaController extends Controller
 			$subModel= new Estado();
 			$subModel2= new Programa();
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->archivoprograma_id]);
+				return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
 			} else {
 				return $this->render('update', [
 					'model' => $model,

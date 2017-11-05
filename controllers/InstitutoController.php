@@ -94,7 +94,7 @@ class InstitutoController extends Controller
 			$model = new Instituto();
 
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->instituto_id]);
+				return $this->redirect(['index', 'id' => $model->instituto_id]);
 			} else {
 				return $this->render('create', [
 					'model' => $model,
@@ -115,7 +115,7 @@ class InstitutoController extends Controller
 			$model = $this->findModel($id);
 
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->instituto_id]);
+				return $this->redirect(['index', 'id' => $model->instituto_id]);
 			} else {
 				return $this->render('update', [
 					'model' => $model,

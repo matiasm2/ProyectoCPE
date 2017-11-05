@@ -93,7 +93,7 @@ class AnoController extends Controller
 			$model = new Ano();
 
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->ano_id]);
+				return $this->redirect(['index', 'id' => $model->ano_id]);
 			} else {
 				return $this->render('create', [
 					'model' => $model,
@@ -114,7 +114,7 @@ class AnoController extends Controller
 			$model = $this->findModel($id);
 
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->ano_id]);
+				return $this->redirect(['index', 'id' => $model->ano_id]);
 			} else {
 				return $this->render('update', [
 					'model' => $model,

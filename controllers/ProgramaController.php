@@ -66,7 +66,7 @@ class ProgramaController extends Controller
         $model = new Programa();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->programa_id]);
+            return $this->redirect(['index', 'id' => $model->programa_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +85,7 @@ class ProgramaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->programa_id]);
+            return $this->redirect(['index', 'id' => $model->programa_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

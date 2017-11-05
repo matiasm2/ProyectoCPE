@@ -112,7 +112,7 @@ class AsignsectorController extends Controller
      */
     public function actionView($id){
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/view')) {
-    
+
 
 			return $this->render('view', [
 				'model' => $this->findModel($id),
@@ -132,7 +132,7 @@ class AsignsectorController extends Controller
 			$subModel =  new Actionrole();
 			$subModel2 = new Sector();
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->asignsector_id]);
+				return $this->redirect(['index', 'id' => $model->asignsector_id]);
 			} else {
 				return $this->render('create', [
 					'model' => $model,
@@ -155,7 +155,7 @@ class AsignsectorController extends Controller
 			$subModel =  new Actionrole();
 			$subModel2 = new Sector();
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->asignsector_id]);
+				return $this->redirect(['index', 'id' => $model->asignsector_id]);
 			} else {
 				return $this->render('update', [
 					'model' => $model,

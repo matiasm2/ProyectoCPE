@@ -94,7 +94,7 @@ class CarreraController extends Controller
 			$model = new Carrera();
 			$subModel=new Instituto();
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->carrera_id]);
+				return $this->redirect(['index', 'id' => $model->carrera_id]);
 			} else {
 				return $this->render('create', [
 									'model' => $model,
@@ -118,7 +118,7 @@ class CarreraController extends Controller
 			$subModel=new Instituto();
 
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->carrera_id]);
+				return $this->redirect(['index', 'id' => $model->carrera_id]);
 			} else {
 				return $this->render('update', [
 					'model' => $model,

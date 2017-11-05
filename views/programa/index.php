@@ -9,8 +9,9 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Programas');
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="col-lg-10">
 <div class="programa-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -25,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'programa_id',
+            //'programa_id',
             'planmateria_id',
             'ano_id',
             'fecha',
@@ -50,3 +51,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
+</div>

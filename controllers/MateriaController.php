@@ -94,7 +94,7 @@ class MateriaController extends Controller
 			$model = new Materia();
 
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->materia_id]);
+				return $this->redirect(['index', 'id' => $model->materia_id]);
 			} else {
 				return $this->render('create', [
 					'model' => $model,
@@ -115,7 +115,7 @@ class MateriaController extends Controller
 			$model = $this->findModel($id);
 
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->materia_id]);
+				return $this->redirect(['index', 'id' => $model->materia_id]);
 			} else {
 				return $this->render('update', [
 					'model' => $model,
