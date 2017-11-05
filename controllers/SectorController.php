@@ -93,7 +93,7 @@ class SectorController extends Controller
 		if (RoleAccessChecker::actionIsAsignSector('sector/create')) {
 			$model = new Sector();
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->sector_id]);
+				return $this->redirect(['index', 'id' => $model->sector_id]);
 			} else {
 				return $this->render('create', [
 					'model' => $model,
@@ -114,7 +114,7 @@ class SectorController extends Controller
 			$model = $this->findModel($id);
 
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['view', 'id' => $model->sector_id]);
+				return $this->redirect(['index', 'id' => $model->sector_id]);
 			} else {
 				return $this->render('update', [
 					'model' => $model,
