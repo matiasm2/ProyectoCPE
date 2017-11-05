@@ -63,7 +63,7 @@ AppAsset::register($this);
                ['label' => 'Carreras', 'url' => ['/carrera/index']],
                ['label' => 'Materias', 'url' => ['/materia/index']],
                ['label' => 'Sectores', 'url' => ['/sector/index']],
-               ['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
+               ['label' => 'Programas', 'url' => ['/programa/index']],
                ['label' => 'Permisos', 'url' => ['/asignsector/index']],
 
 				],
