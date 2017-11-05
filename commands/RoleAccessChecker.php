@@ -12,6 +12,9 @@ use yii\console\Controller;
 use app\models\Asignsector;
 use app\models\Actionrole;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\helpers\StringHelper;
+
 
 /**
  * Clase usada en cada uno de los controladores de las acciones registradas
@@ -64,11 +67,63 @@ class RoleAccessChecker extends Controller{
 						 //tambien por el actionrole_id encontrado por el parametro, entonces significa que la
 						 //accion esta registrada en Actionrole  
 	}
-	
-	public static function listAccess(){
-		$list=[''];
-		return $list;
+	/**
+	 * Devolucion de los asignsector formateado para items de Nav::widget del main.php de yii
+	 * */
+	public static function listNavItemsAccess(){			
+		$out='';	
+		/**
+		 * $allAsignsector is the model class for table "asignsector".
+		 * @property integer $asignsector_id
+		 * @property integer $actionrole_id
+		 * @property integer $sector_id
+		 * @property Actionrole $actionrole
+		 * @property Sector $sector
+		 */
+		$allAsignsector=new Asignsector();
+		$query1 = $allAsignsector->find()
+			-> where('sector_id=:sector_id',[':sector_id'=>
+				Yii::$app->user->identity->getSector()->one()->sector_id]);
+		foreach($query1->each() as $assign){
+			//['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
+			//['label' => 'Usuarios', 'url' => ['/usuario/index']],
+			$out .= '[\'label\' => \''.$assign->getActionrole()->one()->descripcion.
+				'\',\'url\'=>[\''.$assign->getActionrole()->one()->action_disp. '\', ]] , ';
+		}
+		return $out;
 	}
+
+	/**
+	 * Devolucion de los asignsector formateado para items de Nav::widget del main.php de yii
+	 * 
+	public static function navItemsAccess(){
+		$map = ArrayHelper::map(self::arrNavItemsAccess()),'lavel','url');
+		return $map;
+	}*/
+	
+	public static function arrNavItemsAccess(){
+		$arr;	
+		/**
+		 * $allAsignsector is the model class for table "asignsector".
+		 * @property integer $asignsector_id
+		 * @property integer $actionrole_id
+		 * @property integer $sector_id
+		 * @property Actionrole $actionrole
+		 * @property Sector $sector
+		 */
+		$allAsignsector=new Asignsector();
+		$query2 = $allAsignsector->find()
+			-> where('sector_id=:sector_id',[':sector_id'=>
+				Yii::$app->user->identity->getSector()->one()->sector_id]);
+		foreach($query2->each() as $assign2){
+			//['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
+			//['label' => 'Usuarios', 'url' => ['/usuario/index']],
+			$arr=ArrayHelper::merge(Array(['lavel'=> $assign2->getActionrole()->one()->descripcion,
+				'url',[$assign2->getActionrole()->one()->action_disp],]),$arr);
+		}
+		return $arr;
+	}
+
 
 	public static function testQery($currentAction){
 		$out='TestOut in = '.$currentAction.' ,IsAcEn= ';
@@ -106,4 +161,44 @@ class RoleAccessChecker extends Controller{
 		return $out;
 	}
 	
+	public static function navWidgetContent(){
+		$arr= ['options' => 
+				['class' => 'navbar-nav navbar-right'],
+				'items' => [
+				['label' => 'Home', 'url' => ['/site/index']],
+				['label' => 'About', 'url' => ['/site/about']],
+				['label' => 'Contact', 'url' => ['/site/contact']],
+				['label' => 'Register', 'url' => ['/site/register']],
+				['label' => 'Dropdown','items'=> [
+					['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
+					['label' => 'Usuarios', 'url' => ['/usuario/index']],
+					'<li class="divider"></li>',
+					],
+				'visible' => !(Yii::$app->user->isGuest),
+				], Yii::$app->user->isGuest ? (
+					['label' => 'Login', 'url' => ['/site/login']]
+				) : (
+					'<li>'
+					. Html::beginForm(['/site/logout'], 'post')
+					. Html::submitButton(
+						'Logout (' . '  [' . Yii::$app->user->identity->getSector()->one()->descripcion.'] ' . Yii::$app->user->identity->nombre . ' )',
+						['class' => 'btn btn-link logout']
+					)
+					. Html::endForm()
+					. '</li>'
+				)
+			],
+		];
+			//~ $allAsignsector=new Asignsector();
+			//~ $query2 = $allAsignsector->find()
+				//~ -> where('sector_id=:sector_id',[':sector_id'=>
+					//~ Yii::$app->user->identity->getSector()->one()->sector_id]);
+			//~ foreach($query2->each() as $assign2){
+				//~ ArrayHelper::setValue($arr,'items.lavel.Dropdown.items',
+						//~ ['lavel'=>$assign2->getActionrole()->one()->descripcion,]);
+				//~ ArrayHelper::setValue($arr,'items.lavel.Dropdown.items',
+							//~ ['url'=>$assign2->getActionrole()->one()->action_disp,]);
+					//~ }
+		return $arr;
+	}
 }

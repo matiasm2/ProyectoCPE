@@ -247,6 +247,21 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (45,'usuario/update','edita usuario');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (46,'usuario/create','crea usuario');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (47,'usuario/view','muestra usuario');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (48,'planestudio/view','muestra Plan de estudio de una carrera');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (49,'planestudio/index','lista Plan de estudio de una carrera');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (50,'planestudio/update','actualiza Plan de estudio de una carrera');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (51,'planestudio/create','nuevo Plan de estudio de una carrera');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (52,'planestudio/delete','borra Plan de estudio de una carrera');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (53,'planmateria/view','muestra Plan de estudio de una materia');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (54,'planmateria/index','lista Plan de estudio de una materia');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (55,'planmateria/update','actualiza Plan de estudio de una materia');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (56,'planmateria/create','nuevo Plan de estudio de una materia');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (57,'planmateria/delete','borra Plan de estudio de una materiaa');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (58,'programa/view','muestra referencia al documento');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (59,'programa/index','lista referencias de documentos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (60,'programa/update','actualiza referencia de documento');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (61,'programa/create','nueva referencia de documento');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (62,'programa/delete','borra referencia de documento');
 ---
 -- Acciones configurables para cada sector a travez del usuario CPE Admin.
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
@@ -263,6 +278,11 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (45,1);--acceso a usuario/update
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (46,1);--acceso a usuario/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (47,1);--acceso a usuario/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,1);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,1);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (60,1);--acceso a programa/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (61,1);--acceso a programa/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (62,1);--acceso a programa/delete
 	END;
 
 

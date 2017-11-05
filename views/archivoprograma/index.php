@@ -8,8 +8,9 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Archivos de programas';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="col-lg-10">
 <div class="archivoprograma-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -38,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'value' => function ($data){
 							return Html::img('uploads/'.$data['archivo'],['widht' => '100px']);
 						},
-						
+
 				],
 			// URL DEL DOCUMENTO
 				[
@@ -52,4 +53,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+</div>
 </div>

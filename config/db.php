@@ -3,7 +3,7 @@
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'pgsql:host=localhost;port=5432;dbname=cpe_db',
-    'username' => 'cpedba',
+    'username' => 'cpewebuser',
     'password' => 'unaj1234',
     'charset' => 'utf8',
     'schemaMap' => [

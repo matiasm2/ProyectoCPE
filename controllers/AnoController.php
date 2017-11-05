@@ -8,6 +8,8 @@ use app\models\AnoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\commands\RoleAccessChecker;
+use app\controllers\ErrorController;
 
 /**
  * AnoController implements the CRUD actions for Ano model.
@@ -17,9 +19,29 @@ class AnoController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors(){
         return [
+              'access' => [
+                 'class' => AccessControl::className(),
+                 'only' => ['index', 'view', 'update', 'create', 'delete',],
+                 'rules' => [
+                     [
+                         'allow' => true,
+                         'actions' => ['',],
+                         'roles' => ['?'],
+                     ],
+                     [
+                         'allow' => true,
+                         'actions' => ['index', 'view', 'update', 'create', 'delete',],
+                         'roles' => ['@'],
+                     ],
+                     [
+                         'allow' => false,
+                         'actions' => ['',],
+                         'roles' => ['@'],
+                     ],
+                 ],
+             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -33,15 +55,17 @@ class AnoController extends Controller
      * Lists all Ano models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $searchModel = new AnoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    public function actionIndex(){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('ano/index')) {
+			$searchModel = new AnoSearch();
+			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+			]);
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -49,11 +73,13 @@ class AnoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+    public function actionView($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('ano/view')) {
+			return $this->render('view', [
+				'model' => $this->findModel($id),
+			]);
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -61,17 +87,19 @@ class AnoController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Ano();
+    public function actionCreate(){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('ano/create')) {
+			$model = new Ano();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ano_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['index', 'id' => $model->ano_id]);
+			} else {
+				return $this->render('create', [
+					'model' => $model,
+				]);
+			}
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -80,17 +108,19 @@ class AnoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    public function actionUpdate($id{
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('ano/update')) {
+			$model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ano_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['index', 'id' => $model->ano_id]);
+			} else {
+				return $this->render('update', [
+					'model' => $model,
+				]);
+			}
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -99,11 +129,13 @@ class AnoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+    public function actionDelete($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('ano/delete')) {
+			$this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+			return $this->redirect(['index']);
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**

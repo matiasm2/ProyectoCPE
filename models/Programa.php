@@ -11,8 +11,8 @@ use Yii;
  * @property integer $planmateria_id
  * @property integer $ano_id
  * @property string $fecha
+ * @property string $descripcion
  *
- * @property Archivoprograma[] $archivoprogramas
  * @property Ano $ano
  * @property Planmateria $planmateria
  */
@@ -34,6 +34,7 @@ class Programa extends \yii\db\ActiveRecord
         return [
             [['planmateria_id', 'ano_id'], 'integer'],
             [['fecha'], 'safe'],
+            [['descripcion'], 'string', 'max' => 75],
             [['ano_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ano::className(), 'targetAttribute' => ['ano_id' => 'ano_id']],
             [['planmateria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Planmateria::className(), 'targetAttribute' => ['planmateria_id' => 'planmateria_id']],
         ];
@@ -49,15 +50,8 @@ class Programa extends \yii\db\ActiveRecord
             'planmateria_id' => Yii::t('app', 'Planmateria ID'),
             'ano_id' => Yii::t('app', 'Ano ID'),
             'fecha' => Yii::t('app', 'Fecha'),
+            'descripcion' => Yii::t('app', 'Descripcion'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getArchivoprogramas()
-    {
-        return $this->hasMany(Archivoprograma::className(), ['programa_id' => 'programa_id']);
     }
 
     /**

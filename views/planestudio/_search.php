@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'planestudio_id') ?>
-
+    
     <?= $form->field($model, 'carrera_id') ?>
 
     <?= $form->field($model, 'ano_id') ?>

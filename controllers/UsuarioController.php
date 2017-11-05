@@ -8,6 +8,7 @@ use app\models\UsuarioSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use app\commands\RoleAccessChecker;
 use app\controllers\ErrorController;
 
@@ -19,9 +20,29 @@ class UsuarioController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors(){
         return [
+              'access' => [
+                 'class' => AccessControl::className(),
+                 'only' => ['index', 'view', 'update', 'create', 'delete',],
+                 'rules' => [
+                     [
+                         'allow' => true,
+                         'actions' => ['',],
+                         'roles' => ['?'],
+                     ],
+                     [
+                         'allow' => true,
+                         'actions' => ['index', 'view', 'update', 'create', 'delete',],
+                         'roles' => ['@'],
+                     ],
+                     [
+                         'allow' => false,
+                         'actions' => ['',],
+                         'roles' => ['@'],
+                     ],
+                 ],
+             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -53,11 +74,13 @@ class UsuarioController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id)
-        ]);
+    public function actionView($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('usuario/view')) {
+			return $this->render('view', [
+				'model' => $this->findModel($id)
+			]);
+        }else return $this->redirect(['error/error']);
     }
 
     /**
@@ -65,17 +88,20 @@ class UsuarioController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Usuario();
+    public function actionCreate(){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('usuario/create')) {
+			//~ $model = new Usuario();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->usuario_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+			//~ if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				//~ return $this->redirect(['view', 'id' => $model->usuario_id]);
+			//~ } else {
+				//~ return $this->render('create', [
+					//~ 'model' => $model,
+				//~ ]);
+			//~ }
+			$this->redirect(['site/register']);
+        }else return $this->redirect(['error/error']);
     }
 
     /**
@@ -84,18 +110,20 @@ class UsuarioController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    public function actionUpdate($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('usuario/update')) {
+			$model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->usuario_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['index', 'id' => $model->usuario_id]);
+			} else {
+				return $this->render('update', [
+					'model' => $model,
+				]);
+			}
+		}else return $this->redirect(['error/error']);
+	}
 
     /**
      * Deletes an existing Usuario model.
@@ -103,12 +131,14 @@ class UsuarioController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $model=$this->findModel($id);
-        $model->activuser=0;
-        $model->save();
-        return $this->redirect(['index']);
+    public function actionDelete($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('usuario/delete')) {
+			$model=$this->findModel($id);
+			$model->activuser=0;
+			$model->save();
+			return $this->redirect(['index']);
+        }else return $this->redirect(['error/error']);
 
     }
 

@@ -7,9 +7,10 @@ use yii\helpers\Html;
 /* @var $model app\models\Planestudio */
 
 $this->title = 'Create Planestudio';
-$this->params['breadcrumbs'][] = ['label' => 'Planestudios', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+/*$this->params['breadcrumbs'][] = ['label' => 'Planestudios', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;*/
 ?>
+<div class="col-lg-10">
 <div class="planestudio-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -21,4 +22,5 @@ $this->params['breadcrumbs'][] = $this->title;
 
     ]) ?>
 
+</div>
 </div>

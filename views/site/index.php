@@ -23,14 +23,14 @@ $this->title = 'CPE UNAJ Application';
             <div class="col-lg-4">
                 <h2>Explicaci&oacute;n del boton 1</h2>
 
-                <p>El CPE boton 1, debe cambiar segun el rol, si el link 
+                <p>El CPE boton 1, debe cambiar segun el rol, si el link
                 pertenece a un behavior de logueo, direcciona autom&aacute;ticamente. Hay que entender
-                que la redireccion despues del login no sirve porque si uno se reloguea desde un error te 
+                que la redireccion despues del login no sirve porque si uno se reloguea desde un error te
                 redirige al sitio fijo que puede ser molesto</p>
 
                 <p><a class="btn btn-default" href="http://www.unaj.edu.ar">CPE boton 1 &raquo;</a></p>
             </div>
-            
+
             <div class="col-lg-4">
                 <h2>Explicaci&oacute;n del boton 2</h2>
 

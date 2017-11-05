@@ -87,7 +87,7 @@
 	       ano_id    SERIAL PRIMARY KEY,
 	       ano       integer
 	);
-	GRANT SELECT, INSERT, UPDATE  ON public.ano TO cpewebuser;
+	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.ano TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE ano_ano_id_seq TO cpewebuser;
 
 
@@ -96,7 +96,7 @@
 	       carrera_id  integer REFERENCES carrera,
 	       ano_id  integer REFERENCES ano
 	);
-	GRANT SELECT, INSERT, UPDATE  ON public.planestudio TO cpewebuser;
+	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.planestudio TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE planestudio_planestudio_id_seq TO cpewebuser;
 
 
@@ -105,7 +105,7 @@
 	       nombre        varchar(40),
 	       optativa      boolean
 	);
-	GRANT SELECT, INSERT, UPDATE  ON public.materia TO cpewebuser;
+	GRANT SELECT, INSERT, UPDATE ,DELETE  ON public.materia TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE materia_materia_id_seq TO cpewebuser;
 
 
@@ -114,7 +114,7 @@
 	       planestudio_id  integer REFERENCES planestudio,
 	       materia_id  integer REFERENCES materia
 	);
-	GRANT SELECT, INSERT, UPDATE  ON public.planmateria TO cpewebuser;
+	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.planmateria TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE planmateria_planmateria_id_seq TO cpewebuser;
 
 
@@ -125,7 +125,7 @@
 		fecha date,
 	    descripcion   varchar(75)
 	);
-	GRANT SELECT, INSERT, UPDATE  ON public.programa TO cpewebuser;
+	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.programa TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE programa_programa_id_seq TO cpewebuser;
 
 
@@ -145,7 +145,7 @@
 		archivo       varchar(100) not null,
 		fecha date
 	);
-	GRANT SELECT, INSERT, UPDATE  ON public.archivoprograma TO cpewebuser;
+	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.archivoprograma TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE archivoprograma_archivoprograma_id_seq TO cpewebuser;
 
 ---
@@ -168,7 +168,7 @@
 		actionrole_id  integer REFERENCES actionrole,
 	    sector_id   integer REFERENCES sector
 	);
-	GRANT SELECT, INSERT, UPDATE  ON public.asignsector TO cpewebuser;
+	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.asignsector TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE asignsector_asignsector_id_seq TO cpewebuser;
 
 COMMIT;

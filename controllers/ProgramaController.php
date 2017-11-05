@@ -5,11 +5,12 @@ namespace app\controllers;
 use Yii;
 use app\models\Programa;
 use app\models\ProgramaSearch;
-use app\models\Ano;
-use app\models\Planmateria;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\commands\RoleAccessChecker;
+use app\controllers\ErrorController;
 
 /**
  * ProgramaController implements the CRUD actions for Programa model.
@@ -22,6 +23,27 @@ class ProgramaController extends Controller
     public function behaviors()
     {
         return [
+              'access' => [
+                 'class' => AccessControl::className(),
+                 'only' => ['index', 'view', 'update', 'create', 'delete',],
+                 'rules' => [
+                     [
+                         'allow' => true,
+                         'actions' => ['',],
+                         'roles' => ['?'],
+                     ],
+                     [
+                         'allow' => true,
+                         'actions' => ['index', 'view', 'update', 'create', 'delete',],
+                         'roles' => ['@'],
+                     ],
+                     [
+                         'allow' => false,
+                         'actions' => ['',],
+                         'roles' => ['@'],
+                     ],
+                 ],
+             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -35,15 +57,17 @@ class ProgramaController extends Controller
      * Lists all Programa models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $searchModel = new ProgramaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    public function actionIndex(){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('programa/index')) {
+			$searchModel = new ProgramaSearch();
+			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+			]);
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -51,11 +75,13 @@ class ProgramaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+    public function actionView($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('programa/view')) {
+			return $this->render('view', [
+				'model' => $this->findModel($id),
+			]);
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -63,21 +89,19 @@ class ProgramaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $subModelAno=new Ano();
-        $subModelPlanmateria=new Planmateria();
-        $model = new Programa();
+    public function actionCreate(){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('programa/create')) {
+			$model = new Programa();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->programa_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                'subModelAno' => $subModelAno,
-                'subModelPlanmateria' => $subModelPlanmateria
-            ]);
-        }
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['index', 'id' => $model->programa_id]);
+			} else {
+				return $this->render('create', [
+					'model' => $model,
+				]);
+			}
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -86,17 +110,19 @@ class ProgramaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    public function actionUpdate($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('programa/update')) {
+			$model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->programa_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['index', 'id' => $model->programa_id]);
+			} else {
+				return $this->render('update', [
+					'model' => $model,
+				]);
+			}
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**
@@ -105,11 +131,13 @@ class ProgramaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+    public function actionDelete($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('programa/delete')) {
+			$this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+			return $this->redirect(['index']);
+        }else return $this->redirect(['error/error',["msg" => $msg ]]);
     }
 
     /**

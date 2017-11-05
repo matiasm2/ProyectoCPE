@@ -8,8 +8,9 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Planestudios';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="col-lg-10">
 <div class="planestudio-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -24,11 +25,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'planestudio_id',
-            'carrera_id',
-            'ano_id',
+            //'planestudio_id',
+            //'carrera_id',
+            //'ano_id',
+            'descripcioncarrera',
+            'descripcionano',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+</div>
 </div>

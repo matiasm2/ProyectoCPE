@@ -49,6 +49,14 @@ class Planestudio extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getDescripcionano(){
+      return $this->ano->ano;
+    }
+
+    public function getDescripcioncarrera(){
+      return $this->carrera->descripcion;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

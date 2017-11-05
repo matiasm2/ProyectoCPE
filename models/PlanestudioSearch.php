@@ -12,6 +12,9 @@ use app\models\Planestudio;
  */
 class PlanestudioSearch extends Planestudio
 {
+
+  public $descripcion_carrera;
+  public $descripcion_ano;
     /**
      * @inheritdoc
      */
@@ -19,6 +22,7 @@ class PlanestudioSearch extends Planestudio
     {
         return [
             [['planestudio_id', 'carrera_id', 'ano_id'], 'integer'],
+            [['descripcion_ano','descripcion_carrera'], 'safe'],
         ];
     }
 
@@ -61,6 +65,8 @@ class PlanestudioSearch extends Planestudio
             'planestudio_id' => $this->planestudio_id,
             'carrera_id' => $this->carrera_id,
             'ano_id' => $this->ano_id,
+            'descripcion_carrera' => $this->descripcion_carrera,
+            'descripcion_ano' => $this->descripcion_ano,
         ]);
 
         return $dataProvider;

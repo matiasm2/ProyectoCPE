@@ -8,10 +8,11 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Programa',
 ]) . $model->programa_id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Programas'), 'url' => ['index']];
+/*$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Programas'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->programa_id, 'url' => ['view', 'id' => $model->programa_id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update');*/
 ?>
+<div class="col-lg-10">
 <div class="programa-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -20,4 +21,5 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         'model' => $model,
     ]) ?>
 
+</div>
 </div>

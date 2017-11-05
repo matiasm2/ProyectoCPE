@@ -10,6 +10,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Asignsectors', 'url' => ['index']]
 $this->params['breadcrumbs'][] = ['label' => $model->asignsector_id, 'url' => ['view', 'id' => $model->asignsector_id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
+<div class="col-lg-10">
 <div class="asignsector-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -20,4 +21,5 @@ $this->params['breadcrumbs'][] = 'Update';
 	'subModel2' => $subModel2,
     ]) ?>
 
+</div>
 </div>
