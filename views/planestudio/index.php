@@ -25,9 +25,11 @@ $this->title = 'Planestudios';
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'planestudio_id',
-            'carrera_id',
-            'ano_id',
+            //'planestudio_id',
+            //'carrera_id',
+            //'ano_id',
+            'descripcioncarrera',
+            'descripcionano',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

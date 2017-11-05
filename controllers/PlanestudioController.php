@@ -70,7 +70,7 @@ class PlanestudioController extends Controller
         $subModel= new Carrera();
         $subModel2= new Ano();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->planestudio_id]);
+            return $this->redirect(['index', 'id' => $model->planestudio_id]);
         } else {
             return $this->render('create', [
                   'model' => $model,
@@ -89,12 +89,16 @@ class PlanestudioController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $subModel= new Carrera();
+        $subModel2= new Ano();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->planestudio_id]);
+            return $this->redirect(['index', 'id' => $model->planestudio_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'subModel'=> $subModel,
+                'subModel2'=> $subModel2,
             ]);
         }
     }
