@@ -9,8 +9,9 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Programas');
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="col-lg-10">
 <div class="programa-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -29,17 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'planmateria_id',
             'ano_id',
             'fecha',
-            'descripcion',
             [
                 'format' => 'raw',
                 'value' => function($model, $key, $index, $column) {
                         return Html::a(
                             '<i class="fa fa-euro">Ver archivos</i>',
-                            Url::to(['/archivoprograma/programa', 'idprograma' => $model->programa_id]),
+                            Url::to(['mycontroller/myaction', 'id' => $model->programa_id]),
                             [
                                 'id'=>'grid-custom-button',
                                 'data-pjax'=>true,
-                                'action'=>Url::to(['/archivoprograma/programa', 'idprograma' => $model->programa_id]),
+                                'action'=>Url::to(['mycontroller/myaction', 'id' => $model->programa_id]),
                                 'class'=>'button btn btn-default',
                             ]
                         );
@@ -50,3 +50,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
+</div>

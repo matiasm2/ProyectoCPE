@@ -129,6 +129,22 @@ class ArchivoprogramaController extends Controller
     }
 
     /**
+     * Lists all Archivoprograma models.
+     * @return mixed
+     */
+    public function actionPrograma($idprograma){
+		//if (RoleAccessChecker::actionIsAsignSector('archivoprograma/programa')) {
+			$searchModel = new ArchivoprogramaSearch();
+			$dataProvider = $searchModel->searchPorIdPrograma($idprograma);
+
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+			]);
+		//} else return $this->redirect(['error/error']);
+    }
+
+    /**
      * Finds the Archivoprograma model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id

@@ -70,4 +70,35 @@ class ArchivoprogramaSearch extends Archivoprograma
 
         return $dataProvider;
     }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchPorIdPrograma($idprograma)
+    {
+        $query = Archivoprograma::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'programa_id' => $idprograma,
+        ]);
+
+        return $dataProvider;
+    }
 }
