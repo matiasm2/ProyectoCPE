@@ -62,4 +62,84 @@ class Estado extends \yii\db\ActiveRecord
       public static function getAllEstados(){
         return Estado::find()->all();
     }
+
+    public static function getFaltantes($instituto){
+        $connection = Yii::$app->getDb();
+        $estados = $connection->createCommand("SELECT *
+                        FROM instituto ins
+                        INNER JOIN
+                        carrera car
+                        ON
+                        ins.instituto_id=car.instituto_id
+                        INNER JOIN
+                        planestudio planes
+                        ON
+                        planes.carrera_id=car.carrera_id
+                        INNER JOIN
+                        planmateria planma
+                        ON
+                        planma.planestudio_id=planes.planestudio_id
+                        INNER JOIN
+                        programa prog
+                        ON
+                        prog.planmateria_id=planma.planmateria_id
+                        INNER JOIN
+                        materia ma
+                        ON
+                        ma.materia_id=planma.materia_id
+                        INNER JOIN
+                        archivoprograma arch
+                        ON
+                        arch.programa_id=prog.programa_id
+                        INNER JOIN
+                        ano ano
+                        ON
+                        ano.ano_id=prog.ano_id
+                        INNER JOIN
+                        estado estado
+                        ON
+                        estado.estado_id=arch.estado_id
+                        WHERE ano.ano=date_part('year', CURRENT_DATE) AND ins.nombre='$instituto' AND estado.descripcion='A corregir' OR estado.descripcion='Enviado' OR estado.descripcion='En revisión';")->queryAll();
+        return $estados;
+    }
+
+    public static function getEntregados($instituto){
+        $connection = Yii::$app->getDb();
+        $estados = $connection->createCommand("SELECT *
+                        FROM instituto ins
+                        INNER JOIN
+                        carrera car
+                        ON
+                        ins.instituto_id=car.instituto_id
+                        INNER JOIN
+                        planestudio planes
+                        ON
+                        planes.carrera_id=car.carrera_id
+                        INNER JOIN
+                        planmateria planma
+                        ON
+                        planma.planestudio_id=planes.planestudio_id
+                        INNER JOIN
+                        programa prog
+                        ON
+                        prog.planmateria_id=planma.planmateria_id
+                        INNER JOIN
+                        materia ma
+                        ON
+                        ma.materia_id=planma.materia_id
+                        INNER JOIN
+                        archivoprograma arch
+                        ON
+                        arch.programa_id=prog.programa_id
+                        INNER JOIN
+                        ano ano
+                        ON
+                        ano.ano_id=prog.ano_id
+                        INNER JOIN
+                        estado estado
+                        ON
+                        estado.estado_id=arch.estado_id
+                        WHERE ano.ano=date_part('year', CURRENT_DATE) AND ins.nombre='$instituto' AND estado.descripcion='Completo' OR estado.descripcion='Firmado';")->queryAll();
+        return $estados;
+    }
 }

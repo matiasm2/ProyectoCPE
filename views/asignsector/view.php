@@ -10,7 +10,7 @@ $this->title = $model->asignsector_id;
 //$this->params['breadcrumbs'][] = ['label' => 'Asignsectors', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="col-lg-10">
+<div class="col-lg-8">
 <div class="asignsector-view">
 
     <h1><?= Html::encode($this->title) ?></h1>

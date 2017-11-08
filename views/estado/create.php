@@ -10,7 +10,7 @@ $this->title = 'Create Estado';
 /*$this->params['breadcrumbs'][] = ['label' => 'Estados', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;*/
 ?>
-<div class="col-lg-10">
+<div class="col-lg-8">
 <div class="estado-create">
 
     <h1><?= Html::encode($this->title) ?></h1>

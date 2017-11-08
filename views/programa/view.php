@@ -10,7 +10,7 @@ $this->title = $model->programa_id;
 /*$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Programas'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;*/
 ?>
-<div class="col-lg-10">
+<div class="col-lg-8">
 <div class="programa-view">
 
     <h1><?= Html::encode($this->title) ?></h1>

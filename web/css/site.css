@@ -113,3 +113,26 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+#instituto {
+background-color:rgba(228, 228, 228, 1);
+margin-right: 8px;
+margin-top: 8px;
+width: 257px;
+height: 140px;
+text-align: center;
+}
+#instituto1{
+background-color:rgba(228, 228, 228, 1);
+margin-right: 8px;
+margin-top: 8px;
+width: 257px;
+height: 140px;
+text-align: center;
+padding-top: 20px;
+}
+
+td
+{
+    padding:0 1px 0 12px;
+}

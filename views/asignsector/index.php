@@ -10,7 +10,7 @@ use yii\grid\GridView;
 $this->title = 'Asignsectors';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="col-lg-10">
+<div class="col-lg-8">
 <div class="asignsector-index">
 <h3> <?= $msg ?></h3>
 

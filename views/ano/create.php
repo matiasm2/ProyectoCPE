@@ -10,7 +10,7 @@ $this->title = 'Create Ano';
 $this->params['breadcrumbs'][] = ['label' => 'Anos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="col-lg-10">
+<div class="col-lg-8">
 <div class="ano-create">
 
     <h1><?= Html::encode($this->title) ?></h1>

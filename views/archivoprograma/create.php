@@ -10,7 +10,7 @@ $this->title = 'Crear un Archivo de programa';
 $this->params['breadcrumbs'][] = ['label' => 'Archivos de programas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="col-lg-10">
+<div class="col-lg-8">
 
 <div class="archivoprograma-create">
 
