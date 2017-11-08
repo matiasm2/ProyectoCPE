@@ -10,7 +10,7 @@ $this->title = $model->archivoprograma_id;
 /*$this->params['breadcrumbs'][] = ['label' => 'Archivos de programas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;*/
 ?>
-<div class="col-lg-10">
+<div class="col-lg-8">
 <div class="archivoprograma-view">
 
     <h1><?= Html::encode($this->title) ?></h1>

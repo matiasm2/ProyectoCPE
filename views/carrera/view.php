@@ -10,7 +10,7 @@ $this->title = $model->carrera_id;
 /*$this->params['breadcrumbs'][] = ['label' => 'Carreras', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;*/
 ?>
-<div class="col-lg-10">
+<div class="col-lg-8">
 <div class="carrera-view">
 
     <h1><?= Html::encode($this->title) ?></h1>

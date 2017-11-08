@@ -10,7 +10,7 @@ $this->title = 'Update Planmateria: ' . $model->planmateria_id;
 $this->params['breadcrumbs'][] = ['label' => $model->planmateria_id, 'url' => ['view', 'id' => $model->planmateria_id]];
 $this->params['breadcrumbs'][] = 'Update';*/
 ?>
-<div class="col-lg-10">
+<div class="col-lg-8">
 <div class="planmateria-update">
 
     <h1><?= Html::encode($this->title) ?></h1>

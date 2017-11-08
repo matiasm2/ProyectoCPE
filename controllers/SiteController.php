@@ -14,6 +14,7 @@ use app\models\ContactForm;
 use app\models\Usuario;
 use app\models\RegisterForm;
 use app\models\Sector;
+use app\models\Estado;
 use app\models\Usuariotipo;
 use app\models\InvalidoUsuarioModel;
 use app\models\Asignsector;
@@ -76,12 +77,51 @@ class SiteController extends Controller{
      *
      * @return string
      */
-    public function actionIndex()
+ public function actionIndex()
     {
-		if(Yii::$app->user->isGuest) {$msg='No logoneado...';} 
-		else {$msg=RoleAccessChecker::listNavItemsAccess();
-			}
-        return $this->render('index',['msg' => $msg,]);
+        if(Yii::$app->user->isGuest) {$msg='No logoneado...';} 
+        else {$msg=RoleAccessChecker::listNavItemsAccess();
+            }
+        $numUsr=Usuario::find()->count();
+        if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/indexAdmin'))) {
+             $estadosFaltantesIngyAgr = Estado::getFaltantes("Instituto de Ingeniería y Agronomía");
+             $countEstadosFaltantesIngyAgr = count ($estadosFaltantesIngyAgr);
+
+            $estadosEntregadosIngyAgr = Estado::getEntregados("Instituto de Ingeniería y Agronomía");
+            $countEstadosEntregadoIngyAgr = count ($estadosEntregadosIngyAgr);
+
+            $estadosFaltantesEIni= Estado::getFaltantes("Instituto de Estudios Iniciales");
+            $countEstadosFaltantesEIni  = count ($estadosFaltantesEIni );
+             
+            $estadosEntregadosEIni = Estado::getEntregados("Instituto de Estudios Iniciales");
+            $countEstadosEntregadoEIni  = count ($estadosEntregadosEIni);
+
+            $estadosFaltantesSalud= Estado::getFaltantes("Instituto de Ciencias de la Salud");
+            $countEstadosFaltantesSalud  = count ($estadosFaltantesSalud );
+             
+            $estadosEntregadosSalud = Estado::getEntregados("Instituto de Ciencias de la Salud");
+            $countEstadosEntregadoSalud  = count ($estadosEntregadosSalud);
+
+            $estadosFaltantesSocyAdm= Estado::getFaltantes("Instituto de Ciencias Sociales y Administración");
+            $countEstadosFaltantesSocyAdm = count ($estadosFaltantesSocyAdm );
+             
+            $estadosEntregadosSocyAdm = Estado::getEntregados("Instituto de Ciencias Sociales y Administración");
+            $countEstadosEntregadoSocyAdm  = count ($estadosEntregadosSocyAdm);
+
+
+            return $this->render('indexAdmin',['msg' => $msg,
+            'countFaltantesIngyAgr' => $countEstadosFaltantesIngyAgr,
+            'countEntregadosIngyAgr' => $countEstadosEntregadoIngyAgr,
+            'countFaltantesEIni' => $countEstadosFaltantesEIni,
+            'countEntregadosEIni' => $countEstadosEntregadoEIni,
+            'countFaltantesSalud' => $countEstadosFaltantesSalud,
+            'countEntregadosSalud' => $countEstadosEntregadoSalud,
+            'countFaltantesSocyAdm' => $countEstadosFaltantesSocyAdm,
+            'countEntregadosSocyAdm' => $countEstadosEntregadoSocyAdm,]);
+        }
+        else{
+           return $this->render('index',['msg' => $msg,]); 
+        }
     }
 	
     /**

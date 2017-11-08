@@ -9,7 +9,7 @@ $this->title = 'Actualizar Archivo de programa: ' . $model->archivoprograma_id;
 /*$this->params['breadcrumbs'][] = ['label' => $model->archivoprograma_id, 'url' => ['view', 'id' => $model->archivoprograma_id]];
 $this->params['breadcrumbs'][] = 'Update';*/
 ?>
-<div class="col-lg-10">
+<div class="col-lg-8">
 <div class="archivoprograma-update">
 
     <h1><?= Html::encode($this->title) ?></h1>

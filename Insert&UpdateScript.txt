@@ -1,0 +1,34 @@
+﻿
+// Nuevo index para vista administrador cpe
+INSERT INTO actionrole VALUES (63, 'site/indexAdmin', 'Index para administrador de cpe');
+
+
+
+// Carge archivos ficticios solo para probar progressbar
+
+INSERT INTO archivoprograma VALUES (3, 10, 1, 3, '/MatematicaII.docx', '2017-11-07');
+INSERT INTO archivoprograma VALUES (1, 10, 1, 3, '/MatematicaI.docx', '2017-11-07');
+INSERT INTO archivoprograma VALUES (4, 10, 1, 1, '/MatematicaI.doc', '2017-11-07');
+INSERT INTO archivoprograma VALUES (5, 10, 1, 5, '/MatematicaI.doc', '2017-11-07');
+INSERT INTO archivoprograma VALUES (6, 10, 1, 4, '/MatematicaI.doc', '2017-11-07');
+
+
+INSERT INTO programa VALUES (10, 1, 20, '2017-11-07', 'Programa de la materia ZZ');
+
+//Modificar en caso necesario al cargar la base siempre esta me aparece roto los acentos por encoding para 
+que funcionen las consultas de faltantes y entregados
+
+UPDATE instituto
+   SET nombre='Instituto de Ingeniería y Agronomía'
+ WHERE instituto_id=3;
+
+
+UPDATE instituto
+   SET nombre='Instituto de Ciencias Sociales y Administración'
+ WHERE instituto_id=4;
+
+
+
+
+INSERT INTO instituto VALUES (3, 'Instituto de Ciencias Sociales y Administración');
+INSERT INTO instituto VALUES (4, 'Instituto de Ingeniería y Agronomía');
