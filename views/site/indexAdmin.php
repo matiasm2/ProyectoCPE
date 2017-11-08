@@ -130,22 +130,22 @@ $this->title = 'CPE UNAJ Application';
       $('.progress').asProgress({
         'namespace': 'progress'
       });
-      $('.progress').asProgress('go',<?php echo($countEntregadosIngyAgr *100)/($countEntregadosIngyAgr+$countFaltantesIngyAgr)?>);
+      $('.progress').asProgress('go',<?php echo(($countEntregadosIngyAgr +1)*100)/(1+$countEntregadosIngyAgr+$countFaltantesIngyAgr)?>);
 
       $('#progress2').asProgress({
         'namespace': 'progress'
       });
-      $('#progress2').asProgress('go',<?php echo($countEntregadosSocyAdm *100)/($countEntregadosSocyAdm+$countFaltantesSocyAdm)?>);
+      $('#progress2').asProgress('go',<?php echo(($countEntregadosSocyAdm +1)*100)/(1+$countEntregadosSocyAdm+$countFaltantesSocyAdm)?>);
 
       $('#progress3').asProgress({
         'namespace': 'progress'
       });
-      $('#progress3').asProgress('go',<?php echo($countEntregadosSalud *100)/($countEntregadosSalud+$countFaltantesSalud)?>);
+      $('#progress3').asProgress('go',<?php echo(($countEntregadosSalud+1) *100)/(1+$countEntregadosSalud+$countFaltantesSalud)?>);
 
       $('#progress3').asProgress({
         'namespace': 'progress'
       });
-      $('#progress4').asProgress('go',<?php echo($countEntregadosEIni *100)/($countEntregadosEIni+$countFaltantesEIni)?>);
+      $('#progress4').asProgress('go',<?php echo(($countEntregadosEIni+1) *100)/(1+$countEntregadosEIni+$countFaltantesEIni)?>);
 
 
     });

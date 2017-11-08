@@ -196,6 +196,8 @@ BEGIN;
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (3,16,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
+  INSERT INTO programa VALUES (10, 1, 20, '2017-11-07', 'Programa de la materia ZZ');
+
 ---
 -- Acciones registradas de todo el circuito administrativo (tabla fija), sera parte del modelo proporcionando descripciones.
 -- El objetivo de esta tabla es poder completar la tabla actionrole que hace funcionar al 
@@ -262,6 +264,7 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (60,'programa/update','actualiza referencia de documento');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (61,'programa/create','nueva referencia de documento');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (62,'programa/delete','borra referencia de documento');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (63, 'site/indexAdmin', 'Index para administrador de cpe');
 ---
 -- Acciones configurables para cada sector a travez del usuario CPE Admin.
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
@@ -283,6 +286,7 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (60,1);--acceso a programa/update
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (61,1);--acceso a programa/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (62,1);--acceso a programa/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (63,1);--acceso a site/indexAdmin
 	END;
 
 
