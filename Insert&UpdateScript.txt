@@ -26,9 +26,3 @@ UPDATE instituto
 UPDATE instituto
    SET nombre='Instituto de Ciencias Sociales y Administración'
  WHERE instituto_id=4;
-
-
-
-
-INSERT INTO instituto VALUES (3, 'Instituto de Ciencias Sociales y Administración');
-INSERT INTO instituto VALUES (4, 'Instituto de Ingeniería y Agronomía');
