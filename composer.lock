@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
+    "content-hash": "5ab8405f23db97ed9fde13403f1c6323",
+=======
     "content-hash": "979fcbe99ea91b2de1e32bd807702d87",
+>>>>>>> upstream/master
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -591,6 +595,8 @@
                 "yii2"
             ],
             "time": "2017-05-25T20:12:30+00:00"
+<<<<<<< HEAD
+=======
         },
         {
             "name": "kartik-v/yii2-widget-sidenav",
@@ -640,6 +646,7 @@
                 "yii2"
             ],
             "time": "2014-11-09T08:07:23+00:00"
+>>>>>>> upstream/master
         },
         {
             "name": "swiftmailer/swiftmailer",
