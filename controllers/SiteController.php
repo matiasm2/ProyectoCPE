@@ -80,7 +80,7 @@ class SiteController extends Controller{
  public function actionIndex()
     {
         if(Yii::$app->user->isGuest) {$msg='No logoneado...';} 
-        else {$msg=RoleAccessChecker::listNavItemsAccess();
+        else {$msg='Logoneado!';
             }
         $numUsr=Usuario::find()->count();
         if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/indexAdmin'))) {
