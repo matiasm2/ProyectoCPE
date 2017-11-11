@@ -37,62 +37,7 @@ AppAsset::register($this);
 
 
 <div class="wrap">
-    <?php
-
-/*
-    NavBar::begin([
-        'brandLabel' =>'<but',
-            'options' => [
-            'class' => 'navbar-default ',
-        ],
-    ]);
-
-    NavBar::end();
-*/
-    echo Nav::widget(
-    //~ [
-        //~ 'options' => ['class' => 'sidebar-nav navbar-left'],
-        //~ 'encodeLabels' => false,
-        //~ 'items' => [
-            //~ ['label' => '<span class="glyphicon glyphicon-home"></span> Inicio', 'url' => ['/site/index']],
-            //~ //['label' => 'About', 'url' => ['/site/about']],
-            //~ //['label' => 'Contact', 'url' => ['/site/contact']],
-            //~ ['label' => '<span class="glyphicon glyphicon-user"></span> Crear usuarios', 'url' => ['/site/register']],
-//~ /*descomentar si se quiere eliminar el dropdown del menu*/
-            //~ ['label' => 'Archivo', 'url' => ['/archivoprograma/index'],'visible' => !(Yii::$app->user->isGuest)],
-//~ /*comentar desde aca si se quiere eliminar el dropdown del menu*/
-
-			   //~ ['label' => '<span class="glyphicon glyphicon-cog"></span> Herramientas','items'=> [
-				       //~ ['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
-               //~ ['label' => 'Usuarios', 'url' => ['/usuario/index']],
-               //~ ['label' => 'Institutos', 'url' => ['/instituto/index']],
-               //~ ['label' => 'Carreras', 'url' => ['/carrera/index']],
-               //~ ['label' => 'Materias', 'url' => ['/materia/index']],
-               //~ ['label' => 'Sectores', 'url' => ['/sector/index']],
-               //~ ['label' => 'Programas', 'url' => ['/programa/index']],
-               //~ ['label' => 'Permisos', 'url' => ['/asignsector/index']],
-
-				//~ ],
-			     //~ 'visible' => !(Yii::$app->user->isGuest),
-			  //~ ],
-//~ /*comentar hasta aca si se quiere eliminar el dropdown del menu*/
-
-//~ Yii::$app->user->isGuest ? (
-                //~ ['label' => '<span class="glyphicon glyphicon-log-in"></span> Login', 'url' => ['/site/login']]
-            //~ ) : (
-                //~ '<li>'
-                //~ . Html::beginForm(['/site/logout'], 'post')
-                //~ . Html::submitButton(
-                    //~ '<span class="glyphicon glyphicon-log-out"></span> Logout (' . '  [' . Yii::$app->user->identity->getSector()->one()->descripcion.'] ' . Yii::$app->user->identity->nombre . ' )',
-                    //~ ['class' => 'btn btn-link logout']
-                //~ )
-                //~ . Html::endForm()
-                //~ . '</li>'
-            //~ )
-        //~ ],
-    //~ ]
-    RoleAccessChecker::navWidgetContent());
-    ?>
+    <?php echo Nav::widget(RoleAccessChecker::navWidgetContent()); ?>
 
 
     <div class="container-fluid">
