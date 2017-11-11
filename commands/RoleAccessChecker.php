@@ -67,121 +67,41 @@ class RoleAccessChecker extends Controller{
 						 //tambien por el actionrole_id encontrado por el parametro, entonces significa que la
 						 //accion esta registrada en Actionrole  
 	}
-	/**
-	 * Devolucion de los asignsector formateado para items de Nav::widget del main.php de yii
-	 * */
-	public static function listNavItemsAccess(){			
-		$out='';	
-		/**
-		 * $allAsignsector is the model class for table "asignsector".
-		 * @property integer $asignsector_id
-		 * @property integer $actionrole_id
-		 * @property integer $sector_id
-		 * @property Actionrole $actionrole
-		 * @property Sector $sector
-		 */
-		$allAsignsector=new Asignsector();
-		$query1 = $allAsignsector->find()
-			-> where('sector_id=:sector_id',[':sector_id'=>
-				Yii::$app->user->identity->getSector()->one()->sector_id]);
-		foreach($query1->each() as $assign){
-			//['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
-			//['label' => 'Usuarios', 'url' => ['/usuario/index']],
-			$out .= '[\'label\' => \''.$assign->getActionrole()->one()->descripcion.
-				'\',\'url\'=>[\''.$assign->getActionrole()->one()->action_disp. '\', ]] , ';
-		}
-		return $out;
-	}
 
 	/**
-	 * Devolucion de los asignsector formateado para items de Nav::widget del main.php de yii
-	 * 
-	public static function navItemsAccess(){
-		$map = ArrayHelper::map(self::arrNavItemsAccess()),'lavel','url');
-		return $map;
-	}*/
-	
-	public static function arrNavItemsAccess(){
-		$arr;	
-		/**
-		 * $allAsignsector is the model class for table "asignsector".
-		 * @property integer $asignsector_id
-		 * @property integer $actionrole_id
-		 * @property integer $sector_id
-		 * @property Actionrole $actionrole
-		 * @property Sector $sector
-		 */
-		$allAsignsector=new Asignsector();
-		$query2 = $allAsignsector->find()
-			-> where('sector_id=:sector_id',[':sector_id'=>
-				Yii::$app->user->identity->getSector()->one()->sector_id]);
-		foreach($query2->each() as $assign2){
-			//['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
-			//['label' => 'Usuarios', 'url' => ['/usuario/index']],
-			$arr=ArrayHelper::merge(Array(['lavel'=> $assign2->getActionrole()->one()->descripcion,
-				'url',[$assign2->getActionrole()->one()->action_disp],]),$arr);
-		}
-		return $arr;
-	}
-
-
-	public static function testQery($currentAction){
-		$out='TestOut in = '.$currentAction.' ,IsAcEn= ';
-		/**
-		 * $allAsignsector is the model class for table "asignsector".
-		 * @property integer $asignsector_id
-		 * @property integer $actionrole_id
-		 * @property integer $sector_id
-		 * @property Actionrole $actionrole
-		 * @property Sector $sector
-		 */
-		$allAsignsector=new Asignsector();
-		/**
-		 * $allActtionRoles is the model class for table "actionrole".
-		 * @property integer $actionrole_id
-		 * @property string $action_disp
-		 * @property string $descripcion
-		 * @property Asignsector[] $asignsectors
-		 */
-		$allActionRoles=new Actionrole();
-		$actionIsEnable = $allActionRoles->find()
-			->where('action_disp=:action_disp',[':action_disp'=> $currentAction, ])->one();
-		$out .= $actionIsEnable->actionrole_id.'|';
-		$out .= $actionIsEnable->action_disp.'|';
-		$out .= $actionIsEnable->descripcion.'|, sec =';
-		$asign = $allAsignsector->find()
-			-> where('actionrole_id=:actionrole_id',[':actionrole_id'=> $actionIsEnable->actionrole_id, ])
-			-> andWhere('sector_id=:sector_id',[':sector_id'=> 
-				Yii::$app->user->identity->getSector()->one()->sector_id])->one();
-		$out .= Yii::$app->user->identity->getSector()->one()->sector_id.'|, Asig= ';
-		$out .= $asign->asignsector_id.'|';
-		$out .= $asign->actionrole_id.'|';
-		$out .= $asign->sector_id.'|';
-		
-		return $out;
-	}
-	
+	 * Devuelve el contenido  del widget nav en forma dinamica segun la lista de permisos que el sector tenga cargada 
+	 **/
 	public static function navWidgetContent(){
-		$arr= ['options' => 
-				['class' => 'navbar-nav navbar-right'],
-				'items' => [
-				['label' => 'Home', 'url' => ['/site/index']],
-				['label' => 'About', 'url' => ['/site/about']],
-				['label' => 'Contact', 'url' => ['/site/contact']],
-				['label' => 'Register', 'url' => ['/site/register']],
-				['label' => 'Dropdown','items'=> [
-					['label' => 'Archivos', 'url' => ['/archivoprograma/index']],
-					['label' => 'Usuarios', 'url' => ['/usuario/index']],
-					'<li class="divider"></li>',
+		return [
+			'options' => ['class' => 'sidebar-nav navbar-left'],
+			'encodeLabels' => false,
+			'items' => [
+				['label' => '<span class="glyphicon glyphicon-home"></span> Inicio', 'url' => ['/site/index']],
+				['label' => '<span class="glyphicon glyphicon-user"></span> Crear usuarios', 'url' => ['/site/register']],
+				   ['label' => '<span class="glyphicon glyphicon-cog"></span> Herramientas','items'=> [
+					   (self::actionIsAsignSector('site/register')) ? (['label' => 'Registra nuevo usuario', 'url' => ['/site/register']]):(''),
+					   (self::actionIsAsignSector('archivoprograma/index')) ? (['label' => 'Documentos', 'url' => ['/archivoprograma/index']]):(''),
+					   (self::actionIsAsignSector('estado/index')) ? (['label' => 'Estados de documentos', 'url' => ['/estado/index']]):(''),
+					   (self::actionIsAsignSector('instituto/index')) ? (['label' => 'Intitutos', 'url' => ['/instituto/index']]):(''),
+					   (self::actionIsAsignSector('carrera/index')) ? (['label' => 'Carreras', 'url' => ['/carrera/index']]):(''),
+					   (self::actionIsAsignSector('materia/index')) ? (['label' => 'Materias', 'url' => ['/materia/index']]):(''),
+					   (self::actionIsAsignSector('ano/index')) ? (['label' => 'Años', 'url' => ['/ano/index']]):(''),
+					   (self::actionIsAsignSector('sector/index')) ? (['label' => 'Sectores', 'url' => ['/sector/index']]):(''),
+					   (self::actionIsAsignSector('asignsector/index')) ? (['label' => 'Asignación de accesos', 'url' => ['/asignsector/index']]):(''),
+					   (self::actionIsAsignSector('usuario/index')) ? (['label' => 'Usuarios', 'url' => ['/usuario/index']]):(''),
+					   (self::actionIsAsignSector('planestudio/index')) ? (['label' => 'Planes de Estudio', 'url' => ['/planestudio/index']]):(''),
+					   (self::actionIsAsignSector('planmateria/index')) ? (['label' => 'Plan de Estudio x Materia', 'url' => ['/planmateria/index']]):(''),
+					   (self::actionIsAsignSector('programa/index')) ? (['label' => 'Programas', 'url' => ['/programa/index']]):(''),
 					],
-				'visible' => !(Yii::$app->user->isGuest),
-				], Yii::$app->user->isGuest ? (
-					['label' => 'Login', 'url' => ['/site/login']]
-				) : (
+					'visible' => !(Yii::$app->user->isGuest),
+				  ],
+					Yii::$app->user->isGuest ? (
+						['label' => '<span class="glyphicon glyphicon-log-in"></span> Login', 'url' => ['/site/login']]
+					) : (
 					'<li>'
 					. Html::beginForm(['/site/logout'], 'post')
 					. Html::submitButton(
-						'Logout (' . '  [' . Yii::$app->user->identity->getSector()->one()->descripcion.'] ' . Yii::$app->user->identity->nombre . ' )',
+						'<span class="glyphicon glyphicon-log-out"></span> Logout (' . '  [' . Yii::$app->user->identity->getSector()->one()->shortname.'] ' . Yii::$app->user->identity->nombre . ' )',
 						['class' => 'btn btn-link logout']
 					)
 					. Html::endForm()
@@ -189,16 +109,5 @@ class RoleAccessChecker extends Controller{
 				)
 			],
 		];
-			//~ $allAsignsector=new Asignsector();
-			//~ $query2 = $allAsignsector->find()
-				//~ -> where('sector_id=:sector_id',[':sector_id'=>
-					//~ Yii::$app->user->identity->getSector()->one()->sector_id]);
-			//~ foreach($query2->each() as $assign2){
-				//~ ArrayHelper::setValue($arr,'items.lavel.Dropdown.items',
-						//~ ['lavel'=>$assign2->getActionrole()->one()->descripcion,]);
-				//~ ArrayHelper::setValue($arr,'items.lavel.Dropdown.items',
-							//~ ['url'=>$assign2->getActionrole()->one()->action_disp,]);
-					//~ }
-		return $arr;
 	}
 }

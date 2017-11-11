@@ -9,7 +9,9 @@ use Yii;
  *
  * @property integer $sector_id
  * @property string $descripcion
+ * @property string $shortname
  *
+ * @property Asignsector[] $asignsectors
  * @property Usuario[] $usuarios
  */
 class Sector extends \yii\db\ActiveRecord
@@ -28,7 +30,8 @@ class Sector extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['descripcion'], 'string', 'max' => 40],
+            [['descripcion'], 'string', 'max' => 60],
+            [['shortname'], 'string', 'max' => 10],
         ];
     }
 
@@ -40,7 +43,16 @@ class Sector extends \yii\db\ActiveRecord
         return [
             'sector_id' => 'Sector ID',
             'descripcion' => 'Descripcion',
+            'shortname' => 'Shortname',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAsignsectors()
+    {
+        return $this->hasMany(Asignsector::className(), ['sector_id' => 'sector_id'])->inverseOf('sector');
     }
 
     /**
@@ -48,7 +60,7 @@ class Sector extends \yii\db\ActiveRecord
      */
     public function getUsuarios()
     {
-        return $this->hasMany(Usuario::className(), ['sector_id' => 'sector_id']);
+        return $this->hasMany(Usuario::className(), ['sector_id' => 'sector_id'])->inverseOf('sector');
     }
 
     /**
@@ -58,9 +70,5 @@ class Sector extends \yii\db\ActiveRecord
     public static function find()
     {
         return new SectorQuery(get_called_class());
-    }
-
-    public static function getAllSectors(){
-      return Sector::find()->all();
     }
 }

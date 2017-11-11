@@ -158,11 +158,10 @@ class PlanestudioController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id){
-			if (($model = Planestudio::findOne($id)) !== null) {
-				return $model;
-			} else {
-				throw new NotFoundHttpException('The requested page does not exist.');
-			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+		if (($model = Planestudio::findOne($id)) !== null) {
+			return $model;
+		} else {
+			throw new NotFoundHttpException('The requested page does not exist.');
+		}
     }
 }

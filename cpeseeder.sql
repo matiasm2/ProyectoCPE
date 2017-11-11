@@ -1,10 +1,13 @@
 \c cpe_db;
 BEGIN;
   --Datos que deben quedar
-  INSERT INTO sector(descripcion)VALUES ('CPE Admin');
-  INSERT INTO sector(descripcion)VALUES ('Usuario de la CPE');
-  INSERT INTO sector(descripcion)VALUES ('Usuario de instituto');
-  INSERT INTO sector(descripcion)VALUES ('Usuario de Prensa');
+  INSERT INTO sector(descripcion,shortname)VALUES('Administrador del sistema CPE','Admin CPE');
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del sistema CPE','Usr CPE');
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Estudios Iniciales','Usr IEI');
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud','Usr ICS');
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias Sociales y Administración','Usr ICSyA');
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingeniería y Agronomía','Usr IIyA');
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario de Prensa','Usr Pr');
 
   INSERT INTO instituto(nombre)
   VALUES ('Instituto de Estudios Iniciales');
