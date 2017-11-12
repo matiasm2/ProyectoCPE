@@ -291,7 +291,8 @@ class SiteController extends Controller{
 				->setSubject($subject)
 				->setHtmlBody($body)
 				->send();
-				return "Enhorabuena, ahora sólo falta que confirmes tu registro en tu cuenta de correo";
+                echo "Enhorabuena, ahora sólo falta que confirmes tu registro en tu cuenta de correo!";
+				return "Enhorabuena, ahora sólo falta que confirmes tu registro en tu cuenta de correo!";
 		} else return "Confirmación alternativa " . Mailto::getUrlMailto(
 			$user->mailUser, $subject, "", "", "Haga click en el siguiente enlace para finalizar tu registro", $link,
 			"\nClick aquí para reenviar confirmación vía mailto:");

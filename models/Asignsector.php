@@ -43,8 +43,8 @@ class Asignsector extends \yii\db\ActiveRecord
     {
         return [
             'asignsector_id' => 'Asignsector ID',
-            'actionrole_id' => 'Actionrole ID',
-            'sector_id' => 'Sector ID',
+            'actionrole_id' => 'Accion',
+            'sector_id' => 'Sector',
         ];
     }
 

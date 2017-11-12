@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\AsignSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Asignsectors';
+$this->title = 'Asignacion de accesos';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="col-lg-8">
@@ -18,7 +18,7 @@ $this->title = 'Asignsectors';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Asignsector', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
