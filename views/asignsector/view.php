@@ -16,11 +16,11 @@ $this->title = $model->asignsector_id;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->asignsector_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->asignsector_id], [
+        <?= Html::a('Actualizar', ['update', 'id' => $model->asignsector_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->asignsector_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Estas seguro que quieres eliminar este item?',
                 'method' => 'post',
             ],
         ]) ?>
