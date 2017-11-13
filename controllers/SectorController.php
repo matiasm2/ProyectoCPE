@@ -120,7 +120,7 @@ class SectorController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/level-access-error',]a);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
