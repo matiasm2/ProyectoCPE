@@ -8,6 +8,7 @@ use app\models\AnoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use app\commands\RoleAccessChecker;
 use app\controllers\ErrorController;
 
@@ -65,7 +66,7 @@ class AnoController extends Controller
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -79,7 +80,7 @@ class AnoController extends Controller
 			return $this->render('view', [
 				'model' => $this->findModel($id),
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -99,7 +100,7 @@ class AnoController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -108,7 +109,7 @@ class AnoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id{
+    public function actionUpdate($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('ano/update')) {
 			$model = $this->findModel($id);
@@ -120,7 +121,7 @@ class AnoController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -135,7 +136,7 @@ class AnoController extends Controller
 			$this->findModel($id)->delete();
 
 			return $this->redirect(['index']);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**

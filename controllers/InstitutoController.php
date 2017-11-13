@@ -59,14 +59,13 @@ class InstitutoController extends Controller
     public function actionIndex(){
         $searchModel = new InstitutoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('instituto/index')) {
 			return $this->render('index', [
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -80,7 +79,7 @@ class InstitutoController extends Controller
 			return $this->render('view', [
 				'model' => $this->findModel($id),
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -100,7 +99,7 @@ class InstitutoController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -121,7 +120,7 @@ class InstitutoController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -130,11 +129,12 @@ class InstitutoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+    public function actionDelete($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('instituto/delete')) {
+			$this->findModel($id)->delete();
+			return $this->redirect(['index']);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**

@@ -242,7 +242,7 @@ class SiteController extends Controller{
 				} else $model->getErrors();/* error detectado por la validacion del formulario */
 			}
 			return $this->render("register", ["model" => $model,"subModel" => $subModel, "msg" => $msg]);/* Sin errores detectados */
-        }else return $this->redirect(['error/error']);/* error detectado por RoleAccessChecker: Sin acceso. */
+        }else return $this->redirect(['error/level-access-error',]);/* error detectado por RoleAccessChecker: Sin acceso. */
     }
     
 	/**

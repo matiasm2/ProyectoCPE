@@ -1,4 +1,6 @@
-﻿CREATE DATABASE cpe_db;
+﻿CREATE DATABASE cpe_db 
+-- ~ WITH ENCODING 'LATIN1'
+;
 	DO
 	$body$
 	BEGIN
@@ -167,7 +169,8 @@
 	CREATE TABLE public.asignsector (
 		asignsector_id SERIAL PRIMARY KEY,
 		actionrole_id  integer REFERENCES actionrole,
-	    sector_id   integer REFERENCES sector
+	    sector_id   integer REFERENCES sector,
+	    UNIQUE(actionrole_id,sector_id)
 	);
 	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.asignsector TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE asignsector_asignsector_id_seq TO cpewebuser;

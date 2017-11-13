@@ -2,18 +2,21 @@
 
 namespace app\controllers;
 
-class ErrorController extends \yii\web\Controller
-{
+class ErrorController extends \yii\web\Controller{
 	public $msg;
-	
-    public function actionError()
-    {
-		//$this->msg="Datos del error.";
-        return $this->render('error',["msg" => $this->msg]);
+    public function actionDbUniqueError(){
+		$this->msg="Ya existe la regla de acceso";
+        return $this->render('db-unique-error',['msg'=>$this->msg,]);
     }
-    
-    
-    public function setMsg($ref){
-        return $this->render('error',["msg" => $ref]);
-	}
+
+    public function actionError(){
+		$this->msg="Error generico";
+        return $this->render('error',['msg'=>$this->msg,]);
+    }
+
+    public function actionLevelAccessError(){
+		$this->msg="No tiene acceso a esta seccion";
+        return $this->render('level-access-error',['msg'=>$this->msg,]);
+    }
+
 }

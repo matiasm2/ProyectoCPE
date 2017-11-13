@@ -67,7 +67,7 @@ class SectorController extends Controller
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -80,7 +80,7 @@ class SectorController extends Controller
 		if (RoleAccessChecker::actionIsAsignSector('sector/view')) {
 			return $this->render('view', [
 				'model' => $this->findModel($id),]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]a);
     }
 
     /**
@@ -99,7 +99,7 @@ class SectorController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -120,7 +120,7 @@ class SectorController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]a);
     }
 
     /**
@@ -134,7 +134,7 @@ class SectorController extends Controller
 		if (RoleAccessChecker::actionIsAsignSector('sector/delete')) {
 			$this->findModel($id)->delete();
 			return $this->redirect(['index']);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**

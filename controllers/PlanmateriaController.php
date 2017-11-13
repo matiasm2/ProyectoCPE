@@ -69,7 +69,7 @@ class PlanmateriaController extends Controller
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -106,7 +106,7 @@ class PlanmateriaController extends Controller
 					'subModel2' => $subModel2,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -132,7 +132,7 @@ class PlanmateriaController extends Controller
 					'subModel2' => $subModel2,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -146,7 +146,7 @@ class PlanmateriaController extends Controller
 		if (RoleAccessChecker::actionIsAsignSector('planmateria/delete')) {
 			$this->findModel($id)->delete();
 			return $this->redirect(['index']);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**

@@ -42,8 +42,8 @@ class Sector extends \yii\db\ActiveRecord
     {
         return [
             'sector_id' => 'Sector ID',
-            'descripcion' => 'Descripcion',
-            'shortname' => 'Shortname',
+            'descripcion' => 'Descripción',
+            'shortname' => 'Abreviatura',
         ];
     }
 

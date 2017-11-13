@@ -60,13 +60,13 @@ class CarreraController extends Controller
     public function actionIndex(){
         $searchModel = new CarreraSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$msg='';
+        $msg='';
 		if (RoleAccessChecker::actionIsAsignSector('carrera/index')) {
 			return $this->render('index', [
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -80,7 +80,7 @@ class CarreraController extends Controller
 			return $this->render('view', [
 				'model' => $this->findModel($id),
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -101,7 +101,7 @@ class CarreraController extends Controller
 					'subModel'=> $subModel,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -125,7 +125,7 @@ class CarreraController extends Controller
 					'subModel'=> $subModel,
 				]);
 			}
-		}else return $this->redirect(['error/error',["msg" => $msg ]]);
+		}else return $this->redirect(['error/level-access-error',]);
 
     }
 
@@ -140,7 +140,7 @@ class CarreraController extends Controller
 		if (RoleAccessChecker::actionIsAsignSector('carrera/delete')) {
 			$this->findModel($id)->delete();
 			return $this->redirect(['index']);
-		}else return $this->redirect(['error/error',["msg" => $msg ]]);
+		}else return $this->redirect(['error/level-access-error',]);
     }
 
     /**

@@ -67,7 +67,7 @@ class ProgramaController extends Controller
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -81,7 +81,7 @@ class ProgramaController extends Controller
 			return $this->render('view', [
 				'model' => $this->findModel($id),
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -101,7 +101,7 @@ class ProgramaController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -122,7 +122,7 @@ class ProgramaController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]a);
     }
 
     /**
@@ -137,7 +137,7 @@ class ProgramaController extends Controller
 			$this->findModel($id)->delete();
 
 			return $this->redirect(['index']);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**

@@ -66,7 +66,7 @@ class MateriaController extends Controller
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
 	}
 
     /**
@@ -80,7 +80,7 @@ class MateriaController extends Controller
 			return $this->render('view', [
 				'model' => $this->findModel($id),
 			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -100,7 +100,7 @@ class MateriaController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -121,7 +121,7 @@ class MateriaController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -135,7 +135,7 @@ class MateriaController extends Controller
 		if (RoleAccessChecker::actionIsAsignSector('materia/delete')) {
 			$this->findModel($id)->delete();
 			return $this->redirect(['index']);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**

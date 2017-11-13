@@ -66,7 +66,7 @@ class UsuarioController extends Controller
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);
-        }else return $this->redirect(['error/error']);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -80,7 +80,7 @@ class UsuarioController extends Controller
 			return $this->render('view', [
 				'model' => $this->findModel($id)
 			]);
-        }else return $this->redirect(['error/error']);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -101,7 +101,7 @@ class UsuarioController extends Controller
 				//~ ]);
 			//~ }
 			$this->redirect(['site/register']);
-        }else return $this->redirect(['error/error']);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -122,7 +122,7 @@ class UsuarioController extends Controller
 					'model' => $model,
 				]);
 			}
-		}else return $this->redirect(['error/error']);
+		}else return $this->redirect(['error/level-access-error',]);
 	}
 
     /**
@@ -138,7 +138,7 @@ class UsuarioController extends Controller
 			$model->activuser=0;
 			$model->save();
 			return $this->redirect(['index']);
-        }else return $this->redirect(['error/error']);
+        }else return $this->redirect(['error/level-access-error',]a);
 
     }
 

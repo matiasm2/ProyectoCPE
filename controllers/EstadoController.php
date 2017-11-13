@@ -80,7 +80,7 @@ class EstadoController extends Controller
 			return $this->render('view', [
 				'model' => $this->findModel($id),
 			]);
-		}else return $this->redirect(['error/error',["msg" => $msg ]]);
+		}else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -100,7 +100,7 @@ class EstadoController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -121,7 +121,7 @@ class EstadoController extends Controller
 					'model' => $model,
 				]);
 			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -135,7 +135,7 @@ class EstadoController extends Controller
 		if (RoleAccessChecker::actionIsAsignSector('estado/create')) {
 			$this->findModel($id)->delete();
 			return $this->redirect(['index']);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
