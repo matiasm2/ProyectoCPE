@@ -80,7 +80,7 @@ class SectorController extends Controller
 		if (RoleAccessChecker::actionIsAsignSector('sector/view')) {
 			return $this->render('view', [
 				'model' => $this->findModel($id),]);
-        }else return $this->redirect(['error/level-access-error',]a);
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
