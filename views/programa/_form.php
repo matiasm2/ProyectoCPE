@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Programa */
@@ -14,7 +15,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'planmateria_id')->textInput() ?>
 
-    <?= $form->field($model, 'ano_id')->textInput() ?>
+    <?= $form->field($model, 'ano_id')->dropDownList(ArrayHelper::map($subModel->find()->asArray()->select('ano_id, ano')->orderBy('ano')->all(), 'ano_id','ano')) ?>
 
     <?= $form->field($model, 'fecha')->textInput() ?>
 

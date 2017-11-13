@@ -29,6 +29,10 @@ $this->title = Yii::t('app', 'Programas');
 
             //'programa_id',
             'planmateria_id',
+<<<<<<< HEAD
+=======
+
+>>>>>>> c3f4feb51be446aaa51ceadde43b816d6c0cc36c
             //'ano_id',
             [
               'label' => 'Anio',

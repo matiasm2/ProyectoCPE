@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\commands\RoleAccessChecker;
 use app\controllers\ErrorController;
+use app\models\Ano;
 
 /**
  * ProgramaController implements the CRUD actions for Programa model.
@@ -93,12 +94,14 @@ class ProgramaController extends Controller
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('programa/create')) {
 			$model = new Programa();
+      $subModel = new Ano();
 
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
 				return $this->redirect(['index', 'id' => $model->programa_id]);
 			} else {
 				return $this->render('create', [
 					'model' => $model,
+          'subModel' => $subModel,
 				]);
 			}
         }else return $this->redirect(['error/level-access-error',]);
@@ -114,6 +117,7 @@ class ProgramaController extends Controller
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('programa/update')) {
 			$model = $this->findModel($id);
+      $subModel = new Ano();
 
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
 				return $this->redirect(['index', 'id' => $model->programa_id]);
