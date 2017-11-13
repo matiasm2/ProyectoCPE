@@ -5,13 +5,8 @@ BEGIN;
   INSERT INTO sector(descripcion,shortname)VALUES('Usuario del sistema CPE','Usr CPE');
   INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Estudios Iniciales','Usr IEI');
   INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud','Usr ICS');
-<<<<<<< HEAD
   INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias Sociales y Administración','Usr ICSyA');
   INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingeniería y Agronomía','Usr IIyA');
-=======
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias Sociales y Administracion','Usr ICSyA');
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingenieria y Agronomia','Usr IIyA');
->>>>>>> 236628680812d5f9032365bbcebcd673a67d097b
   INSERT INTO sector(descripcion,shortname)VALUES('Usuario de Prensa','Usr Pr');
 
   INSERT INTO instituto(nombre)
@@ -19,21 +14,14 @@ BEGIN;
   INSERT INTO instituto(nombre)
   VALUES ('Instituto de Ciencias de la Salud');
   INSERT INTO instituto(nombre)
-<<<<<<< HEAD
   VALUES ('Instituto de Ciencias Sociales y Administración');
   INSERT INTO instituto(nombre)
   VALUES ('Instituto de Ingeniería y Agronomía');
-=======
-  VALUES ('Instituto de Ciencias Sociales y Administracion');
-  INSERT INTO instituto(nombre)
-  VALUES ('Instituto de Ingenieria y Agronomia');
->>>>>>> 236628680812d5f9032365bbcebcd673a67d097b
 
   --Carreras del 'Instituto de Ciencias de la Salud'
   INSERT INTO carrera(instituto_id, descripcion)
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Medicina');
   INSERT INTO carrera(instituto_id, descripcion)
-<<<<<<< HEAD
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Bioquímica');
   INSERT INTO carrera(instituto_id, descripcion)
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en Enfermería');
@@ -41,21 +29,11 @@ BEGIN;
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en Organización y Asistencia de Quirófanos');
   INSERT INTO carrera(instituto_id, descripcion)
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en Kinesiología y Fisiatría');
-=======
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Bioquimica');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en Enfermeria');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en Organizacion y Asistencia de Quirofanos');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en Kinesiologia y Fisiatria');
->>>>>>> 236628680812d5f9032365bbcebcd673a67d097b
   INSERT INTO carrera(instituto_id, descripcion)
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Tecnicatura en Emergencias Sanitarias y Desastres');
   INSERT INTO carrera(instituto_id, descripcion)
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Tecnicatura Universitaria en Farmacia Hospitalaria');
   INSERT INTO carrera(instituto_id, descripcion)
-<<<<<<< HEAD
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Tecnicatura Universitaria en Información Clínica y Gestión de Pacientes');
 
   INSERT INTO carrera(instituto_id, descripcion)
@@ -99,61 +77,12 @@ BEGIN;
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingeniería y Agronomía'),'Licenciatura en Ciencias Agrarias');
   INSERT INTO carrera(instituto_id, descripcion)
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingeniería y Agronomía'),'Ingeniería en Transporte');
-=======
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Tecnicatura Universitaria en Informacion Clinica y Gestion de Pacientes');
-
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Especializacion en Cardiologia');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Maestria en Investigacion Traslacional para la Salud');
-
-  --Carreras del 'Instituto de Ciencias Sociales y Administracion'
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administracion'),'Licenciatura en Economia');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administracion'),'Licenciatura en Trabajo Social');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administracion'),'Licenciatura en Administracion');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administracion'),'Licenciatura en Gestion Ambiental');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administracion'),'Licenciatura en Relaciones del Trabajo');
-
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administracion'),'Especializacion en Evaluacion de Politicas Publicas');
-
-  --Carreras del 'Instituto de Ingenieria y Agronomia'
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenieria y Agronomia'),'Ingenieria en Petroleo');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenieria y Agronomia'),'Bioingenieria');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenieria y Agronomia'),'Ingenieria Electromecanica');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenieria y Agronomia'),'Ingenieria en Informatica');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenieria y Agronomia'),'Ingenieria Industrial');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenieria y Agronomia'),'Tecnicatura Universitaria en Produccion Vegetal Intensiva');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenieria y Agronomia'),'Tecnicatura Universitaria en Emprendimientos Agropecuarios');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenieria y Agronomia'),'Licenciatura en Administracion Agraria');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenieria y Agronomia'),'Licenciatura en Ciencias Agrarias');
-  INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenieria y Agronomia'),'Ingenieria en Transporte');
->>>>>>> 236628680812d5f9032365bbcebcd673a67d097b
 
   --Estados
   INSERT INTO estado(descripcion)
   VALUES ('Enviado');
   INSERT INTO estado(descripcion)
-<<<<<<< HEAD
   VALUES ('En revisión');
-=======
-  VALUES ('En revision');
->>>>>>> 236628680812d5f9032365bbcebcd673a67d097b
   INSERT INTO estado(descripcion)
   VALUES ('A corregir');
   INSERT INTO estado(descripcion)
@@ -214,7 +143,6 @@ BEGIN;
 
   --Inserts de prueba
   INSERT INTO planestudio(carrera_id,ano_id)
-<<<<<<< HEAD
   VALUES ((SELECT carrera_id FROM carrera WHERE descripcion='Ingeniería en Petróleo'),(SELECT ano_id FROM ano WHERE ano=2015));
   INSERT INTO planestudio(carrera_id,ano_id)
   VALUES ((SELECT carrera_id FROM carrera WHERE descripcion='Ingeniería en Informática'),(SELECT ano_id FROM ano WHERE ano=2015));
@@ -225,23 +153,10 @@ BEGIN;
   VALUES ('Matemática II', FALSE);
   INSERT INTO materia(nombre,optativa)
   VALUES ('Matemática III', FALSE);
-=======
-  VALUES ((SELECT carrera_id FROM carrera WHERE descripcion='Ingenieria en Petroleo'),(SELECT ano_id FROM ano WHERE ano=2015));
-  INSERT INTO planestudio(carrera_id,ano_id)
-  VALUES ((SELECT carrera_id FROM carrera WHERE descripcion='Ingenieria en Informatica'),(SELECT ano_id FROM ano WHERE ano=2015));
-
-  INSERT INTO materia(nombre,optativa)
-  VALUES ('Matematica I', FALSE);
-  INSERT INTO materia(nombre,optativa)
-  VALUES ('Matematica II', FALSE);
-  INSERT INTO materia(nombre,optativa)
-  VALUES ('Matematica III', FALSE);
->>>>>>> 236628680812d5f9032365bbcebcd673a67d097b
 
   INSERT INTO planmateria(planestudio_id,materia_id)
   VALUES (
     (SELECT planestudio_id FROM planestudio
-<<<<<<< HEAD
       WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingeniería en Informática')
       AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
     (SELECT materia_id FROM materia WHERE nombre='Matemática I'));
@@ -257,55 +172,38 @@ BEGIN;
       WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingeniería en Informática')
       AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
     (SELECT materia_id FROM materia WHERE nombre='Matemática III'));
-=======
-      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingenieria en Informatica')
-      AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
-    (SELECT materia_id FROM materia WHERE nombre='Matematica I'));
-  INSERT INTO planmateria(planestudio_id,materia_id)
-  VALUES (
-    (SELECT planestudio_id FROM planestudio
-      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingenieria en Informatica')
-      AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
-    (SELECT materia_id FROM materia WHERE nombre='Matematica II'));
-  INSERT INTO planmateria(planestudio_id,materia_id)
-  VALUES (
-    (SELECT planestudio_id FROM planestudio
-      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingenieria en Informatica')
-      AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
-    (SELECT materia_id FROM materia WHERE nombre='Matematica III'));
->>>>>>> 236628680812d5f9032365bbcebcd673a67d097b
 
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (1,14,(SELECT CURRENT_DATE),'Programa de la materia XX');
-
+	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (2,14,(SELECT CURRENT_DATE),'Programa de la materia YY');
-
+	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (3,14,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
-
+	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (1,15,(SELECT CURRENT_DATE),'Programa de la materia XX');
-
+	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (2,15,(SELECT CURRENT_DATE),'Programa de la materia YY');
-
+	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (3,15,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
-
+	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (1,16,(SELECT CURRENT_DATE),'Programa de la materia XX');
-
+	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (2,16,(SELECT CURRENT_DATE),'Programa de la materia YY');
-
+	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (3,16,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
   INSERT INTO programa VALUES (10, 1, 20, '2017-11-07', 'Programa de la materia ZZ');
 
 ---
 -- Acciones registradas de todo el circuito administrativo (tabla fija), sera parte del modelo proporcionando descripciones.
--- El objetivo de esta tabla es poder completar la tabla actionrole que hace funcionar al
+-- El objetivo de esta tabla es poder completar la tabla actionrole que hace funcionar al 
 -- comando app\commands\RoleAccessChecker a travez de la tabla asignsector que depende de esta
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (1,'error/error','Ver pantalla bloqueada');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (2,'site/register','Registrar nuevos usuarios');
@@ -344,19 +242,11 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (35,'sector/update','Actualizar sectores');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (36,'sector/create','Crear sectores');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (37,'sector/view','Ver sectores');
-<<<<<<< HEAD
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (38,'asignsector/delete','Eliminar asignación de acciones');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (39,'asignsector/index','Ver lista de asignación de acciones');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (40,'asignsector/update','Actualizar asignación de acciones');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (41,'asignsector/create','Crear asignación de acciones');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (42,'asignsector/view','Ver asignación de acciones');
-=======
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (38,'asignsector/delete','Eliminar asignaci�n de acciones');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (39,'asignsector/index','Ver lista de asignaci�n de acciones');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (40,'asignsector/update','Actualizar asignaci�n de acciones');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (41,'asignsector/create','Crear asignaci�n de acciones');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (42,'asignsector/view','Ver asignaci�n de acciones');
->>>>>>> 236628680812d5f9032365bbcebcd673a67d097b
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (43,'usuario/delete','Eliminar usuarios');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (44,'usuario/index','Ver lista de usuarios');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (45,'usuario/update','Actualizar usuarios');
@@ -379,15 +269,9 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (62,'programa/delete','Eliminar referencia de documentos');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (63, 'site/indexAdmin', 'Home del administrador de CPE');
 ---
-<<<<<<< HEAD
 -- Acciones configurables para cada sector a travez del usuario Administrador del sistema CPE', Admin CPE., id1
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
 -- comando app\commands\RoleAccessChecker se insertan los valores para que Admin CPE tenga todos los accesos
-=======
--- Acciones configurables para cada sector a travez del usuario CPE Admin.
--- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al
--- comando app\commands\RoleAccessChecker se insertan los valores para que CPE Admin tenga todos los accesos
->>>>>>> 236628680812d5f9032365bbcebcd673a67d097b
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (1,1);--acceso a error/error
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (2,1);--acceso a site/register
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (38,1);--acceso a asignsector/delete
