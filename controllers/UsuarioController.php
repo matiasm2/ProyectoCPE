@@ -138,7 +138,7 @@ class UsuarioController extends Controller
 			$model->activuser=0;
 			$model->save();
 			return $this->redirect(['index']);
-        }else return $this->redirect(['error/level-access-error',]a);
+        }else return $this->redirect(['error/level-access-error',]);
 
     }
 
