@@ -165,6 +165,8 @@ class ArchivoprogramaController extends Controller
 		//} else return $this->redirect(['error/error']);
     }
 
+    
+
     /**
      * Finds the Archivoprograma model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

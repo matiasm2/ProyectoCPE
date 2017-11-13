@@ -32,8 +32,8 @@ class Programa extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['planmateria_id', 'ano_id'], 'integer'],
-            [['fecha'], 'safe'],
+            [['planmateria_id'], 'integer'],
+            [['fecha', 'ano_id'], 'safe'],
             [['descripcion'], 'string', 'max' => 75],
             [['ano_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ano::className(), 'targetAttribute' => ['ano_id' => 'ano_id']],
             [['planmateria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Planmateria::className(), 'targetAttribute' => ['planmateria_id' => 'planmateria_id']],

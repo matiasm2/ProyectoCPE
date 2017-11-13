@@ -43,6 +43,8 @@ class ProgramaSearch extends Programa
     {
         $query = Programa::find();
 
+        $query->leftJoin('ano','ano.ano_id=programa.ano_id');
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -61,7 +63,7 @@ class ProgramaSearch extends Programa
         $query->andFilterWhere([
             'programa_id' => $this->programa_id,
             'planmateria_id' => $this->planmateria_id,
-            'ano_id' => $this->ano_id,
+            'ano.ano' => $this->ano_id,
             'fecha' => $this->fecha,
         ]);
 

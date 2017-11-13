@@ -10,7 +10,7 @@ use yii\grid\GridView;
 $this->title = 'Archivos de programas';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="col-lg-10">
+<div class="col-lg-8">
 <div class="archivoprograma-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -24,23 +24,26 @@ $this->title = 'Archivos de programas';
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            //'programa_id',
+            [
+              'attribute' => 'programa',
+              'value' =>'descripcionPrograma',
+            ],
 
-            'archivoprograma_id',
-            'programa_id',
-            'usuario_id',
-            'estado_id',
+            'nombreUsuario',
+            'descripcionEstado',
             'archivo',
             // 'fecha',
             // IMAGEN DEL DOCUMENTO
-				[
+				/*[
 					'attribute'	=> 'archivo',
 					'format' => 'html',
-					'label' => 'ImageColumnLabel',
+					//'label' => 'ImageColumnLabel',
 					'value' => function ($data){
 							return Html::img('uploads/'.$data['archivo'],['widht' => '100px']);
 						},
 
-				],
+				],*/
 			// URL DEL DOCUMENTO
 				[
 					'label' => 'File',

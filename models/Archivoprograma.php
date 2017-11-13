@@ -52,7 +52,7 @@ class Archivoprograma extends \yii\db\ActiveRecord
             'archivoprograma_id' => 'Archivoprograma ID',
             'programa_id' => 'Programa ID',
             'usuario_id' => 'Usuario ID',
-            'estado_id' => 'Estado ID',
+            'estado' => 'Estado',
             'archivo' => 'Archivo',
             'fecha' => 'Fecha',
         ];
@@ -98,5 +98,17 @@ class Archivoprograma extends \yii\db\ActiveRecord
     public static function find()
     {
         return new ArchivoprogramaQuery(get_called_class());
+    }
+
+    public function getNombreUsuario(){
+      return $this->usuario->nombre . " " . $this->usuario->apellido;
+    }
+
+    public function getDescripcionEstado(){
+      return $this->estado->descripcion;
+    }
+
+    public function getDescripcionPrograma(){
+      return $this->programa->descripcion;
     }
 }
