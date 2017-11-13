@@ -67,7 +67,7 @@ class ArchivoprogramaController extends Controller
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);
-		} else return $this->redirect(['error/error']);
+		} else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -80,7 +80,7 @@ class ArchivoprogramaController extends Controller
 			return $this->render('view', [
 				'model' => $this->findModel($id),
 			]);
-		} else return $this->redirect(['error/error']);
+		} else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -109,7 +109,7 @@ class ArchivoprogramaController extends Controller
 			} else return $this->render('create', ['model' => $model,
 									'subModel' => $subModel,
 									'subModel2' => $subModel2,]);
-		} else return $this->redirect(['error/error']);
+		} else return $this->redirect(['error/level-access-error',]);
       }
 
 
@@ -133,7 +133,7 @@ class ArchivoprogramaController extends Controller
 					'subModel2' => $subModel2,
 				]);
 			}
-		} else return $this->redirect(['error/error']);
+		} else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -146,7 +146,7 @@ class ArchivoprogramaController extends Controller
 		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/delete')) {
 			$this->findModel($id)->delete();
 			return $this->redirect(['index']);
-		} else return $this->redirect(['error/error']);
+		} else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -162,7 +162,7 @@ class ArchivoprogramaController extends Controller
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);
-		//} else return $this->redirect(['error/error']);
+		//} else return $this->redirect(['error/level-access-error',]);
     }
 
     
