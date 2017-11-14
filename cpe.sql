@@ -37,8 +37,8 @@
 
 	CREATE TABLE public.sector (
 	       sector_id    SERIAL PRIMARY KEY,
-	       descripcion   varchar(60),
-	       shortname	varchar(10)
+	       descripcion   varchar(140),
+	       shortname	varchar(15)
 	);
 	GRANT SELECT, INSERT, UPDATE ON public.sector TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE sector_sector_id_seq TO cpewebuser;

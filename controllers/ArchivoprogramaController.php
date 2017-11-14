@@ -91,24 +91,21 @@ class ArchivoprogramaController extends Controller
     public function actionCreate(){
 		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/create')) {
 			$model = new Archivoprograma();
-			$subModel= new Estado();
-			$subModel2= new Programa();
+			$subModelEstado = new Estado();
+			$subModelPrograma = new Programa();
 			if ($model->load(Yii::$app->request->post())){
 					$model->usuario_id=Yii::$app->user->identity->usuario_id;
 					$model->archivo= UploadedFile::getInstance($model,'archivo');
 					$model->fecha=date('Y-m-d');
 			  if ($model->save()) {
-				if ($model->upload()) {
-				  return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
-				} else {
-				  return $this->render('errorup');
-				}
+				if ($model->upload()) return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
+				else return $this->render('errorup');
 			  } else return $this->render('create', ['model' => $model,
-					'subModel' => $subModel,
-					'subModel2' => $subModel2,]);
+					'subModelEstado' => $subModelEstado,
+					'subModelPrograma' => $subModelPrograma,]);
 			} else return $this->render('create', ['model' => $model,
-									'subModel' => $subModel,
-									'subModel2' => $subModel2,]);
+					'subModelEstado' => $subModelEstado,
+					'subModelPrograma' => $subModelPrograma,]);
 		} else return $this->redirect(['error/level-access-error',]);
       }
 
@@ -122,16 +119,16 @@ class ArchivoprogramaController extends Controller
     public function actionUpdate($id){
 		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/update')) {
 			$model = $this->findModel($id);
-			$subModel= new Estado();
-			$subModel2= new Programa();
+			$subModelEstado = new Estado();
+			$subModelPrograma = new Programa();
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
 				return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
 			} else {
 				return $this->render('update', [
 					'model' => $model,
-					'subModel' => $subModel,
-					'subModel2' => $subModel2,
-				]);
+					'subModelEstado' => $subModelEstado,
+					'subModelPrograma' => $subModelPrograma,
+					]);
 			}
 		} else return $this->redirect(['error/level-access-error',]);
     }

@@ -16,19 +16,15 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, "estado_id")
                     ->dropDownList(
-            ArrayHelper::map($subModel->find()->all(), 'estado_id', 'descripcion'))
+            ArrayHelper::map($subModelEstado->find()->all(), 'estado_id', 'descripcion'))
             ?>
 
     <?= $form->field($model, "programa_id")
                     ->dropDownList(
-            ArrayHelper::map($subModel2->find()->all(), 'programa_id', 'descripcion'))
+            ArrayHelper::map($subModelPrograma->find()->all(), 'programa_id', 'descripcion'))
             ?>
 
-   
-
-    <!--?= $form->field($model, 'archivo')->textInput(['maxlength' => true]) ?-->
-
-    <?= $form->field($model, 'archivo')->widget(FileInput::classname(),
+     <?= $form->field($model, 'archivo')->widget(FileInput::classname(),
         ['options' => ['accept' => 'upload/*'],])
     ?>
 
