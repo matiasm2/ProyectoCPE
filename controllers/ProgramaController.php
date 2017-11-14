@@ -131,6 +131,7 @@ class ProgramaController extends Controller
 				} else {
 					return $this->render('update', [
 						'model' => $model,
+            'subModel' => $subModel,
 					]);
 				}
  			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
