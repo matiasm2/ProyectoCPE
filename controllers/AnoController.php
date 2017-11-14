@@ -61,11 +61,13 @@ class AnoController extends Controller
 		if (RoleAccessChecker::actionIsAsignSector('ano/index')) {
 			$searchModel = new AnoSearch();
 			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+			try{
 
-			return $this->render('index', [
-				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider,
-			]);
+				return $this->render('index', [
+					'searchModel' => $searchModel,
+					'dataProvider' => $dataProvider,
+				]);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -77,9 +79,11 @@ class AnoController extends Controller
     public function actionView($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('ano/view')) {
-			return $this->render('view', [
-				'model' => $this->findModel($id),
-			]);
+			try{
+				return $this->render('view', [
+					'model' => $this->findModel($id),
+				]);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -91,15 +95,17 @@ class AnoController extends Controller
     public function actionCreate(){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('ano/create')) {
-			$model = new Ano();
+			try{
+				$model = new Ano();
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->ano_id]);
-			} else {
-				return $this->render('create', [
-					'model' => $model,
-				]);
-			}
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->ano_id]);
+				} else {
+					return $this->render('create', [
+						'model' => $model,
+					]);
+				}
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -112,15 +118,17 @@ class AnoController extends Controller
     public function actionUpdate($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('ano/update')) {
-			$model = $this->findModel($id);
+			try{
+				$model = $this->findModel($id);
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->ano_id]);
-			} else {
-				return $this->render('update', [
-					'model' => $model,
-				]);
-			}
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->ano_id]);
+				} else {
+					return $this->render('update', [
+						'model' => $model,
+					]);
+				}
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -133,9 +141,11 @@ class AnoController extends Controller
     public function actionDelete($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('ano/delete')) {
-			$this->findModel($id)->delete();
+			try{
+				$this->findModel($id)->delete();
 
-			return $this->redirect(['index']);
+				return $this->redirect(['index']);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 

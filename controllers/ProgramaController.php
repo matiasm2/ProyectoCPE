@@ -61,13 +61,15 @@ class ProgramaController extends Controller
     public function actionIndex(){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('programa/index')) {
-			$searchModel = new ProgramaSearch();
-			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+			try{
+				$searchModel = new ProgramaSearch();
+				$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-			return $this->render('index', [
-				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider,
-			]);
+				return $this->render('index', [
+					'searchModel' => $searchModel,
+					'dataProvider' => $dataProvider,
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -79,9 +81,11 @@ class ProgramaController extends Controller
     public function actionView($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('programa/view')) {
-			return $this->render('view', [
-				'model' => $this->findModel($id),
-			]);
+			try{
+				return $this->render('view', [
+					'model' => $this->findModel($id),
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -93,17 +97,19 @@ class ProgramaController extends Controller
     public function actionCreate(){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('programa/create')) {
-			$model = new Programa();
-      $subModel = new Ano();
+			try{
+				$model = new Programa();
+				$subModel = new Ano();
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->programa_id]);
-			} else {
-				return $this->render('create', [
-					'model' => $model,
-          'subModel' => $subModel,
-				]);
-			}
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->programa_id]);
+				} else {
+					return $this->render('create', [
+						'model' => $model,
+			  'subModel' => $subModel,
+					]);
+				}
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -116,16 +122,18 @@ class ProgramaController extends Controller
     public function actionUpdate($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('programa/update')) {
-			$model = $this->findModel($id);
-      $subModel = new Ano();
+			try{
+				$model = $this->findModel($id);
+				$subModel = new Ano();
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->programa_id]);
-			} else {
-				return $this->render('update', [
-					'model' => $model,
-				]);
-			}
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->programa_id]);
+				} else {
+					return $this->render('update', [
+						'model' => $model,
+					]);
+				}
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -138,9 +146,10 @@ class ProgramaController extends Controller
     public function actionDelete($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('programa/delete')) {
-			$this->findModel($id)->delete();
-
-			return $this->redirect(['index']);
+			try{
+				$this->findModel($id)->delete();
+				return $this->redirect(['index']);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 

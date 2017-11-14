@@ -62,10 +62,12 @@ class CarreraController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $msg='';
 		if (RoleAccessChecker::actionIsAsignSector('carrera/index')) {
-			return $this->render('index', [
-				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider,
-			]);
+			try{
+				return $this->render('index', [
+					'searchModel' => $searchModel,
+					'dataProvider' => $dataProvider,
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -77,9 +79,11 @@ class CarreraController extends Controller
     public function actionView($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('carrera/view')) {
-			return $this->render('view', [
-				'model' => $this->findModel($id),
-			]);
+			try{
+				return $this->render('view', [
+					'model' => $this->findModel($id),
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -91,16 +95,18 @@ class CarreraController extends Controller
     public function actionCreate(){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('carrera/create')) {
-			$model = new Carrera();
-			$subModel=new Instituto();
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->carrera_id]);
-			} else {
-				return $this->render('create', [
-									'model' => $model,
-					'subModel'=> $subModel,
-				]);
-			}
+			try{
+				$model = new Carrera();
+				$subModel=new Instituto();
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->carrera_id]);
+				} else {
+					return $this->render('create', [
+										'model' => $model,
+						'subModel'=> $subModel,
+					]);
+				}
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -113,18 +119,20 @@ class CarreraController extends Controller
     public function actionUpdate($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('carrera/create')) {
-			$model = $this->findModel($id);
-			$model=new Carrera();
-			$subModel=new Instituto();
+			try{
+				$model = $this->findModel($id);
+				$model=new Carrera();
+				$subModel=new Instituto();
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->carrera_id]);
-			} else {
-				return $this->render('update', [
-					'model' => $model,
-					'subModel'=> $subModel,
-				]);
-			}
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->carrera_id]);
+				} else {
+					return $this->render('update', [
+						'model' => $model,
+						'subModel'=> $subModel,
+					]);
+				}
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
 		}else return $this->redirect(['error/level-access-error',]);
 
     }
@@ -138,8 +146,10 @@ class CarreraController extends Controller
     public function actionDelete($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('carrera/delete')) {
-			$this->findModel($id)->delete();
-			return $this->redirect(['index']);
+			try{
+				$this->findModel($id)->delete();
+				return $this->redirect(['index']);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
 		}else return $this->redirect(['error/level-access-error',]);
     }
 

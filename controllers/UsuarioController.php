@@ -59,14 +59,16 @@ class UsuarioController extends Controller
     public function actionIndex(){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('usuario/index')) {
-			$searchModel = new UsuarioSearch();
-			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+			try{
+				$searchModel = new UsuarioSearch();
+				$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-			return $this->render('index', [
-				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider,
-			]);
-        }else return $this->redirect(['error/level-access-error',]);
+				return $this->render('index', [
+					'searchModel' => $searchModel,
+					'dataProvider' => $dataProvider,
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+       }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -77,9 +79,11 @@ class UsuarioController extends Controller
     public function actionView($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('usuario/view')) {
-			return $this->render('view', [
-				'model' => $this->findModel($id)
-			]);
+			try{
+				return $this->render('view', [
+					'model' => $this->findModel($id)
+				]);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -91,16 +95,18 @@ class UsuarioController extends Controller
     public function actionCreate(){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('usuario/create')) {
-			//~ $model = new Usuario();
+			try{
+				//~ $model = new Usuario();
 
-			//~ if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				//~ return $this->redirect(['view', 'id' => $model->usuario_id]);
-			//~ } else {
-				//~ return $this->render('create', [
-					//~ 'model' => $model,
-				//~ ]);
-			//~ }
-			$this->redirect(['site/register']);
+				//~ if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					//~ return $this->redirect(['view', 'id' => $model->usuario_id]);
+				//~ } else {
+					//~ return $this->render('create', [
+						//~ 'model' => $model,
+					//~ ]);
+				//~ }
+				$this->redirect(['site/register']);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -113,15 +119,17 @@ class UsuarioController extends Controller
     public function actionUpdate($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('usuario/update')) {
-			$model = $this->findModel($id);
+			try{
+				$model = $this->findModel($id);
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->usuario_id]);
-			} else {
-				return $this->render('update', [
-					'model' => $model,
-				]);
-			}
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->usuario_id]);
+				} else {
+					return $this->render('update', [
+						'model' => $model,
+					]);
+				}
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
 		}else return $this->redirect(['error/level-access-error',]);
 	}
 
@@ -134,10 +142,12 @@ class UsuarioController extends Controller
     public function actionDelete($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('usuario/delete')) {
-			$model=$this->findModel($id);
-			$model->activuser=0;
-			$model->save();
-			return $this->redirect(['index']);
+			try{
+				$model=$this->findModel($id);
+				$model->activuser=0;
+				$model->save();
+				return $this->redirect(['index']);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
 
     }

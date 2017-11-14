@@ -59,13 +59,15 @@ class MateriaController extends Controller
     public function actionIndex(){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('materia/index')) {
-			$searchModel = new MateriaSearch();
-			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+			try{
+				$searchModel = new MateriaSearch();
+				$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-			return $this->render('index', [
-				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider,
-			]);
+				return $this->render('index', [
+					'searchModel' => $searchModel,
+					'dataProvider' => $dataProvider,
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
 	}
 
@@ -77,9 +79,11 @@ class MateriaController extends Controller
     public function actionView($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('materia/view')) {
-			return $this->render('view', [
-				'model' => $this->findModel($id),
-			]);
+			try{
+				return $this->render('view', [
+					'model' => $this->findModel($id),
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -91,15 +95,17 @@ class MateriaController extends Controller
     public function actionCreate(){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('materia/create')) {
-			$model = new Materia();
+			try{
+				$model = new Materia();
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->materia_id]);
-			} else {
-				return $this->render('create', [
-					'model' => $model,
-				]);
-			}
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->materia_id]);
+				} else {
+					return $this->render('create', [
+						'model' => $model,
+					]);
+				}
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -112,15 +118,17 @@ class MateriaController extends Controller
     public function actionUpdate($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('materia/update')) {
-			$model = $this->findModel($id);
+			try{
+				$model = $this->findModel($id);
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->materia_id]);
-			} else {
-				return $this->render('update', [
-					'model' => $model,
-				]);
-			}
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->materia_id]);
+				} else {
+					return $this->render('update', [
+						'model' => $model,
+					]);
+				}
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -133,8 +141,10 @@ class MateriaController extends Controller
     public function actionDelete($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('materia/delete')) {
-			$this->findModel($id)->delete();
-			return $this->redirect(['index']);
+			try{
+				$this->findModel($id)->delete();
+				return $this->redirect(['index']);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 

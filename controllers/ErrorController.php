@@ -9,6 +9,11 @@ class ErrorController extends \yii\web\Controller{
         return $this->render('db-unique-error',['msg'=>$this->msg,]);
     }
 
+    public function actionDbGrantError(){
+		$this->msg="No tiene permisos suficientes. Contactar al DBA, por favor...";
+        return $this->render('db-unique-error',['msg'=>$this->msg,]);
+    }
+
     public function actionError(){
 		$this->msg="Error generico";
         return $this->render('error',['msg'=>$this->msg,]);

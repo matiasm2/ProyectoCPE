@@ -61,10 +61,12 @@ class InstitutoController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('instituto/index')) {
-			return $this->render('index', [
-				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider,
-			]);
+			try{
+				return $this->render('index', [
+					'searchModel' => $searchModel,
+					'dataProvider' => $dataProvider,
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -76,9 +78,11 @@ class InstitutoController extends Controller
     public function actionView($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('instituto/view')) {
-			return $this->render('view', [
-				'model' => $this->findModel($id),
-			]);
+			try{
+				return $this->render('view', [
+					'model' => $this->findModel($id),
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -90,15 +94,17 @@ class InstitutoController extends Controller
     public function actionCreate(){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('instituto/create')) {
-			$model = new Instituto();
+			try{
+				$model = new Instituto();
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->instituto_id]);
-			} else {
-				return $this->render('create', [
-					'model' => $model,
-				]);
-			}
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->instituto_id]);
+				} else {
+					return $this->render('create', [
+						'model' => $model,
+					]);
+				}
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -111,15 +117,17 @@ class InstitutoController extends Controller
     public function actionUpdate($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('instituto/update')) {
-			$model = $this->findModel($id);
+			try{
+				$model = $this->findModel($id);
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->instituto_id]);
-			} else {
-				return $this->render('update', [
-					'model' => $model,
-				]);
-			}
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->instituto_id]);
+				} else {
+					return $this->render('update', [
+						'model' => $model,
+					]);
+				}
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
@@ -132,8 +140,10 @@ class InstitutoController extends Controller
     public function actionDelete($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('instituto/delete')) {
-			$this->findModel($id)->delete();
-			return $this->redirect(['index']);
+			try{
+				$this->findModel($id)->delete();
+				return $this->redirect(['index']);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
         }else return $this->redirect(['error/level-access-error',]);
     }
 
