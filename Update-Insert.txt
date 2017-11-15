@@ -1,8 +1,0 @@
-INSERT INTO public.asignsector(
-            asignsector_id, actionrole_id, sector_id)
-    VALUES (258, 63, 2);
-
-
-UPDATE public.actionrole
-   SET action_disp='site/indexUserAdmCPE', descripcion='Home del administrador y usuario CPE'
- WHERE actionrole_id=63;

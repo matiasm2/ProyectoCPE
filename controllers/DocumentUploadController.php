@@ -13,7 +13,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use app\commands\RoleAccessChecker;
-
+use app\commands\RegisterModeChecker;
 /**
  * DocumentUploadController implements the CRUD actions for DocumentUpload model.
  */
@@ -58,14 +58,14 @@ class DocumentUploadController extends Controller
      * Lists all DocumentUpload models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex(){
         $searchModel = new DocumentUploadSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+		$msg='El resultado de test RegisterModeChhecker es: '.RegisterModeChecker::test(-1,"OTROS|LECTOESCR_SECTOR|LECTOESCR_USUARIO|LECTOESCR");
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'msg'=>$msg,
         ]);
     }
 

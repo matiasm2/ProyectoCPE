@@ -133,56 +133,31 @@ BEGIN;
   INSERT INTO estado(descripcion)
   VALUES ('Firmado');
 
-  INSERT INTO ano(ano)
-  VALUES (1999);
-  INSERT INTO ano(ano)
-  VALUES (2000);
-  INSERT INTO ano(ano)
-  VALUES (2001);
-  INSERT INTO ano(ano)
-  VALUES (2002);
-  INSERT INTO ano(ano)
-  VALUES (2003);
-  INSERT INTO ano(ano)
-  VALUES (2004);
-  INSERT INTO ano(ano)
-  VALUES (2005);
-  INSERT INTO ano(ano)
-  VALUES (2006);
-  INSERT INTO ano(ano)
-  VALUES (2007);
-  INSERT INTO ano(ano)
-  VALUES (2008);
-  INSERT INTO ano(ano)
-  VALUES (2009);
-  INSERT INTO ano(ano)
-  VALUES (2010);
-  INSERT INTO ano(ano)
-  VALUES (2011);
-  INSERT INTO ano(ano)
-  VALUES (2012);
-  INSERT INTO ano(ano)
-  VALUES (2013);
-  INSERT INTO ano(ano)
-  VALUES (2014);
-  INSERT INTO ano(ano)
-  VALUES (2015);
-  INSERT INTO ano(ano)
-  VALUES (2016);
-  INSERT INTO ano(ano)
-  VALUES (2018);
-  INSERT INTO ano(ano)
-  VALUES (2017);
-  INSERT INTO ano(ano)
-  VALUES (2019);
-  INSERT INTO ano(ano)
-  VALUES (2020);
-  INSERT INTO ano(ano)
-  VALUES (2021);
-  INSERT INTO ano(ano)
-  VALUES (2022);
-  INSERT INTO ano(ano)
-  VALUES (2023);
+  INSERT INTO ano(ano)VALUES (1999);--1
+  INSERT INTO ano(ano)VALUES (2000);--2
+  INSERT INTO ano(ano)VALUES (2001);--3
+  INSERT INTO ano(ano)VALUES (2002);--4
+  INSERT INTO ano(ano)VALUES (2003);--5
+  INSERT INTO ano(ano)VALUES (2004);--6
+  INSERT INTO ano(ano)VALUES (2005);--7
+  INSERT INTO ano(ano)VALUES (2006);--8
+  INSERT INTO ano(ano)VALUES (2007);--9
+  INSERT INTO ano(ano)VALUES (2008);--10
+  INSERT INTO ano(ano)VALUES (2009);--11
+  INSERT INTO ano(ano)VALUES (2010);--12
+  INSERT INTO ano(ano)VALUES (2011);--13
+  INSERT INTO ano(ano)VALUES (2012);--14
+  INSERT INTO ano(ano)VALUES (2013);--15
+  INSERT INTO ano(ano)VALUES (2014);--16
+  INSERT INTO ano(ano)VALUES (2015);--17
+  INSERT INTO ano(ano)VALUES (2016);--18
+  INSERT INTO ano(ano)VALUES (2018);--19
+  INSERT INTO ano(ano)VALUES (2017);--20
+  INSERT INTO ano(ano)VALUES (2019);--21
+  INSERT INTO ano(ano)VALUES (2020);--22
+  INSERT INTO ano(ano)VALUES (2021);--23
+  INSERT INTO ano(ano)VALUES (2022);--24
+  INSERT INTO ano(ano)VALUES (2023);--25
 
   --Inserts de prueba
   INSERT INTO planestudio(carrera_id,ano_id)
@@ -217,32 +192,34 @@ BEGIN;
     (SELECT materia_id FROM materia WHERE nombre='Matemática III'));
 
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (1,14,(SELECT CURRENT_DATE),'Programa de la materia XX');
+  VALUES (1,14,(SELECT CURRENT_DATE),'Programa de la materia XX 2012');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (2,14,(SELECT CURRENT_DATE),'Programa de la materia YY');
+  VALUES (2,14,(SELECT CURRENT_DATE),'Programa de la materia YY 2012');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (3,14,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
+  VALUES (3,14,(SELECT CURRENT_DATE),'Programa de la materia ZZ 2012');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (1,15,(SELECT CURRENT_DATE),'Programa de la materia XX');
+  VALUES (1,15,(SELECT CURRENT_DATE),'Programa de la materia XX 2013');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (2,15,(SELECT CURRENT_DATE),'Programa de la materia YY');
+  VALUES (2,15,(SELECT CURRENT_DATE),'Programa de la materia YY 2013');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (3,15,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
+  VALUES (3,15,(SELECT CURRENT_DATE),'Programa de la materia ZZ 2013');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (1,16,(SELECT CURRENT_DATE),'Programa de la materia XX');
+  VALUES (1,16,(SELECT CURRENT_DATE),'Programa de la materia XX 2014');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (2,16,(SELECT CURRENT_DATE),'Programa de la materia YY');
+  VALUES (2,16,(SELECT CURRENT_DATE),'Programa de la materia YY 2014');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (3,16,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
-  INSERT INTO programa VALUES (10, 1, 20, '2017-11-07', 'Programa de la materia ZZ');
+  VALUES (3,16,(SELECT CURRENT_DATE),'Programa de la materia ZZ 2014');
+  
+  INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion) 
+  VALUES ( 1, 20, '2017-11-07', 'Programa de la materia ZZ 2017');
 
 ---
 -- Acciones registradas de todo el circuito administrativo (tabla fija), sera parte del modelo proporcionando descripciones.

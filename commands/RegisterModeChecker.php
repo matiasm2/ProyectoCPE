@@ -12,9 +12,8 @@ use yii\console\Controller;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
-use app\models\ModeRegister;
-use app\models\;
 use app\models\Usuario;
+use app\models\DocumentUpload;
 
 /**
  * Clase usada en cada uno de los controladores de los registros de a
@@ -30,7 +29,7 @@ class RegisterModeChecker extends Controller{
 	 * a lo devuelto por identityInterface retorna true si es permitido la 
 	 * lectura del registro deacuerdo a la referencia del parámetro:
 	 * @param $currentModeRegister: valor mode de la columna de la tabla 
-	 * archivoprograma, ejemplo:"OTROS|LECTOESCRITURA_SECTOR|LECTOESCRITURA_USUARIO|LECTOESCRITURA"
+	 * archivoprograma, ejemplo:"OTROS|LECTOESCR_SECTOR|LECTOESCR_USUARIO|LECTOESCR"
 	 **/
 	public static function registerIsReadable($idRegister){
 		/**
@@ -104,7 +103,7 @@ class RegisterModeChecker extends Controller{
 			else return false;
 		}
 	}
-	public static function test($currentModeRegister){
+	public static function test($currentModeRegister,$msg){
 		/**
 		 * DocumentUpload class for table "archivoprograma".
 		 * @property integer $archivoprograma_id
@@ -115,12 +114,20 @@ class RegisterModeChecker extends Controller{
 		 * @property string $fecha
 		 * @property string $mode
 		 */
-		$currentRegister=DocumentUpload::find()
-			-> where('archivoprograma_id=:archivoprograma_id',[':archivoprograma_id'=> $idRegister ])
-			-> one();
-		$modeUsr=substr($currentRegister->mode_reg,strpos("_USUARIO|")-strlen($currentRegister->mode_reg));
-		$modeSec=substr($currentRegister->mode_reg,-strlen($currentRegister->mode_reg)+strpos("_USUARIO|"),strpos("_SECTOR|"));
-		$modeOtr=substr($currentRegister->mode_reg,-strlen($currentRegister->mode_reg),strpos("OTROS|"));
-		return $modeUsr."##".$modeSec."##".modeOtr;
+		 if($currentModeRegister!=-1){
+			$currentRegister=DocumentUpload::find()
+				-> where('archivoprograma_id=:archivoprograma_id',[':archivoprograma_id'=> $idRegister ])
+				-> one();
+			$modeUsr=substr($currentRegister->mode_reg,strpos($currentRegister->mode_reg,"_USUARIO|")-strlen($currentRegister->mode_reg));
+			$modeSec=substr($currentRegister->mode_reg,-strlen($currentRegister->mode_reg)+strpos($currentRegister->mode_reg,"_USUARIO|"),strpos($currentRegister->mode_reg,"_SECTOR|"));
+			$modeOtr=substr($currentRegister->mode_reg,-strlen($currentRegister->mode_reg),strpos($currentRegister->mode_reg,"OTROS|"));
+			return $modeUsr."##".$modeSec."##".modeOtr;
+		}else{
+			//~ se prueba con "OTROS|LECTOESCR_SECTOR|LECTOESCR_USUARIO|LECTOESCR"			
+			$modeUsr=substr($msg,strpos($msg,"_USUARIO|")-strlen($msg));
+			$modeSec=substr($msg,-strlen($msg)+strpos($msg,"_USUARIO|"),strpos($msg,"_SECTOR|"));
+			$modeOtr=substr($msg,-strlen($msg),strpos($msg,"OTROS|"));
+			return "1)strlen=".strlen($msg)."  2)Strpos(_USUARIO)=".strpos($msg,"_USUARIO|")."  3)Strpos(_SECTOR|)=".strpos($msg,"_SECTOR|")."  4)Strpos(OTROS)=".strpos($msg,"OTROS|")." </p><p>-<>-".$modeUsr."-<>-".$modeSec."-<>-".$modeOtr."-<>-";
+		}
 	}
 }
