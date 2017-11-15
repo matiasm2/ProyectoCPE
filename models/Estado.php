@@ -99,7 +99,7 @@ class Estado extends \yii\db\ActiveRecord
                         estado estado
                         ON
                         estado.estado_id=arch.estado_id
-                        WHERE ano.ano=date_part('year', CURRENT_DATE) AND ins.nombre='$instituto' AND estado.descripcion='A corregir' OR estado.descripcion='Enviado' OR estado.descripcion='En revisión';")->queryAll();
+                        WHERE ano.ano=date_part('year', CURRENT_DATE) AND ins.nombre='$instituto' AND (estado.descripcion='A corregir' OR estado.descripcion='Enviado' OR estado.descripcion='En revisión');")->queryAll();
         return $estados;
     }
 
@@ -139,7 +139,7 @@ class Estado extends \yii\db\ActiveRecord
                         estado estado
                         ON
                         estado.estado_id=arch.estado_id
-                        WHERE ano.ano=date_part('year', CURRENT_DATE) AND ins.nombre='$instituto' AND estado.descripcion='Completo' OR estado.descripcion='Firmado';")->queryAll();
+                        WHERE ano.ano=date_part('year', CURRENT_DATE) AND ins.nombre='$instituto' AND (estado.descripcion='Completo' OR estado.descripcion='Firmado');")->queryAll();
         return $estados;
     }
 }

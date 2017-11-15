@@ -83,7 +83,7 @@ class SiteController extends Controller{
 			else {$msg='Logoneado!';
 				}
 			$numUsr=Usuario::find()->count();
-			if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/indexAdmin'))) {
+			if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/indexUserAdmCPE'))) {
 				 $estadosFaltantesIngyAgr = Estado::getFaltantes("Instituto de Ingeniería y Agronomía");
 				 $countEstadosFaltantesIngyAgr = count ($estadosFaltantesIngyAgr);
 
@@ -109,7 +109,7 @@ class SiteController extends Controller{
 				$countEstadosEntregadoSocyAdm  = count ($estadosEntregadosSocyAdm);
 
 
-				return $this->render('indexAdmin',['msg' => $msg,
+				return $this->render('indexUserAdmCPE',['msg' => $msg,
 				'countFaltantesIngyAgr' => $countEstadosFaltantesIngyAgr,
 				'countEntregadosIngyAgr' => $countEstadosEntregadoIngyAgr,
 				'countFaltantesEIni' => $countEstadosFaltantesEIni,
