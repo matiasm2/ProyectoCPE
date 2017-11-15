@@ -310,7 +310,7 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (60,'programa/update','Actualizar referencia de documento');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (61,'programa/create','Crear referencia de documentos');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (62,'programa/delete','Eliminar referencia de documentos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (63, 'site/indexAdmin', 'Home del administrador de CPE');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (63, 'site/indexUserAdmCPE','Home del administrador y usuario CPE');
 ---
 -- Acciones configurables para cada sector a travez del usuario Administrador del sistema CPE', Admin CPE., id1
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
@@ -371,6 +371,7 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (60,2);--acceso a programa/update
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (61,2);--acceso a programa/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (62,2);--acceso a programa/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (63,2);--acceso a site/indexUserAdmCPE
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,2);--acceso a archivoprograma/view
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,2);--acceso a archivoprograma/index
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,2);--acceso a archivoprograma/update
