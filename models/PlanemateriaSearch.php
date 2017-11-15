@@ -18,7 +18,8 @@ class PlanemateriaSearch extends Planmateria
     public function rules()
     {
         return [
-            [['planmateria_id', 'planestudio_id', 'materia_id'], 'integer'],
+            [['planmateria_id', 'planestudio_id'], 'integer'],
+            [['materia_id'], 'safe'],
         ];
     }
 
@@ -42,6 +43,8 @@ class PlanemateriaSearch extends Planmateria
     {
         $query = Planmateria::find();
 
+        $query->leftJoin('materia','materia.materia_id=planmateria.materia_id');
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -60,8 +63,10 @@ class PlanemateriaSearch extends Planmateria
         $query->andFilterWhere([
             'planmateria_id' => $this->planmateria_id,
             'planestudio_id' => $this->planestudio_id,
-            'materia_id' => $this->materia_id,
+            //'materia_id' => $this->materia_id,
         ]);
+
+        $query->andFilterWhere(['like','materia.nombre',$this->materia_id]);
 
         return $dataProvider;
     }
