@@ -59,13 +59,6 @@
 	GRANT SELECT, INSERT, UPDATE  ON public.usuario TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE usuario_usuario_id_seq TO cpewebuser;
 
-	CREATE TABLE public.usuariocarrera (
- 	       usuario_id     integer REFERENCES usuario,
- 	       carrera_id     integer REFERENCES carrera
- 	);
- 	GRANT SELECT, INSERT, UPDATE  ON public.usuariocarrera TO cpewebuser;
- 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE usuariocarrera_usuariocarrera_id_seq TO cpewebuser;
- 
 
 	CREATE TABLE public.instituto (
 	       instituto_id     SERIAL PRIMARY KEY,
@@ -83,6 +76,13 @@
 	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.carrera TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE carrera_carrera_id_seq TO cpewebuser;
 
+	CREATE TABLE public.usuariocarrera (
+               usuariocarrera_id SERIAL PRIMARY KEY,
+               usuario_id     integer REFERENCES usuario,
+               carrera_id     integer REFERENCES carrera
+        );
+        GRANT SELECT, INSERT, UPDATE  ON public.usuariocarrera TO cpewebuser;
+        GRANT SELECT, USAGE, UPDATE ON SEQUENCE usuariocarrera_usuariocarrera_id_seq TO cpewebuser;
 
 	CREATE TABLE public.ano (
 	       ano_id    SERIAL PRIMARY KEY,
