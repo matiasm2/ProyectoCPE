@@ -61,7 +61,7 @@ class DocumentUploadController extends Controller
     public function actionIndex(){
         $searchModel = new DocumentUploadSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$msg='El resultado de test RegisterModeChhecker es: '.RegisterModeChecker::test(-1,"OTROS|LECTOESCR_SECTOR|LECTOESCR_USUARIO|LECTOESCR");
+		$msg='El resultado de test RegisterModeChhecker es: '.RegisterModeChecker::test(-1,"OTROS|ESCRITURA_SECTOR|INACCESIBLE_USUARIO|INACCESIBLE");
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

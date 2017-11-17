@@ -45,21 +45,23 @@ class RegisterModeChecker extends Controller{
 		$currentRegister=DocumentUpload::find()
 			-> where('archivoprograma_id=:archivoprograma_id',[':archivoprograma_id'=> $idRegister ])
 			-> one();
-		$modeUsr=substr($currentRegister->mode_reg,strpos("_USUARIO|")-strlen($currentRegister->mode_reg));
-		$modeSec=substr($currentRegister->mode_reg,-strlen($currentRegister->mode_reg)+strpos("_USUARIO|"),strpos("_SECTOR|"));
-		$modeOtr=substr($currentRegister->mode_reg,-strlen($currentRegister->mode_reg),strpos("OTROS|"));
+		$modeUsr=substr($currentRegister->mode_reg,strpos($currentRegister->mode_reg,"_USUARIO|")-strlen($currentRegister->mode_reg));
+		$modeSec=substr($currentRegister->mode_reg,strpos($currentRegister->mode_reg,"_SECTOR|"),(strlen($currentRegister->mode_reg)
+			-strpos($currentRegister->mode_reg,"_SECTOR|"))-(strlen($msg)-strpos($currentRegister->mode_reg,"_USUARIO|")));
+		$modeOtr=substr($currentRegister->mode_reg,strpos($currentRegister->mode_reg,"OTROS|"),strpos($currentRegister->mode_reg,"_SECTOR|"));
 		if(Yii::$app->user->isGuest)return false;
 		else {
-			if($modeUsr == "USUARIO|LECTOESCRITURA" && 
+			if($modeUsr == "_USUARIO|LECTOESCR" && 
 				Yii::$app->user->identity->usuario_id==$currentRegister->usuario_id)return true;
-			else if($modeUsr == "USUARIO|LECTURA" && 
+			else if($modeUsr == "_USUARIO|LECTURA" && 
 				Yii::$app->user->identity->usuario_id==$currentRegister->usuario_id)return true;
-			else if($modeSec == "SECTOR|LECTOESCRITURA"&& 
+			else if($modeSec == "_SECTOR|LECTOESCR"&& 
 				Yii::$app->user->identity->usuario_id==$currentRegister->usuario_id)return true;
-			else if($modeSec == "SECTOR|LECTURA"&& 
+			else if($modeSec == "_SECTOR|LECTURA"&& 
 				Yii::$app->user->identity->getSector()->one()->sector_id == 
 					Usuario::findIdentity($currentRegister->usuario_id)->sector_id
 				)return true;
+			else if ($modeOtr == "OTROS|LECTURA"||$modeOtr == "OTROS|LECTOESCR")return true;
 			else return false;
 		}
 	}
@@ -85,21 +87,23 @@ class RegisterModeChecker extends Controller{
 		$currentRegister=DocumentUpload::find()
 			-> where('archivoprograma_id=:archivoprograma_id',[':archivoprograma_id'=> $idRegister ])
 			-> one();
-		$modeUsr=substr($currentRegister->mode_reg,strpos("_USUARIO|")-strlen($currentRegister->mode_reg));
-		$modeSec=substr($currentRegister->mode_reg,-strlen($currentRegister->mode_reg)+strpos("_USUARIO|"),strpos("_SECTOR|"));
-		$modeOtr=substr($currentRegister->mode_reg,-strlen($currentRegister->mode_reg),strpos("OTROS|"));
+		$modeUsr=substr($currentRegister->mode_reg,strpos($currentRegister->mode_reg,"_USUARIO|")-strlen($currentRegister->mode_reg));
+		$modeSec=substr($currentRegister->mode_reg,strpos($currentRegister->mode_reg,"_SECTOR|"),(strlen($currentRegister->mode_reg)
+			-strpos($currentRegister->mode_reg,"_SECTOR|"))-(strlen($msg)-strpos($currentRegister->mode_reg,"_USUARIO|")));
+		$modeOtr=substr($currentRegister->mode_reg,strpos($currentRegister->mode_reg,"OTROS|"),strpos($currentRegister->mode_reg,"_SECTOR|"));
 		if(Yii::$app->user->isGuest)return false;
 		else {
-			if($modeUsr == "USUARIO|LECTOESCRITURA" && 
+			if($modeUsr == "_USUARIO|LECTOESCR" && 
 				Yii::$app->user->identity->usuario_id==$currentRegister->usuario_id)return true;
-			else if($modeUsr == "USUARIO|ESCRITURA" && 
+			else if($modeUsr == "_USUARIO|ESCRITURA" && 
 				Yii::$app->user->identity->usuario_id==$currentRegister->usuario_id)return true;
-			else if($modeSec == "SECTOR|LECTOESCRITURA"&& 
+			else if($modeSec == "_SECTOR|LECTOESCR"&& 
 				Yii::$app->user->identity->usuario_id==$currentRegister->usuario_id)return true;
-			else if($modeSec == "SECTOR|ESCRITURA"&& 
+			else if($modeSec == "_SECTOR|ESCRITURA"&& 
 				Yii::$app->user->identity->getSector()->one()->sector_id == 
 					Usuario::findIdentity($currentRegister->usuario_id)->sector_id
 				)return true;
+			else if ($modeOtr == "OTROS|ESCRITURA"||$modeOtr == "OTROS|LECTOESCR")return true;
 			else return false;
 		}
 	}
@@ -119,14 +123,15 @@ class RegisterModeChecker extends Controller{
 				-> where('archivoprograma_id=:archivoprograma_id',[':archivoprograma_id'=> $idRegister ])
 				-> one();
 			$modeUsr=substr($currentRegister->mode_reg,strpos($currentRegister->mode_reg,"_USUARIO|")-strlen($currentRegister->mode_reg));
-			$modeSec=substr($currentRegister->mode_reg,-strlen($currentRegister->mode_reg)+strpos($currentRegister->mode_reg,"_USUARIO|"),strpos($currentRegister->mode_reg,"_SECTOR|"));
-			$modeOtr=substr($currentRegister->mode_reg,-strlen($currentRegister->mode_reg),strpos($currentRegister->mode_reg,"OTROS|"));
+			$modeSec=substr($currentRegister->mode_reg,strpos($currentRegister->mode_reg,"_SECTOR|"),(strlen($currentRegister->mode_reg)
+				-strpos($currentRegister->mode_reg,"_SECTOR|"))-(strlen($msg)-strpos($currentRegister->mode_reg,"_USUARIO|")));
+			$modeOtr=substr($currentRegister->mode_reg,strpos($currentRegister->mode_reg,"OTROS|"),strpos($currentRegister->mode_reg,"_SECTOR|"));
 			return $modeUsr."##".$modeSec."##".modeOtr;
 		}else{
 			//~ se prueba con "OTROS|LECTOESCR_SECTOR|LECTOESCR_USUARIO|LECTOESCR"			
 			$modeUsr=substr($msg,strpos($msg,"_USUARIO|")-strlen($msg));
-			$modeSec=substr($msg,-strlen($msg)+strpos($msg,"_USUARIO|"),strpos($msg,"_SECTOR|"));
-			$modeOtr=substr($msg,-strlen($msg),strpos($msg,"OTROS|"));
+			$modeSec=substr($msg,strpos($msg,"_SECTOR|"),(strlen($msg)-strpos($msg,"_SECTOR|"))-(strlen($msg)-strpos($msg,"_USUARIO|")));
+			$modeOtr=substr($msg,strpos($msg,"OTROS|"),strpos($msg,"_SECTOR|"));
 			return "1)strlen=".strlen($msg)."  2)Strpos(_USUARIO)=".strpos($msg,"_USUARIO|")."  3)Strpos(_SECTOR|)=".strpos($msg,"_SECTOR|")."  4)Strpos(OTROS)=".strpos($msg,"OTROS|")." </p><p>-<>-".$modeUsr."-<>-".$modeSec."-<>-".$modeOtr."-<>-";
 		}
 	}
