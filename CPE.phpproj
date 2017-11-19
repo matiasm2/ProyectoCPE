@@ -46,9 +46,6 @@
     <Compile Include="controllers\SectorController.php" />
     <Compile Include="controllers\SiteController.php" />
     <Compile Include="controllers\UsuarioController.php" />
-    <Compile Include="CPEProyecto\CPEProyecto\CPEProyecto.phpproj" />
-    <Compile Include="CPEProyecto\CPEProyecto\index.php" />
-    <Compile Include="CPEProyecto\CPEProyecto.sln" />
     <Compile Include="mail\layouts\html.php" />
     <Compile Include="models\Actionrole.php" />
     <Compile Include="models\Ano.php" />
@@ -281,8 +278,6 @@
     <Folder Include="commands" />
     <Folder Include="config" />
     <Folder Include="controllers" />
-    <Folder Include="CPEProyecto\CPEProyecto" />
-    <Folder Include="CPEProyecto" />
     <Folder Include="mail\layouts" />
     <Folder Include="mail" />
     <Folder Include="models" />

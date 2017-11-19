@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 	<p><?= $msg; ?></p>
     <p>
-        <?= Html::a('Create Document Upload', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Document Upload', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,

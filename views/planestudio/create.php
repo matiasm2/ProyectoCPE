@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Planestudio */
 
-$this->title = 'Create Planestudio';
+$this->title = 'Crear Planestudio';
 /*$this->params['breadcrumbs'][] = ['label' => 'Planestudios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;*/
 ?>

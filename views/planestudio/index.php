@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\PlanestudioSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Planestudios';
+$this->title = 'Plan de estudios';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="col-lg-8">
@@ -17,7 +17,7 @@ $this->title = 'Planestudios';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Planestudio', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Plan de estudio', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

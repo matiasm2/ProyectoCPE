@@ -8,7 +8,7 @@ use app\models\Materia;
 /* @var $searchModel app\models\PlanemateriaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Planmaterias';
+$this->title = 'Plan de materias';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="col-lg-8">
@@ -18,7 +18,7 @@ $this->title = 'Planmaterias';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Planmateria', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Plan de materia', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

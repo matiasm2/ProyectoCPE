@@ -7,7 +7,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
+$this->title = 'Iniciar Sesion';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="col-md-offset-4">

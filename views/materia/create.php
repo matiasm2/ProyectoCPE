@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Materia */
 
-$this->title = 'Create Materia';
+$this->title = 'Crear Materia';
 /*$this->params['breadcrumbs'][] = ['label' => 'Materias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;*/
 ?>

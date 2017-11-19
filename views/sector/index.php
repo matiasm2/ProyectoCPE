@@ -17,7 +17,7 @@ $this->title = 'Sectores';
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Nuevo Sector', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Sector', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

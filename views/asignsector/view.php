@@ -20,7 +20,7 @@ $this->title = $model->asignsector_id;
         <?= Html::a('Eliminar', ['delete', 'id' => $model->asignsector_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Estas seguro que quieres eliminar este item?',
+                'confirm' => '?Est? seguro que quiere eliminar este item?',
                 'method' => 'post',
             ],
         ]) ?>
