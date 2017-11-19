@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Ano */
 
-$this->title = 'Create Ano';
+$this->title = 'Crear Anio';
 $this->params['breadcrumbs'][] = ['label' => 'Anos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

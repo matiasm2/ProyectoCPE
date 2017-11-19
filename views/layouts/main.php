@@ -2,6 +2,7 @@
 
 /* @var $this \yii\web\View */
 /* @var $content string */
+/* footer: Yii::powered() */
 
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -55,7 +56,7 @@ AppAsset::register($this);
           <img src="img/unaj.png" style="display:inline; margin-top: -20px; align: center; width:150px; height:55px;">&nbsp&nbsp&nbsp&nbsp<b style="size:15px"></b>
           &copy; UNAJ-CPE <?= date('Y') ?>
         </p>
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right"> desarrolladores.unajcpe@gmail.com <?= date('') ?></p>
     </div>
 </footer>
 

@@ -17,7 +17,7 @@ $this->title = 'Institutos';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Instituto', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Instituto', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

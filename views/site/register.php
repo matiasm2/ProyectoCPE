@@ -8,14 +8,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 
-$this->title = 'Register';
+$this->title = 'Registrar';
 //$this->params['breadcrumbs'][] = $this->title;
 
 ?>
-
-
-
-
 
 <div class="site-about">
 
@@ -41,7 +37,7 @@ $this->title = 'Register';
 
 				<?= $form->field($model, "password_repeat")->input("password") ?>
 
-    		<?= Html::submitButton("Register", ["class" => "btn btn-primary"]) ?>
+    		<?= Html::submitButton("Registrar", ["class" => "btn btn-primary"]) ?>
 
 		</div>
 

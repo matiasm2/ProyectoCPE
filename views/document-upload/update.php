@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\DocumentUpload */
 
-$this->title = 'Update Document Upload: ' . $model->archivoprograma_id;
+$this->title = 'Actualizar Document Upload: ' . $model->archivoprograma_id;
 $this->params['breadcrumbs'][] = ['label' => 'Document Uploads', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->archivoprograma_id, 'url' => ['view', 'id' => $model->archivoprograma_id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="document-upload-update">
 

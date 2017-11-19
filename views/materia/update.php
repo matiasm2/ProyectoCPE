@@ -8,7 +8,7 @@ use yii\helpers\Html;
 /*$this->title = 'Update Materia: ' . $model->materia_id;
 $this->params['breadcrumbs'][] = ['label' => 'Materias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->materia_id, 'url' => ['view', 'id' => $model->materia_id]];
-$this->params['breadcrumbs'][] = 'Update';*/
+$this->params['breadcrumbs'][] = 'Actualizar';*/
 ?>
 <div class="col-lg-8">
 <div class="materia-update">

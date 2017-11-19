@@ -17,7 +17,7 @@ $this->title = 'Materias';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Materia', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Materia', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
