@@ -60,14 +60,16 @@ class ArchivoprogramaController extends Controller
      */
     public function actionIndex(){
 		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/index')) {
-			$searchModel = new ArchivoprogramaSearch();
-			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+			try{
+				$searchModel = new ArchivoprogramaSearch();
+				$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-			return $this->render('index', [
-				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider,
-			]);
-		} else return $this->redirect(['error/error']);
+				return $this->render('index', [
+					'searchModel' => $searchModel,
+					'dataProvider' => $dataProvider,
+				]);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+		} else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -77,10 +79,12 @@ class ArchivoprogramaController extends Controller
      */
     public function actionView($id){
 		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/view')) {
-			return $this->render('view', [
-				'model' => $this->findModel($id),
-			]);
-		} else return $this->redirect(['error/error']);
+			try{
+				return $this->render('view', [
+					'model' => $this->findModel($id),
+				]);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+		} else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -90,26 +94,25 @@ class ArchivoprogramaController extends Controller
      */
     public function actionCreate(){
 		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/create')) {
-			$model = new Archivoprograma();
-			$subModel= new Estado();
-			$subModel2= new Programa();
-			if ($model->load(Yii::$app->request->post())){
-					$model->usuario_id=Yii::$app->user->identity->usuario_id;
-					$model->archivo= UploadedFile::getInstance($model,'archivo');
-					$model->fecha=date('Y-m-d');
-			  if ($model->save()) {
-				if ($model->upload()) {
-				  return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
-				} else {
-				  return $this->render('errorup');
-				}
-			  } else return $this->render('create', ['model' => $model,
-					'subModel' => $subModel,
-					'subModel2' => $subModel2,]);
-			} else return $this->render('create', ['model' => $model,
-									'subModel' => $subModel,
-									'subModel2' => $subModel2,]);
-		} else return $this->redirect(['error/error']);
+			try{
+				$model = new Archivoprograma();
+				$subModelEstado = new Estado();
+				$subModelPrograma = new Programa();
+				if ($model->load(Yii::$app->request->post())){
+						$model->usuario_id=Yii::$app->user->identity->usuario_id;
+						$model->archivo= UploadedFile::getInstance($model,'archivo');
+						$model->fecha=date('Y-m-d');
+				  if ($model->save()) {
+					if ($model->upload()) return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
+					else return $this->render('errorup');
+				  } else return $this->render('create', ['model' => $model,
+						'subModelEstado' => $subModelEstado,
+						'subModelPrograma' => $subModelPrograma,]);
+				} else return $this->render('create', ['model' => $model,
+						'subModelEstado' => $subModelEstado,
+						'subModelPrograma' => $subModelPrograma,]);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+		} else return $this->redirect(['error/level-access-error',]);
       }
 
 
@@ -121,19 +124,21 @@ class ArchivoprogramaController extends Controller
      */
     public function actionUpdate($id){
 		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/update')) {
-			$model = $this->findModel($id);
-			$subModel= new Estado();
-			$subModel2= new Programa();
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
-			} else {
-				return $this->render('update', [
-					'model' => $model,
-					'subModel' => $subModel,
-					'subModel2' => $subModel2,
-				]);
-			}
-		} else return $this->redirect(['error/error']);
+			try{
+				$model = $this->findModel($id);
+				$subModelEstado = new Estado();
+				$subModelPrograma = new Programa();
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
+				} else {
+					return $this->render('update', [
+						'model' => $model,
+						'subModelEstado' => $subModelEstado,
+						'subModelPrograma' => $subModelPrograma,
+						]);
+				}
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+		} else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -144,9 +149,11 @@ class ArchivoprogramaController extends Controller
      */
     public function actionDelete($id){
 		if (RoleAccessChecker::actionIsAsignSector('archivoprograma/delete')) {
-			$this->findModel($id)->delete();
-			return $this->redirect(['index']);
-		} else return $this->redirect(['error/error']);
+			try{
+				$this->findModel($id)->delete();
+				return $this->redirect(['index']);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+		} else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -162,8 +169,10 @@ class ArchivoprogramaController extends Controller
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);
-		//} else return $this->redirect(['error/error']);
+		//} else return $this->redirect(['error/level-access-error',]);
     }
+
+    
 
     /**
      * Finds the Archivoprograma model based on its primary key value.

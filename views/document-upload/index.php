@@ -2,49 +2,34 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ArchivoprogramaSearch */
+/* @var $searchModel app\models\DocumentUploadSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Archivos de programas';
-//$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Document Uploads';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="col-lg-8">
-<div class="archivoprograma-index">
+<div class="document-upload-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+	<p><?= $msg; ?></p>
     <p>
-        <?= Html::a('Crear ', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Document Upload', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+<?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            //'programa_id',
-            [
+             [
               'attribute' => 'programa',
               'value' =>'descripcionPrograma',
             ],
-
             'nombreUsuario',
             'descripcionEstado',
             'archivo',
-            // 'fecha',
-            // IMAGEN DEL DOCUMENTO
-				/*[
-					'attribute'	=> 'archivo',
-					'format' => 'html',
-					//'label' => 'ImageColumnLabel',
-					'value' => function ($data){
-							return Html::img('uploads/'.$data['archivo'],['widht' => '100px']);
-						},
-
-				],*/
-			// URL DEL DOCUMENTO
 				[
 					'label' => 'File',
 					'format' => 'raw',
@@ -56,5 +41,5 @@ $this->title = 'Archivos de programas';
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-</div>
-</div>
+
+<?php Pjax::end(); ?></div>

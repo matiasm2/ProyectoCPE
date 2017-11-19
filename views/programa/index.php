@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\Ano;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProgramaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -28,7 +29,15 @@ $this->title = Yii::t('app', 'Programas');
 
             //'programa_id',
             'planmateria_id',
-            'ano_id',
+            //'ano_id',
+            [
+              'label' => 'Anio',
+              'attribute' => 'ano_id',
+              'value' => function($model){
+                $anio=Ano::find()->where(['ano_id'=>$model->ano_id])->one();
+                return $anio->ano;
+              }
+            ],
             'fecha',
             'descripcion',
             [

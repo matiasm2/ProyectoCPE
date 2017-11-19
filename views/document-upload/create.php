@@ -4,15 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Archivoprograma */
+/* @var $model app\models\DocumentUpload */
 
-$this->title = 'Crear un Archivo de programa';
-$this->params['breadcrumbs'][] = ['label' => 'Archivos de programas', 'url' => ['index']];
+$this->title = 'Create Document Upload';
+$this->params['breadcrumbs'][] = ['label' => 'Document Uploads', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="col-lg-8">
-
-<div class="archivoprograma-create">
+<div class="document-upload-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -22,5 +20,4 @@ $this->params['breadcrumbs'][] = $this->title;
 		'subModelPrograma' => $subModelPrograma,
     ]) ?>
 
-</div>
 </div>

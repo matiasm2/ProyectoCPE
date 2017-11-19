@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Programa]].
+ * This is the ActiveQuery class for [[DocumentUpload]].
  *
- * @see Programa
+ * @see DocumentUpload
  */
-class ProgramaQuery extends \yii\db\ActiveQuery
+class DocumentUploadQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class ProgramaQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Programa[]|array
+     * @return DocumentUpload[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class ProgramaQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Programa|array|null
+     * @return DocumentUpload|array|null
      */
     public function one($db = null)
     {

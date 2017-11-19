@@ -13,12 +13,13 @@ use Yii;
  * @property integer $estado_id
  * @property string $archivo
  * @property string $fecha
+ * @property string $mode_reg
  *
  * @property Estado $estado
  * @property Programa $programa
  * @property Usuario $usuario
  */
-class Archivoprograma extends \yii\db\ActiveRecord
+class DocumentUpload extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -36,7 +37,9 @@ class Archivoprograma extends \yii\db\ActiveRecord
         return [
             [['programa_id', 'usuario_id', 'estado_id'], 'integer'],
             [['archivo'], 'file'],
+            [['archivo'], 'required'],
             [['fecha'], 'safe'],
+            [['mode_reg'], 'string'],
             [['estado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::className(), 'targetAttribute' => ['estado_id' => 'estado_id']],
             [['programa_id'], 'exist', 'skipOnError' => true, 'targetClass' => Programa::className(), 'targetAttribute' => ['programa_id' => 'programa_id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usuario_id' => 'usuario_id']],
@@ -52,19 +55,11 @@ class Archivoprograma extends \yii\db\ActiveRecord
             'archivoprograma_id' => 'Archivoprograma ID',
             'programa_id' => 'Programa ID',
             'usuario_id' => 'Usuario ID',
-            'estado' => 'Estado',
+            'estado_id' => 'Estado ID',
             'archivo' => 'Archivo',
             'fecha' => 'Fecha',
+            'mode_reg' => 'Mode Reg',
         ];
-    }
-
-    public function upload() {
-      if ($this->validate()) {
-          $this->archivo->saveAs('uploads/' . $this->archivo->baseName . '.' . $this->archivo->extension);
-          return true;
-      } else {
-          return false;
-      }
     }
 
     /**
@@ -93,13 +88,20 @@ class Archivoprograma extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return ArchivoprogramaQuery the active query used by this AR class.
+     * @return DocumentUploadQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new ArchivoprogramaQuery(get_called_class());
+        return new DocumentUploadQuery(get_called_class());
     }
-
+    
+	public function upload() {
+      if ($this->validate()) {
+          $this->archivo->saveAs('uploads/' . $this->archivo->baseName . '.' . $this->archivo->extension);
+          return true;
+      } else return false;
+    }
+    
     public function getNombreUsuario(){
       return $this->usuario->nombre . " " . $this->usuario->apellido;
     }
@@ -111,4 +113,5 @@ class Archivoprograma extends \yii\db\ActiveRecord
     public function getDescripcionPrograma(){
       return $this->programa->descripcion;
     }
+
 }

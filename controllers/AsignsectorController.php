@@ -90,16 +90,18 @@ class AsignsectorController extends Controller
      * @return mixed
      */
     public function actionIndex(){
+		$msg='';
 		$searchModel = new AsignSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/index')) {
-			return $this->render('index', [
-				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider,
-				"msg" => $msg ,
-			]);
-		}else return $this->redirect(['error/error',["msg" => $msg ]]);
+			try{
+				return $this->render('index', [
+					'searchModel' => $searchModel,
+					'dataProvider' => $dataProvider,
+					'msg' => $msg,
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+		}else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -108,10 +110,13 @@ class AsignsectorController extends Controller
      * @return mixed
      */
     public function actionView($id){
+		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/view')) {
-			return $this->render('view', [
-				'model' => $this->findModel($id),]);
-        }else return $this->redirect(['error/error']);
+			try{
+				return $this->render('view', [
+					'model' => $this->findModel($id),]);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -120,20 +125,23 @@ class AsignsectorController extends Controller
      * @return mixed
      */
     public function actionCreate(){
+		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/create')) {
-			$model = new Asignsector();
-			$subModel =  new Actionrole();
-			$subModel2 = new Sector();
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->asignsector_id]);
-			} else {
-				return $this->render('create', [
-					'model' => $model,
-					'subModel' => $subModel,
-					'subModel2' => $subModel2,
-				]);
-			}
-        }else return $this->redirect(['error/error',]);
+		$model = new Asignsector();
+		$subModel =  new Actionrole();
+		$subModel2 = new Sector();
+			try{
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->asignsector_id]);
+				} else {
+					return $this->render('create', [
+						'model' => $model,
+						'subModel' => $subModel,
+						'subModel2' => $subModel2,
+					]);
+				}
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-unique-error',]);}
+		}else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -143,20 +151,23 @@ class AsignsectorController extends Controller
      * @return mixed
      */
     public function actionUpdate($id){
+		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/update')) {
-			$model = $this->findModel($id);
-			$subModel =  new Actionrole();
-			$subModel2 = new Sector();
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->asignsector_id]);
-			} else {
-				return $this->render('update', [
-					'model' => $model,
-					'subModel' => $subModel,
-					'subModel2' => $subModel2,
-				]);
-			}
-        }else return $this->redirect(['error/error']);
+			try{
+				$model = $this->findModel($id);
+				$subModel =  new Actionrole();
+				$subModel2 = new Sector();
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->asignsector_id]);
+				} else {
+					return $this->render('update', [
+						'model' => $model,
+						'subModel' => $subModel,
+						'subModel2' => $subModel2,
+					]);
+				}
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -166,11 +177,14 @@ class AsignsectorController extends Controller
      * @return mixed
      */
     public function actionDelete($id){
+		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('asignsector/delete')) {
-			$this->findModel($id)->delete();
+			try{
+				$this->findModel($id)->delete();
 
-			return $this->redirect(['index']);
-        }else return $this->redirect(['error/error']);
+				return $this->redirect(['index']);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**

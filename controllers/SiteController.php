@@ -77,65 +77,67 @@ class SiteController extends Controller{
      *
      * @return string
      */
- public function actionIndex()
-    {
-        if(Yii::$app->user->isGuest) {$msg='No logoneado...';} 
-        else {$msg='Logoneado!';
-            }
-        $numUsr=Usuario::find()->count();
-        if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/indexAdmin'))) {
-             $estadosFaltantesIngyAgr = Estado::getFaltantes("Instituto de Ingeniería y Agronomía");
-             $countEstadosFaltantesIngyAgr = count ($estadosFaltantesIngyAgr);
+ public function actionIndex(){
+        try{
+			if(Yii::$app->user->isGuest) {$msg='No logoneado...';} 
+			else {$msg='Logoneado!';
+				}
+			$numUsr=Usuario::find()->count();
+			if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/indexUserAdmCPE'))) {
+				 $estadosFaltantesIngyAgr = Estado::getFaltantes("Instituto de Ingeniería y Agronomía");
+				 $countEstadosFaltantesIngyAgr = count ($estadosFaltantesIngyAgr);
 
-            $estadosEntregadosIngyAgr = Estado::getEntregados("Instituto de Ingeniería y Agronomía");
-            $countEstadosEntregadoIngyAgr = count ($estadosEntregadosIngyAgr);
+				$estadosEntregadosIngyAgr = Estado::getEntregados("Instituto de Ingeniería y Agronomía");
+				$countEstadosEntregadoIngyAgr = count ($estadosEntregadosIngyAgr);
 
-            $estadosFaltantesEIni= Estado::getFaltantes("Instituto de Estudios Iniciales");
-            $countEstadosFaltantesEIni  = count ($estadosFaltantesEIni );
-             
-            $estadosEntregadosEIni = Estado::getEntregados("Instituto de Estudios Iniciales");
-            $countEstadosEntregadoEIni  = count ($estadosEntregadosEIni);
+				$estadosFaltantesEIni= Estado::getFaltantes("Instituto de Estudios Iniciales");
+				$countEstadosFaltantesEIni  = count ($estadosFaltantesEIni );
+				 
+				$estadosEntregadosEIni = Estado::getEntregados("Instituto de Estudios Iniciales");
+				$countEstadosEntregadoEIni  = count ($estadosEntregadosEIni);
 
-            $estadosFaltantesSalud= Estado::getFaltantes("Instituto de Ciencias de la Salud");
-            $countEstadosFaltantesSalud  = count ($estadosFaltantesSalud );
-             
-            $estadosEntregadosSalud = Estado::getEntregados("Instituto de Ciencias de la Salud");
-            $countEstadosEntregadoSalud  = count ($estadosEntregadosSalud);
+				$estadosFaltantesSalud= Estado::getFaltantes("Instituto de Ciencias de la Salud");
+				$countEstadosFaltantesSalud  = count ($estadosFaltantesSalud );
+				 
+				$estadosEntregadosSalud = Estado::getEntregados("Instituto de Ciencias de la Salud");
+				$countEstadosEntregadoSalud  = count ($estadosEntregadosSalud);
 
-            $estadosFaltantesSocyAdm= Estado::getFaltantes("Instituto de Ciencias Sociales y Administración");
-            $countEstadosFaltantesSocyAdm = count ($estadosFaltantesSocyAdm );
-             
-            $estadosEntregadosSocyAdm = Estado::getEntregados("Instituto de Ciencias Sociales y Administración");
-            $countEstadosEntregadoSocyAdm  = count ($estadosEntregadosSocyAdm);
+				$estadosFaltantesSocyAdm= Estado::getFaltantes("Instituto de Ciencias Sociales y Administración");
+				$countEstadosFaltantesSocyAdm = count ($estadosFaltantesSocyAdm );
+				 
+				$estadosEntregadosSocyAdm = Estado::getEntregados("Instituto de Ciencias Sociales y Administración");
+				$countEstadosEntregadoSocyAdm  = count ($estadosEntregadosSocyAdm);
 
 
-            return $this->render('indexAdmin',['msg' => $msg,
-            'countFaltantesIngyAgr' => $countEstadosFaltantesIngyAgr,
-            'countEntregadosIngyAgr' => $countEstadosEntregadoIngyAgr,
-            'countFaltantesEIni' => $countEstadosFaltantesEIni,
-            'countEntregadosEIni' => $countEstadosEntregadoEIni,
-            'countFaltantesSalud' => $countEstadosFaltantesSalud,
-            'countEntregadosSalud' => $countEstadosEntregadoSalud,
-            'countFaltantesSocyAdm' => $countEstadosFaltantesSocyAdm,
-            'countEntregadosSocyAdm' => $countEstadosEntregadoSocyAdm,]);
-        }
-        else{
-           return $this->render('index',['msg' => $msg,]); 
-        }
-    }
+				return $this->render('indexUserAdmCPE',['msg' => $msg,
+				'countFaltantesIngyAgr' => $countEstadosFaltantesIngyAgr,
+				'countEntregadosIngyAgr' => $countEstadosEntregadoIngyAgr,
+				'countFaltantesEIni' => $countEstadosFaltantesEIni,
+				'countEntregadosEIni' => $countEstadosEntregadoEIni,
+				'countFaltantesSalud' => $countEstadosFaltantesSalud,
+				'countEntregadosSalud' => $countEstadosEntregadoSalud,
+				'countFaltantesSocyAdm' => $countEstadosFaltantesSocyAdm,
+				'countEntregadosSocyAdm' => $countEstadosEntregadoSocyAdm,]);
+			}
+			else{
+			   return $this->render('index',['msg' => $msg,]); 
+			}
+ 		} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+   }
 	
     /**
      * Login action.
      *
      * @return Response|string
      */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) return $this->goHome();
+    public function actionLogin(){
+        try{
+			if (!Yii::$app->user->isGuest) return $this->goHome();
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) return $this->goBack();
-        return $this->render('login', ['model' => $model, ]);
+			$model = new LoginForm();
+			if ($model->load(Yii::$app->request->post()) && $model->login()) return $this->goBack();
+			return $this->render('login', ['model' => $model, ]);
+ 		} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
     }
 
     /**
@@ -154,17 +156,18 @@ class SiteController extends Controller{
      *
      * @return Response|string
      */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+    public function actionContact(){
+        try{
+			$model = new ContactForm();
+			if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+				Yii::$app->session->setFlash('contactFormSubmitted');
 
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
+				return $this->refresh();
+			}
+			return $this->render('contact', [
+				'model' => $model,
+			]);
+        } catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
     }
 
     /**
@@ -179,27 +182,29 @@ class SiteController extends Controller{
 
 
     public function actionConfirm() {
-        if (Yii::$app->request->get()) {
-            $id = Html::encode($_GET["id"]);$authKey = $_GET["authKey"];
-            if ((int) $id) {
-				$usr = Usuario::find()
-                        ->where("usuario_id=:usuario_id", [":usuario_id" => $id])
-                        ->andWhere("authkeyuser=:authkeyuser", [":authkeyuser" => $authKey]);
-                if ($usr->count() == 1) {
-                    $activar = Usuario:: find()
-                                    ->where("usuario_id=:usuario_id", [":usuario_id" => $id])
-                                    ->andWhere("authkeyuser=:authkeyuser", [":authkeyuser" => $authKey])->one();
-                    $activar->activuser = 1;
-				if ($activar->update() !== false) {
-					echo "Registro ok, redireccionando..";
-					echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
-				} else {
-					echo "Registro fallido, redireccionando..";
-					echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
+         try{
+		   if (Yii::$app->request->get()) {
+				$id = Html::encode($_GET["id"]);$authKey = $_GET["authKey"];
+				if ((int) $id) {
+					$usr = Usuario::find()
+							->where("usuario_id=:usuario_id", [":usuario_id" => $id])
+							->andWhere("authkeyuser=:authkeyuser", [":authkeyuser" => $authKey]);
+					if ($usr->count() == 1) {
+						$activar = Usuario:: find()
+										->where("usuario_id=:usuario_id", [":usuario_id" => $id])
+										->andWhere("authkeyuser=:authkeyuser", [":authkeyuser" => $authKey])->one();
+						$activar->activuser = 1;
+					if ($activar->update() !== false) {
+						echo "Registro ok, redireccionando..";
+						echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
+					} else {
+						echo "Registro fallido, redireccionando..";
+						echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
+					}
 				}
+				} else return $this->redirect(["site/login"]);
 			}
-            } else return $this->redirect(["site/login"]);
-        }
+ 		} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
     }
 
     /**
@@ -208,41 +213,43 @@ class SiteController extends Controller{
      * @return string
      */
     public function actionRegister() {
-		$numUsr=Usuario::find()->count();
-		if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/register'))) {
-			$model = new RegisterForm();/*model= formulario de registro
-										public $Nombre;
-										public $Apellido;
-										public $email;
-										public $password;
-										public $password_repeat;
-										public $sector_id*/
-			$ref=new Sector();/*$ref=  referencia de la descripcion de sector_id para la lista dropdown
-							* @property integer $sector_id
-							* @property string $descripcion
-							*/
-			if ($numUsr == 0){$subModel=$ref->find()->where('sector_id=:sector_id',[':sector_id'=> 1]);}
-				/*$subModel= contenido de la lista desplegable si es el primer registro habilita CPE Admin*/
-			else $subModel=$ref->find()->where('sector_id>:sector_id',[':sector_id'=>1]);
-				/* $subModel= contenido de la lista desplegable si no es el primer registro muestra los demas e impide CPE Admin
-				 * existiría un solo CPE Admin, si se quiere mas de uno cambiar =>1 por =>0 */
-			$msg = "Cantidad de usuarios= ". $numUsr;
-			if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
-				Yii::$app->response->format = Response::FORMAT_JSON;
-				return ActiveForm::validate($model);/* ejecuta formulario de entrada*/
-			}
-			if ($model->load(Yii::$app->request->post())) {/*lee respuesta*/
-				if ($model->validate()) {/*si valida ok:*/
-					$table = new Usuario();/*se crea nuevo registro de la tabla usuario*/
-					$this->fillModelUsuario($table, $model);/*llena nuevo registro con valores del formulario*/
-					if ($table->insert()) {/*si inserta nuevo registro a la tabla usuario: */
-						$msg = $this->sendConfirm($table);/* llama a la funcion que envía email de confirmación */
-						$this->nullModelRegister($model);/* llama a la funcion que borra el formulario */
-					} else $msg = "Ha ocurrido un error al llevar a cabo tu  registro\n";/* error causado porque falla la base de datos */
-				} else $model->getErrors();/* error detectado por la validacion del formulario */
-			}
-			return $this->render("register", ["model" => $model,"subModel" => $subModel, "msg" => $msg]);/* Sin errores detectados */
-        }else return $this->redirect(['error/error']);/* error detectado por RoleAccessChecker: Sin acceso. */
+        try{
+			$numUsr=Usuario::find()->count();
+			if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/register'))) {
+				$model = new RegisterForm();/*model= formulario de registro
+											public $Nombre;
+											public $Apellido;
+											public $email;
+											public $password;
+											public $password_repeat;
+											public $sector_id*/
+				$ref=new Sector();/*$ref=  referencia de la descripcion de sector_id para la lista dropdown
+								* @property integer $sector_id
+								* @property string $descripcion
+								*/
+				if ($numUsr == 0){$subModel=$ref->find()->where('sector_id=:sector_id',[':sector_id'=> 1]);}
+					/*$subModel= contenido de la lista desplegable si es el primer registro habilita CPE Admin*/
+				else $subModel=$ref->find()->where('sector_id>:sector_id',[':sector_id'=>1]);
+					/* $subModel= contenido de la lista desplegable si no es el primer registro muestra los demas e impide CPE Admin
+					 * existiría un solo CPE Admin, si se quiere mas de uno cambiar =>1 por =>0 */
+				$msg = "Cantidad de usuarios= ". $numUsr;
+				if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
+					Yii::$app->response->format = Response::FORMAT_JSON;
+					return ActiveForm::validate($model);/* ejecuta formulario de entrada*/
+				}
+				if ($model->load(Yii::$app->request->post())) {/*lee respuesta*/
+					if ($model->validate()) {/*si valida ok:*/
+						$table = new Usuario();/*se crea nuevo registro de la tabla usuario*/
+						$this->fillModelUsuario($table, $model);/*llena nuevo registro con valores del formulario*/
+						if ($table->insert()) {/*si inserta nuevo registro a la tabla usuario: */
+							$msg = $this->sendConfirm($table);/* llama a la funcion que envía email de confirmación */
+							$this->nullModelRegister($model);/* llama a la funcion que borra el formulario */
+						} else $msg = "Ha ocurrido un error al llevar a cabo tu  registro\n";/* error causado porque falla la base de datos */
+					} else $model->getErrors();/* error detectado por la validacion del formulario */
+				}
+				return $this->render("register", ["model" => $model,"subModel" => $subModel, "msg" => $msg]);/* Sin errores detectados */
+			}else return $this->redirect(['error/level-access-error',]);/* error detectado por RoleAccessChecker: Sin acceso. */
+ 		} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
     }
     
 	/**

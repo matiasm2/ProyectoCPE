@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Materia;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PlanemateriaSearch */
@@ -27,7 +28,15 @@ $this->title = 'Planmaterias';
 
             //'planmateria_id',
             'planestudio_id',
-            'materia_id',
+            //'materia_id',
+            [
+              'label' => 'Materia',
+              'attribute' => 'materia_id',
+              'value' => function($model){
+                $materia=Materia::find()->where(['materia_id'=>$model->materia_id])->one();
+                return $materia->nombre;
+              }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

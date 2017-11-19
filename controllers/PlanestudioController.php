@@ -62,14 +62,16 @@ class PlanestudioController extends Controller
     public function actionIndex(){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('planestudio/index')) {
-			$searchModel = new PlanestudioSearch();
-			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+			try{
+				$searchModel = new PlanestudioSearch();
+				$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-			return $this->render('index', [
-				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider,
-			]);
-         }else return $this->redirect(['error/error',["msg" => $msg ]]);
+				return $this->render('index', [
+					'searchModel' => $searchModel,
+					'dataProvider' => $dataProvider,
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+         }else return $this->redirect(['error/level-access-error',]);
    }
 
     /**
@@ -80,11 +82,13 @@ class PlanestudioController extends Controller
     public function actionView($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('planestudio/view')) {
-			return $this->render('view', [
-				'model' => $this->findModel($id),
+			try{
+				return $this->render('view', [
+					'model' => $this->findModel($id),
 
-			]);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -95,19 +99,21 @@ class PlanestudioController extends Controller
     public function actionCreate(){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('planestudio/create')) {
-			$model = new Planestudio();
-			$subModel= new Carrera();
-			$subModel2= new Ano();
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->planestudio_id]);
-			} else {
-				return $this->render('create', [
-					  'model' => $model,
-					'subModel'=> $subModel,
-					 'subModel2'=> $subModel2,
-				]);
-			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+			try{
+				$model = new Planestudio();
+				$subModel= new Carrera();
+				$subModel2= new Ano();
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->planestudio_id]);
+				} else {
+					return $this->render('create', [
+						  'model' => $model,
+						'subModel'=> $subModel,
+						 'subModel2'=> $subModel2,
+					]);
+				}
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -119,20 +125,22 @@ class PlanestudioController extends Controller
     public function actionUpdate($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('planestudio/update')) {
-			$model = $this->findModel($id);
-			$subModel= new Carrera();
-			$subModel2= new Ano();
+			try{
+				$model = $this->findModel($id);
+				$subModel= new Carrera();
+				$subModel2= new Ano();
 
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
-				return $this->redirect(['index', 'id' => $model->planestudio_id]);
-			} else {
-				return $this->render('update', [
-					'model' => $model,
-					'subModel'=> $subModel,
-					'subModel2'=> $subModel2,
-				]);
-			}
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+				if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->planestudio_id]);
+				} else {
+					return $this->render('update', [
+						'model' => $model,
+						'subModel'=> $subModel,
+						'subModel2'=> $subModel2,
+					]);
+				}
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -144,10 +152,12 @@ class PlanestudioController extends Controller
     public function actionDelete($id){
 		$msg='';
 		if (RoleAccessChecker::actionIsAsignSector('planestudio/delete')) {
-			$this->findModel($id)->delete();
+			try{
+				$this->findModel($id)->delete();
 
-			return $this->redirect(['index']);
-        }else return $this->redirect(['error/error',["msg" => $msg ]]);
+				return $this->redirect(['index']);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+        }else return $this->redirect(['error/level-access-error',]);
     }
 
     /**

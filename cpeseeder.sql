@@ -1,88 +1,131 @@
 \c cpe_db;
 BEGIN;
   --Datos que deben quedar
-  INSERT INTO sector(descripcion,shortname)VALUES('Administrador del sistema CPE','Admin CPE');
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del sistema CPE','Usr CPE');
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Estudios Iniciales','Usr IEI');
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud','Usr ICS');
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias Sociales y AdministraciÛn','Usr ICSyA');
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de IngenierÌa y AgronomÌa','Usr IIyA');
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario de Prensa','Usr Pr');
+  --salud
+  INSERT INTO sector(descripcion,shortname)VALUES('Administrador del sistema CPE','Admin CPE');--1
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del sistema CPE','Usr CPE');--2
+  --prensa
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario de Prensa','Usr Pr');--3
+  --institutos
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Estudios Iniciales','Usr IEI');--4
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Ciencias de la Salud - Licenciatura en Kinesiolog√≠a y Fisiatr√≠a','ICS/Kin');--5
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud - Medicina','ICS/Medicina');--6
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud - Bioqu√≠mica','ICS/Bioqu√≠mica');--7
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud - Licenciatura en Enfermer√≠a','ICS/Enfermer√≠a');--8
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Ciencias de la Salud - Licenciatura en Organizaci√≥n y Asistencia de Quir√≥fanos','ICS/Org.As.Quir');--9
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Ciencias de la Salud - Tecnicatura en Emergencias Sanitarias y Desastres','ICS/E.Sanit.Des');--10
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Ciencias de la Salud - Tecnicatura Universitaria en Farmacia Hospitalaria','ICS/Farm.Hospit');--11
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud - Especializaci√≥n en Cardiolog√≠a','ICS/Esp.Cardio');--12
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Ciencias de la Salud - Maestr√≠a en Investigaci√≥n Traslacional para la Salud','ICS/M.I.Tras.Sd');--13
+  --administracion
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Cs. Sociales y Administraci√≥n - Licenciatura en Administraci√≥n','ICSyA/Administ');--14
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Cs. Sociales y Administraci√≥n - Licenciatura en Econom√≠a','ICSyA/Econom√≠a');--15
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Cs. Sociales y Administraci√≥n - Licenciatura en Trabajo Social','ICSyA/Tr.Social');--16
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Cs. Sociales y Administraci√≥n - Licenciatura en Gesti√≥n Ambiental','ICSyA/G.Ambient');--17
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Cs. Sociales y Administraci√≥n - Licenciatura en Relaciones del Trabajo','ICSyA/R.Trabajo');--18
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Cs. Sociales y Administraci√≥n - Especializaci√≥n en Evaluaci√≥n de Pol√≠ticas P√∫blicas','ICSyA/Ev.P.P√∫bl');--19
+  --ingenieria y agronomia
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Ingenier√≠a en Inform√°tica','IIyA/Inform√°t'); --20
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Ingenier√≠a en Petr√≥leo','IIyA/Petr√≥leo');--21
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Bioingenier√≠a','IIyA/Bioingnria');--22
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Ingenier√≠a Electromec√°nica','IIyA/Electromec');--23
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Ingenier√≠a Industrial','IIyA/Industrial');--24
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Tecnicatura Universitaria en Producci√≥n Vegetal Intensiva','IIyA/ProdVegInt');--25
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Tecnicatura Universitaria en Emprendimientos Agropecuarios','IIyA/EmprAgrope');--26
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Licenciatura en Administraci√≥n Agraria','IIyA/AdmAgraria');--27
+  INSERT INTO sector(descripcion,shortname)
+  VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Licenciatura en Ciencias Agrarias','IIyA/CsAgrarias');--28
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Ingenier√≠a en Transporte','IIyA/Transporte');--29
 
   INSERT INTO instituto(nombre)
   VALUES ('Instituto de Estudios Iniciales');
   INSERT INTO instituto(nombre)
   VALUES ('Instituto de Ciencias de la Salud');
   INSERT INTO instituto(nombre)
-  VALUES ('Instituto de Ciencias Sociales y AdministraciÛn');
+  VALUES ('Instituto de Ciencias Sociales y Administraci√≥n');
   INSERT INTO instituto(nombre)
-  VALUES ('Instituto de IngenierÌa y AgronomÌa');
+  VALUES ('Instituto de Ingenier√≠a y Agronom√≠a');
 
   --Carreras del 'Instituto de Ciencias de la Salud'
   INSERT INTO carrera(instituto_id, descripcion)
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Medicina');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'BioquÌmica');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Bioqu√≠mica');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en EnfermerÌa');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en Enfermer√≠a');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en OrganizaciÛn y Asistencia de QuirÛfanos');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en Organizaci√≥n y Asistencia de Quir√≥fanos');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en KinesiologÌa y FisiatrÌa');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en Kinesiolog√≠a y Fisiatr√≠a');
   INSERT INTO carrera(instituto_id, descripcion)
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Tecnicatura en Emergencias Sanitarias y Desastres');
   INSERT INTO carrera(instituto_id, descripcion)
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Tecnicatura Universitaria en Farmacia Hospitalaria');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Tecnicatura Universitaria en InformaciÛn ClÌnica y GestiÛn de Pacientes');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Tecnicatura Universitaria en Informaci√≥n Cl√≠nica y Gesti√≥n de Pacientes');
 
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'EspecializaciÛn en CardiologÌa');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Especializaci√≥n en Cardiolog√≠a');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'MaestrÌa en InvestigaciÛn Traslacional para la Salud');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Maestr√≠a en Investigaci√≥n Traslacional para la Salud');
 
-  --Carreras del 'Instituto de Ciencias Sociales y AdministraciÛn'
+  --Carreras del 'Instituto de Ciencias Sociales y Administraci√≥n'
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y AdministraciÛn'),'Licenciatura en EconomÌa');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administraci√≥n'),'Licenciatura en Econom√≠a');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y AdministraciÛn'),'Licenciatura en Trabajo Social');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administraci√≥n'),'Licenciatura en Trabajo Social');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y AdministraciÛn'),'Licenciatura en AdministraciÛn');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administraci√≥n'),'Licenciatura en Administraci√≥n');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y AdministraciÛn'),'Licenciatura en GestiÛn Ambiental');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administraci√≥n'),'Licenciatura en Gesti√≥n Ambiental');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y AdministraciÛn'),'Licenciatura en Relaciones del Trabajo');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administraci√≥n'),'Licenciatura en Relaciones del Trabajo');
 
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y AdministraciÛn'),'EspecializaciÛn en EvaluaciÛn de PolÌticas P˙blicas');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administraci√≥n'),'Especializaci√≥n en Evaluaci√≥n de Pol√≠ticas P√∫blicas');
 
-  --Carreras del 'Instituto de IngenierÌa y AgronomÌa'
+  --Carreras del 'Instituto de Ingenier√≠a y Agronom√≠a'
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'IngenierÌa en PetrÛleo');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Ingenier√≠a en Petr√≥leo');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'BioingenierÌa');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Bioingenier√≠a');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'IngenierÌa Electromec·nica');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Ingenier√≠a Electromec√°nica');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'IngenierÌa en Inform·tica');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Ingenier√≠a en Inform√°tica');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'IngenierÌa Industrial');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Ingenier√≠a Industrial');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'Tecnicatura Universitaria en ProducciÛn Vegetal Intensiva');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Tecnicatura Universitaria en Producci√≥n Vegetal Intensiva');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'Tecnicatura Universitaria en Emprendimientos Agropecuarios');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Tecnicatura Universitaria en Emprendimientos Agropecuarios');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'Licenciatura en AdministraciÛn Agraria');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Licenciatura en Administraci√≥n Agraria');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'Licenciatura en Ciencias Agrarias');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Licenciatura en Ciencias Agrarias');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'IngenierÌa en Transporte');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Ingenier√≠a en Transporte');
 
   --Estados
   INSERT INTO estado(descripcion)
   VALUES ('Enviado');
   INSERT INTO estado(descripcion)
-  VALUES ('En revisiÛn');
+  VALUES ('En revisi√≥n');
   INSERT INTO estado(descripcion)
   VALUES ('A corregir');
   INSERT INTO estado(descripcion)
@@ -90,116 +133,93 @@ BEGIN;
   INSERT INTO estado(descripcion)
   VALUES ('Firmado');
 
-  INSERT INTO ano(ano)
-  VALUES (1999);
-  INSERT INTO ano(ano)
-  VALUES (2000);
-  INSERT INTO ano(ano)
-  VALUES (2001);
-  INSERT INTO ano(ano)
-  VALUES (2002);
-  INSERT INTO ano(ano)
-  VALUES (2003);
-  INSERT INTO ano(ano)
-  VALUES (2004);
-  INSERT INTO ano(ano)
-  VALUES (2005);
-  INSERT INTO ano(ano)
-  VALUES (2006);
-  INSERT INTO ano(ano)
-  VALUES (2007);
-  INSERT INTO ano(ano)
-  VALUES (2008);
-  INSERT INTO ano(ano)
-  VALUES (2009);
-  INSERT INTO ano(ano)
-  VALUES (2010);
-  INSERT INTO ano(ano)
-  VALUES (2011);
-  INSERT INTO ano(ano)
-  VALUES (2012);
-  INSERT INTO ano(ano)
-  VALUES (2013);
-  INSERT INTO ano(ano)
-  VALUES (2014);
-  INSERT INTO ano(ano)
-  VALUES (2015);
-  INSERT INTO ano(ano)
-  VALUES (2016);
-  INSERT INTO ano(ano)
-  VALUES (2018);
-  INSERT INTO ano(ano)
-  VALUES (2017);
-  INSERT INTO ano(ano)
-  VALUES (2019);
-  INSERT INTO ano(ano)
-  VALUES (2020);
-  INSERT INTO ano(ano)
-  VALUES (2021);
-  INSERT INTO ano(ano)
-  VALUES (2022);
-  INSERT INTO ano(ano)
-  VALUES (2023);
+  INSERT INTO ano(ano)VALUES (1999);--1
+  INSERT INTO ano(ano)VALUES (2000);--2
+  INSERT INTO ano(ano)VALUES (2001);--3
+  INSERT INTO ano(ano)VALUES (2002);--4
+  INSERT INTO ano(ano)VALUES (2003);--5
+  INSERT INTO ano(ano)VALUES (2004);--6
+  INSERT INTO ano(ano)VALUES (2005);--7
+  INSERT INTO ano(ano)VALUES (2006);--8
+  INSERT INTO ano(ano)VALUES (2007);--9
+  INSERT INTO ano(ano)VALUES (2008);--10
+  INSERT INTO ano(ano)VALUES (2009);--11
+  INSERT INTO ano(ano)VALUES (2010);--12
+  INSERT INTO ano(ano)VALUES (2011);--13
+  INSERT INTO ano(ano)VALUES (2012);--14
+  INSERT INTO ano(ano)VALUES (2013);--15
+  INSERT INTO ano(ano)VALUES (2014);--16
+  INSERT INTO ano(ano)VALUES (2015);--17
+  INSERT INTO ano(ano)VALUES (2016);--18
+  INSERT INTO ano(ano)VALUES (2018);--19
+  INSERT INTO ano(ano)VALUES (2017);--20
+  INSERT INTO ano(ano)VALUES (2019);--21
+  INSERT INTO ano(ano)VALUES (2020);--22
+  INSERT INTO ano(ano)VALUES (2021);--23
+  INSERT INTO ano(ano)VALUES (2022);--24
+  INSERT INTO ano(ano)VALUES (2023);--25
 
   --Inserts de prueba
   INSERT INTO planestudio(carrera_id,ano_id)
-  VALUES ((SELECT carrera_id FROM carrera WHERE descripcion='IngenierÌa en PetrÛleo'),(SELECT ano_id FROM ano WHERE ano=2015));
+  VALUES ((SELECT carrera_id FROM carrera WHERE descripcion='Ingenier√≠a en Petr√≥leo'),(SELECT ano_id FROM ano WHERE ano=2015));
   INSERT INTO planestudio(carrera_id,ano_id)
-  VALUES ((SELECT carrera_id FROM carrera WHERE descripcion='IngenierÌa en Inform·tica'),(SELECT ano_id FROM ano WHERE ano=2015));
+  VALUES ((SELECT carrera_id FROM carrera WHERE descripcion='Ingenier√≠a en Inform√°tica'),(SELECT ano_id FROM ano WHERE ano=2015));
 
   INSERT INTO materia(nombre,optativa)
-  VALUES ('Matem·tica I', FALSE);
+  VALUES ('Matem√°tica I', FALSE);
   INSERT INTO materia(nombre,optativa)
-  VALUES ('Matem·tica II', FALSE);
+  VALUES ('Matem√°tica II', FALSE);
   INSERT INTO materia(nombre,optativa)
-  VALUES ('Matem·tica III', FALSE);
+  VALUES ('Matem√°tica III', FALSE);
 
   INSERT INTO planmateria(planestudio_id,materia_id)
   VALUES (
     (SELECT planestudio_id FROM planestudio
-      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='IngenierÌa en Inform·tica')
+      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingenier√≠a en Inform√°tica')
       AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
-    (SELECT materia_id FROM materia WHERE nombre='Matem·tica I'));
+    (SELECT materia_id FROM materia WHERE nombre='Matem√°tica I'));
   INSERT INTO planmateria(planestudio_id,materia_id)
   VALUES (
     (SELECT planestudio_id FROM planestudio
-      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='IngenierÌa en Inform·tica')
+      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingenier√≠a en Inform√°tica')
       AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
-    (SELECT materia_id FROM materia WHERE nombre='Matem·tica II'));
+    (SELECT materia_id FROM materia WHERE nombre='Matem√°tica II'));
   INSERT INTO planmateria(planestudio_id,materia_id)
   VALUES (
     (SELECT planestudio_id FROM planestudio
-      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='IngenierÌa en Inform·tica')
+      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingenier√≠a en Inform√°tica')
       AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
-    (SELECT materia_id FROM materia WHERE nombre='Matem·tica III'));
+    (SELECT materia_id FROM materia WHERE nombre='Matem√°tica III'));
 
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (1,14,(SELECT CURRENT_DATE),'Programa de la materia XX');
+  VALUES (1,14,(SELECT CURRENT_DATE),'Programa de la materia XX 2012');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (2,14,(SELECT CURRENT_DATE),'Programa de la materia YY');
+  VALUES (2,14,(SELECT CURRENT_DATE),'Programa de la materia YY 2012');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (3,14,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
+  VALUES (3,14,(SELECT CURRENT_DATE),'Programa de la materia ZZ 2012');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (1,15,(SELECT CURRENT_DATE),'Programa de la materia XX');
+  VALUES (1,15,(SELECT CURRENT_DATE),'Programa de la materia XX 2013');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (2,15,(SELECT CURRENT_DATE),'Programa de la materia YY');
+  VALUES (2,15,(SELECT CURRENT_DATE),'Programa de la materia YY 2013');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (3,15,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
+  VALUES (3,15,(SELECT CURRENT_DATE),'Programa de la materia ZZ 2013');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (1,16,(SELECT CURRENT_DATE),'Programa de la materia XX');
+  VALUES (1,16,(SELECT CURRENT_DATE),'Programa de la materia XX 2014');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (2,16,(SELECT CURRENT_DATE),'Programa de la materia YY');
+  VALUES (2,16,(SELECT CURRENT_DATE),'Programa de la materia YY 2014');
 	
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
-  VALUES (3,16,(SELECT CURRENT_DATE),'Programa de la materia ZZ');
-  INSERT INTO programa VALUES (10, 1, 20, '2017-11-07', 'Programa de la materia ZZ');
+  VALUES (3,16,(SELECT CURRENT_DATE),'Programa de la materia ZZ 2014');
+  
+  INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion) 
+  VALUES ( 1, 20, '2017-11-07', 'Programa de la materia ZZ 2017');
 
 ---
 -- Acciones registradas de todo el circuito administrativo (tabla fija), sera parte del modelo proporcionando descripciones.
@@ -242,11 +262,11 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (35,'sector/update','Actualizar sectores');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (36,'sector/create','Crear sectores');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (37,'sector/view','Ver sectores');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (38,'asignsector/delete','Eliminar asignaciÛn de acciones');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (39,'asignsector/index','Ver lista de asignaciÛn de acciones');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (40,'asignsector/update','Actualizar asignaciÛn de acciones');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (41,'asignsector/create','Crear asignaciÛn de acciones');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (42,'asignsector/view','Ver asignaciÛn de acciones');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (38,'asignsector/delete','Eliminar asignaci√≥n de acciones');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (39,'asignsector/index','Ver lista de asignaci√≥n de acciones');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (40,'asignsector/update','Actualizar asignaci√≥n de acciones');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (41,'asignsector/create','Crear asignaci√≥n de acciones');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (42,'asignsector/view','Ver asignaci√≥n de acciones');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (43,'usuario/delete','Eliminar usuarios');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (44,'usuario/index','Ver lista de usuarios');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (45,'usuario/update','Actualizar usuarios');
@@ -267,11 +287,11 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (60,'programa/update','Actualizar referencia de documento');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (61,'programa/create','Crear referencia de documentos');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (62,'programa/delete','Eliminar referencia de documentos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (63, 'site/indexAdmin', 'Home del administrador de CPE');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (63, 'site/indexUserAdmCPE','Home del administrador y usuario CPE');
 ---
--- Acciones configurables para cada sector a travez del usuario CPE Admin.
+-- Acciones configurables para cada sector a travez del usuario Administrador del sistema CPE', Admin CPE., id1
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
--- comando app\commands\RoleAccessChecker se insertan los valores para que CPE Admin tenga todos los accesos
+-- comando app\commands\RoleAccessChecker se insertan los valores para que Admin CPE tenga todos los accesos
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (1,1);--acceso a error/error
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (2,1);--acceso a site/register
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (38,1);--acceso a asignsector/delete
@@ -290,8 +310,332 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (61,1);--acceso a programa/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (62,1);--acceso a programa/delete
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (63,1);--acceso a site/indexAdmin
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (17,1);--acceso a instituto/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (14,1);--acceso a instituto/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (15,1);--acceso a instituto/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (16,1);--acceso a instituto/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (13,1);--acceso a instituto/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (22,1);--acceso a carrera/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (19,1);--acceso a carrera/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (20,1);--acceso a carrera/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (21,1);--acceso a carrera/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (18,1);--acceso a carrera/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (27,1);--acceso a materia/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (24,1);--acceso a materia/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (25,1);--acceso a materia/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (26,1);--acceso a materia/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (23,1);--acceso a materia/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (53,1);--acceso a planmateria/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (54,1);--acceso a planmateria/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (55,1);--acceso a planmateria/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (56,1);--acceso a planmateria/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (57,1);--acceso a planmateria/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (48,1);--acceso a planestudio/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (49,1);--acceso a planestudio/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (50,1);--acceso a planestudio/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (51,1);--acceso a planestudio/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (52,1);--acceso a planestudio/delete	
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (32,1);--acceso a a√±o/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (29,1);--acceso a a√±o/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (30,1);--acceso a a√±o/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (31,1);--acceso a a√±o/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (28,1);--acceso a a√±o/delete
+---
+-- Acciones configurables para: 'Usuario del sistema CPE','Usr CPE', id2
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,2);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,2);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (60,2);--acceso a programa/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (61,2);--acceso a programa/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (62,2);--acceso a programa/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (63,2);--acceso a site/indexUserAdmCPE
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,2);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,2);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,2);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,2);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,2);--acceso a archivoprograma/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (17,2);--acceso a instituto/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (14,2);--acceso a instituto/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (22,2);--acceso a carrera/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (19,2);--acceso a carrera/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (53,2);--acceso a planmateria/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (54,2);--acceso a planmateria/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (48,2);--acceso a planestudio/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (49,2);--acceso a planestudio/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (27,2);--acceso a materia/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (24,2);--acceso a materia/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (25,2);--acceso a materia/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (26,2);--acceso a materia/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (23,2);--acceso a materia/delete
+---
+-- Acciones configurables para: 'Usuario de Prensa','Usr Pr'
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,3);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,3);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,3);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,3);--acceso a archivoprograma/index
+
+
+---
+-- Acciones configurables para: 'Usuario del Instituto de Estudios Iniciales','Usr IEI', id34
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,4);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,4);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,4);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,4);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,4);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,4);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,4);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario del Instituto de Ciencias de la Salud - Licenciatura en Kinesiolog√≠a y Fisiatr√≠a','ICS/Kin',id5
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,5);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,5);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,5);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,5);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,5);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,5);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,5);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario del Instituto de Ciencias de la Salud - Medicina','ICS/Medicina,id6
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,6);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,6);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,6);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,6);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,6);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,6);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,6);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario del Instituto de Ciencias de la Salud - Bioqu√≠mica','ICS/Bioqu√≠mica',id7
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,7);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,7);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,7);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,7);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,7);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,7);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,7);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario del Instituto de Ciencias de la Salud - Licenciatura en Enfermer√≠a','ICS/Enfermer√≠a',id8
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,8);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,8);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,8);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,8);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,8);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,8);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,8);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id9
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,9);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,9);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,9);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,9);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,9);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,9);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,9);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id10
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,10);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,10);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,10);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,10);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,10);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,10);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,10);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id11
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,11);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,11);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,11);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,11);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,11);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,11);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,11);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id12
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,12);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,12);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,12);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,12);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,12);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,12);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,12);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id13
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,13);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,13);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,13);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,13);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,13);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,13);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,13);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id14
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,14);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,14);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,14);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,14);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,14);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,14);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,14);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id15
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,15);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,15);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,15);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,15);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,15);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,15);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,15);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id16
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,16);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,16);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,16);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,16);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,16);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,16);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,16);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id17
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,17);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,17);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,17);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,17);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,17);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,17);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,17);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id18
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,18);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,18);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,18);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,18);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,18);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,18);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,18);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id19
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,19);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,19);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,19);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,19);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,19);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,19);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,19);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id20
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,20);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,20);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,20);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,20);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,20);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,20);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,20);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id21
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,21);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,21);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,21);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,21);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,21);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,21);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,21);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id22
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,22);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,22);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,22);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,22);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,22);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,22);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,22);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id23
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,23);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,23);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,23);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,23);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,23);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,23);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,23);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id24
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,24);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,24);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,24);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,24);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,24);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,24);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,24);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id25
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,25);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,25);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,25);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,25);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,25);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,25);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,25);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id26
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,26);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,26);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,26);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,26);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,26);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,26);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,26);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id27
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,27);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,27);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,27);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,27);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,27);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,27);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,27);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id28
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,28);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,28);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,28);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,28);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,28);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,28);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,28);--acceso a archivoprograma/delete
+---
+-- Acciones configurables para: 'Usuario ..,id29
+---
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,29);--acceso a programa/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,29);--acceso a programa/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,29);--acceso a archivoprograma/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,29);--acceso a archivoprograma/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,29);--acceso a archivoprograma/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,29);--acceso a archivprograma/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,29);--acceso a archivoprograma/delete
+
 	END;
-
-
-
 COMMIT;
