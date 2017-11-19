@@ -26,7 +26,6 @@
     <Compile Include="commands\RoleAccessChecker.php" />
     <Compile Include="config\console.php" />
     <Compile Include="config\db.php" />
-    <Compile Include="config\main.php" />
     <Compile Include="config\params.php" />
     <Compile Include="config\test.php" />
     <Compile Include="config\test_db.php" />

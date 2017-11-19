@@ -1,6 +1,6 @@
 <?php
 use app\commands\Intranet;
-use Yii;
+//use Yii;
 
 /* @var $this yii\web\View */
 

@@ -96,12 +96,12 @@ class RoleAccessChecker extends Controller{
 					'visible' => !(Yii::$app->user->isGuest),
 				  ],
 					Yii::$app->user->isGuest ? (
-						['label' => '<span class="glyphicon glyphicon-log-in"></span> Login', 'url' => ['/site/login']]
+						['label' => '<span class="glyphicon glyphicon-log-in"></span> Iniciar Sesion', 'url' => ['/site/login']]
 					) : (
 					'<li>'
 					. Html::beginForm(['/site/logout'], 'post')
 					. Html::submitButton(
-						'<span class="glyphicon glyphicon-log-out"></span> Logout (' . '  [' . Yii::$app->user->identity->getSector()->one()->shortname.'] ' . Yii::$app->user->identity->nombre . ' )',
+						'<span class="glyphicon glyphicon-log-out"></span> Salir (' . '  [' . Yii::$app->user->identity->getSector()->one()->shortname.'] ' . Yii::$app->user->identity->nombre . ' )',
 						['class' => 'btn btn-link logout']
 					)
 					. Html::endForm()
