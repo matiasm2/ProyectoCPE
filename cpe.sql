@@ -1,6 +1,3 @@
-﻿CREATE DATABASE cpe_db 
--- ~ WITH ENCODING 'LATIN1'
-;
 	DO
 	$body$
 	BEGIN
