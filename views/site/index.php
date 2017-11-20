@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 use app\commands\Intranet;
 //use Yii;
 

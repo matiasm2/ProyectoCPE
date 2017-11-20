@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Ano */
 
 $this->title = $model->ano_id;
-$this->params['breadcrumbs'][] = ['label' => 'Anos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Años', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="col-lg-8">
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Eliminar', ['delete', 'id' => $model->ano_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => '?Est? seguro que quiere eliminar este item?',
+                'confirm' => '¿Está seguro que quiere eliminar este item?',
                 'method' => 'post',
             ],
         ]) ?>

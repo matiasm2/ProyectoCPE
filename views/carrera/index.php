@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -17,7 +17,7 @@ $this->title = 'Carreras';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Crear Carrera', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

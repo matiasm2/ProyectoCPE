@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use yii\helpers\Html;
 
@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Asignsector */
 
-$this->title = 'Crear asignacion de accesos';
+$this->title = 'Crear Asignación de accesos';
 //$this->params['breadcrumbs'][] = ['label' => 'Asignsectors', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 ?>

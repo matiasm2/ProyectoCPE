@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Planmateria */
 
-$this->title = 'Crear Planmateria';
+$this->title = 'Crear Plan de materia';
 /*$this->params['breadcrumbs'][] = ['label' => 'Planmaterias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;*/
 ?>

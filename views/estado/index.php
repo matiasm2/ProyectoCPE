@@ -17,7 +17,7 @@ $this->title = 'Estados';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Crear Estado', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

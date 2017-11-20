@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\AsignSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Asignacion de accesos';
+$this->title = 'Asignación de accesos';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="col-lg-8">

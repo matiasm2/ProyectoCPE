@@ -1,12 +1,12 @@
-<?php
+﻿<?php
 
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Asignsector */
 
-$this->title = 'Actualizar asignacion de acceso: ' . $model->asignsector_id;
-$this->params['breadcrumbs'][] = ['label' => 'Asignacion de accesos', 'url' => ['index']];
+$this->title = 'Actualizar Asignación de acceso: ' . $model->asignsector_id;
+$this->params['breadcrumbs'][] = ['label' => 'Asignación de accesos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->asignsector_id, 'url' => ['view', 'id' => $model->asignsector_id]];
 $this->params['breadcrumbs'][] = 'Actualizar';
 ?>
