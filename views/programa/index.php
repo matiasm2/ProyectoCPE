@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -19,7 +19,7 @@ $this->title = Yii::t('app', 'Programas');
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Crear Programa'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Crear'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -31,7 +31,7 @@ $this->title = Yii::t('app', 'Programas');
             'planmateria_id',
             //'ano_id',
             [
-              'label' => 'Anio',
+              'label' => 'Año',
               'attribute' => 'ano_id',
               'value' => function($model){
                 $anio=Ano::find()->where(['ano_id'=>$model->ano_id])->one();

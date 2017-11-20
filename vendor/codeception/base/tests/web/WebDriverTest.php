@@ -983,7 +983,7 @@ class WebDriverTest extends TestsForBrowsers
         $asserts = PHPUnit_Framework_Assert::getCount();
         $this->module->amOnPage('/form/example1');
         $this->module->performOn('.rememberMe', \Codeception\Util\ActionSequence::build()
-            ->see('Remember me')
+            ->see('Remember Me')
             ->see('next time')
             ->dontSee('Login')
         );

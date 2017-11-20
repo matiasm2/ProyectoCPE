@@ -1,12 +1,12 @@
-<?php
+﻿<?php
 
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Ano */
 
-$this->title = 'Actualizar Anio: ' . $model->ano_id;
-$this->params['breadcrumbs'][] = ['label' => 'Anos', 'url' => ['index']];
+$this->title = 'Actualizar Año: ' . $model->ano_id;
+$this->params['breadcrumbs'][] = ['label' => 'Años', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->ano_id, 'url' => ['view', 'id' => $model->ano_id]];
 $this->params['breadcrumbs'][] = 'Actualizar';
 ?>

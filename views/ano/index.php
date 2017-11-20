@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\AnoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Anios';
+$this->title = 'Años';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="col-lg-8">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Crear Anio', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

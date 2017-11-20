@@ -1,4 +1,4 @@
-# AngularJS
+﻿# AngularJS
 
 
 Module for AngularJS testing, based on [WebDriver module](http://codeception.com/docs/modules/WebDriver) and [Protractor](http://angular.github.io/protractor/).
@@ -990,7 +990,7 @@ List of actions can be pragmatically build using `Codeception\Util\ActionSequenc
 <?php
 $I->performOn('.model', ActionSequence::build()
     ->see('Warning')
-    ->see('Are you sure you want to delete this?')
+    ->see('¿Está seguro que quiere eliminar este item?')
     ->click('Yes')
 );
 ```

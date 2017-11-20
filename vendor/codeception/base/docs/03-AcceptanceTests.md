@@ -480,7 +480,7 @@ Let's see how you can perform some actions inside an HTML popup:
 <?php
 $I->performOn('.confirm', \Codeception\Util\ActionSequence::build()
     ->see('Warning')
-    ->see('Are you sure you want to delete this?')
+    ->see('¿Está seguro que quiere eliminar este item?')
     ->click('Yes')
 );
 ```
@@ -490,7 +490,7 @@ Alternatively, this can be executed using a callback, in this case the `WebDrive
 <?php
 $I->performOn('.confirm', function(\Codeception\Module\WebDriver $I) {
     $I->see('Warning');
-    $I->see('Are you sure you want to delete this?');
+    $I->see('¿Está seguro que quiere eliminar este item?'); 
     $I->click('Yes');
 });
 ```

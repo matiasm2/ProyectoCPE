@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;*/
         <?= Html::a(Yii::t('app', 'Eliminar'), ['delete', 'id' => $model->programa_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', '?Est? seguro que quiere eliminar este item?'),
+                'confirm' => Yii::t('app', '¿Está seguro que quiere eliminar este item?'),
                 'method' => 'post',
             ],
         ]) ?>
