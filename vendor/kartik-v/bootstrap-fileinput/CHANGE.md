@@ -1,6 +1,32 @@
 Change Log: `bootstrap-fileinput`
 =================================
 
+## version 4.4.6
+
+**Date:** 13-Nov-2017
+
+- (enh #1125): Create CODE_OF_CONDUCT.md.
+- (bug #1123): Correct error container close button click behavior for various scenarios.
+- (enh #1121): Update Spanish Translations.
+- (enh #1119): Enhance close button icon markup as per BS4 norms.
+- (enh #1118): Better file action button style.
+- (bug #1117): Reset `ajaxAborted` status more correctly before upload.
+- (enh #1113): Correct slug default callback to include hyphens in file name.
+- (enh #1111): Enhance default file download action to use `button` markup.
+- (enh #1110): Add support for previewing TIFF, EPS, AI, WMF files.
+- (bug #1108): Correct sortable drag element parsing during sorting.
+- (enh #1106): Update Portuguese BR Translations.
+- (enh #1105): Update Russian Translations.
+- (enh #1103): Update German Translations.
+- (enh #1099): Enhance mime type parsing for IE 11. 
+- (enh #1097): Add support for previewing Office file formats (e.g. docx, xlsx, pptx). 
+    - Supports all common formats that google docs can view.
+    - Available only for initial preview content (where the document is accessible via a public web link).
+- Update README to include updated cover images for bootstrap-fileinput themes (with Bootstrap 4.x support).
+- (enh #1096): Update Czech language folder and code to ISO code `cs`.
+- (bug #1095): Fix resize image when used with non JPEG images (silently ignoring `piexif` errors).
+- (enh #1094): Update French Translations.
+
 ## version 4.4.5
 
 **Date:** 01-Oct-2017

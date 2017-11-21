@@ -1,3 +1,4 @@
+\c cpe_db;
 BEGIN;
   --Datos que deben quedar
   --salud
@@ -8,123 +9,123 @@ BEGIN;
   --institutos
   INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Estudios Iniciales','Usr IEI');--4
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de Ciencias de la Salud - Licenciatura en KinesiologÌa y FisiatrÌa','ICS/Kin');--5
+  VALUES('Usuario del Instituto de Ciencias de la Salud - Licenciatura en Kinesiolog√≠a y Fisiatr√≠a','ICS/Kin');--5
   INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud - Medicina','ICS/Medicina');--6
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud - BioquÌmica','ICS/BioquÌmica');--7
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud - Licenciatura en EnfermerÌa','ICS/EnfermerÌa');--8
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud - Bioqu√≠mica','ICS/Bioqu√≠mica');--7
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud - Licenciatura en Enfermer√≠a','ICS/Enfermer√≠a');--8
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de Ciencias de la Salud - Licenciatura en OrganizaciÛn y Asistencia de QuirÛfanos','ICS/Org.As.Quir');--9
+  VALUES('Usuario del Instituto de Ciencias de la Salud - Licenciatura en Organizaci√≥n y Asistencia de Quir√≥fanos','ICS/Org.As.Quir');--9
   INSERT INTO sector(descripcion,shortname)
   VALUES('Usuario del Instituto de Ciencias de la Salud - Tecnicatura en Emergencias Sanitarias y Desastres','ICS/E.Sanit.Des');--10
   INSERT INTO sector(descripcion,shortname)
   VALUES('Usuario del Instituto de Ciencias de la Salud - Tecnicatura Universitaria en Farmacia Hospitalaria','ICS/Farm.Hospit');--11
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud - EspecializaciÛn en CardiologÌa','ICS/Esp.Cardio');--12
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ciencias de la Salud - Especializaci√≥n en Cardiolog√≠a','ICS/Esp.Cardio');--12
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de Ciencias de la Salud - MaestrÌa en InvestigaciÛn Traslacional para la Salud','ICS/M.I.Tras.Sd');--13
+  VALUES('Usuario del Instituto de Ciencias de la Salud - Maestr√≠a en Investigaci√≥n Traslacional para la Salud','ICS/M.I.Tras.Sd');--13
   --administracion
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de Cs. Sociales y AdministraciÛn - Licenciatura en AdministraciÛn','ICSyA/Administ');--14
+  VALUES('Usuario del Instituto de Cs. Sociales y Administraci√≥n - Licenciatura en Administraci√≥n','ICSyA/Administ');--14
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de Cs. Sociales y AdministraciÛn - Licenciatura en EconomÌa','ICSyA/EconomÌa');--15
+  VALUES('Usuario del Instituto de Cs. Sociales y Administraci√≥n - Licenciatura en Econom√≠a','ICSyA/Econom√≠a');--15
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de Cs. Sociales y AdministraciÛn - Licenciatura en Trabajo Social','ICSyA/Tr.Social');--16
+  VALUES('Usuario del Instituto de Cs. Sociales y Administraci√≥n - Licenciatura en Trabajo Social','ICSyA/Tr.Social');--16
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de Cs. Sociales y AdministraciÛn - Licenciatura en GestiÛn Ambiental','ICSyA/G.Ambient');--17
+  VALUES('Usuario del Instituto de Cs. Sociales y Administraci√≥n - Licenciatura en Gesti√≥n Ambiental','ICSyA/G.Ambient');--17
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de Cs. Sociales y AdministraciÛn - Licenciatura en Relaciones del Trabajo','ICSyA/R.Trabajo');--18
+  VALUES('Usuario del Instituto de Cs. Sociales y Administraci√≥n - Licenciatura en Relaciones del Trabajo','ICSyA/R.Trabajo');--18
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de Cs. Sociales y AdministraciÛn - EspecializaciÛn en EvaluaciÛn de PolÌticas P˙blicas','ICSyA/Ev.P.P˙bl');--19
+  VALUES('Usuario del Instituto de Cs. Sociales y Administraci√≥n - Especializaci√≥n en Evaluaci√≥n de Pol√≠ticas P√∫blicas','ICSyA/Ev.P.P√∫bl');--19
   --ingenieria y agronomia
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de IngenierÌa y AgronomÌa - IngenierÌa en Inform·tica','IIyA/Inform·t'); --20
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de IngenierÌa y AgronomÌa - IngenierÌa en PetrÛleo','IIyA/PetrÛleo');--21
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de IngenierÌa y AgronomÌa - BioingenierÌa','IIyA/Bioingnria');--22
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Ingenier√≠a en Inform√°tica','IIyA/Inform√°t'); --20
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Ingenier√≠a en Petr√≥leo','IIyA/Petr√≥leo');--21
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Bioingenier√≠a','IIyA/Bioingnria');--22
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de IngenierÌa y AgronomÌa - IngenierÌa Electromec·nica','IIyA/Electromec');--23
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de IngenierÌa y AgronomÌa - IngenierÌa Industrial','IIyA/Industrial');--24
+  VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Ingenier√≠a Electromec√°nica','IIyA/Electromec');--23
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Ingenier√≠a Industrial','IIyA/Industrial');--24
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de IngenierÌa y AgronomÌa - Tecnicatura Universitaria en ProducciÛn Vegetal Intensiva','IIyA/ProdVegInt');--25
+  VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Tecnicatura Universitaria en Producci√≥n Vegetal Intensiva','IIyA/ProdVegInt');--25
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de IngenierÌa y AgronomÌa - Tecnicatura Universitaria en Emprendimientos Agropecuarios','IIyA/EmprAgrope');--26
+  VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Tecnicatura Universitaria en Emprendimientos Agropecuarios','IIyA/EmprAgrope');--26
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de IngenierÌa y AgronomÌa - Licenciatura en AdministraciÛn Agraria','IIyA/AdmAgraria');--27
+  VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Licenciatura en Administraci√≥n Agraria','IIyA/AdmAgraria');--27
   INSERT INTO sector(descripcion,shortname)
-  VALUES('Usuario del Instituto de IngenierÌa y AgronomÌa - Licenciatura en Ciencias Agrarias','IIyA/CsAgrarias');--28
-  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de IngenierÌa y AgronomÌa - IngenierÌa en Transporte','IIyA/Transporte');--29
+  VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Licenciatura en Ciencias Agrarias','IIyA/CsAgrarias');--28
+  INSERT INTO sector(descripcion,shortname)VALUES('Usuario del Instituto de Ingenier√≠a y Agronom√≠a - Ingenier√≠a en Transporte','IIyA/Transporte');--29
 
   INSERT INTO instituto(nombre)
   VALUES ('Instituto de Estudios Iniciales');
   INSERT INTO instituto(nombre)
   VALUES ('Instituto de Ciencias de la Salud');
   INSERT INTO instituto(nombre)
-  VALUES ('Instituto de Ciencias Sociales y AdministraciÛn');
+  VALUES ('Instituto de Ciencias Sociales y Administraci√≥n');
   INSERT INTO instituto(nombre)
-  VALUES ('Instituto de IngenierÌa y AgronomÌa');
+  VALUES ('Instituto de Ingenier√≠a y Agronom√≠a');
 
   --Carreras del 'Instituto de Ciencias de la Salud'
   INSERT INTO carrera(instituto_id, descripcion)
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Medicina');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'BioquÌmica');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Bioqu√≠mica');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en EnfermerÌa');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en Enfermer√≠a');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en OrganizaciÛn y Asistencia de QuirÛfanos');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en Organizaci√≥n y Asistencia de Quir√≥fanos');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en KinesiologÌa y FisiatrÌa');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Licenciatura en Kinesiolog√≠a y Fisiatr√≠a');
   INSERT INTO carrera(instituto_id, descripcion)
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Tecnicatura en Emergencias Sanitarias y Desastres');
   INSERT INTO carrera(instituto_id, descripcion)
   VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Tecnicatura Universitaria en Farmacia Hospitalaria');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Tecnicatura Universitaria en InformaciÛn ClÌnica y GestiÛn de Pacientes');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Tecnicatura Universitaria en Informaci√≥n Cl√≠nica y Gesti√≥n de Pacientes');
 
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'EspecializaciÛn en CardiologÌa');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Especializaci√≥n en Cardiolog√≠a');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'MaestrÌa en InvestigaciÛn Traslacional para la Salud');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias de la Salud'),'Maestr√≠a en Investigaci√≥n Traslacional para la Salud');
 
-  --Carreras del 'Instituto de Ciencias Sociales y AdministraciÛn'
+  --Carreras del 'Instituto de Ciencias Sociales y Administraci√≥n'
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y AdministraciÛn'),'Licenciatura en EconomÌa');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administraci√≥n'),'Licenciatura en Econom√≠a');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y AdministraciÛn'),'Licenciatura en Trabajo Social');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administraci√≥n'),'Licenciatura en Trabajo Social');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y AdministraciÛn'),'Licenciatura en AdministraciÛn');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administraci√≥n'),'Licenciatura en Administraci√≥n');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y AdministraciÛn'),'Licenciatura en GestiÛn Ambiental');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administraci√≥n'),'Licenciatura en Gesti√≥n Ambiental');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y AdministraciÛn'),'Licenciatura en Relaciones del Trabajo');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administraci√≥n'),'Licenciatura en Relaciones del Trabajo');
 
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y AdministraciÛn'),'EspecializaciÛn en EvaluaciÛn de PolÌticas P˙blicas');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ciencias Sociales y Administraci√≥n'),'Especializaci√≥n en Evaluaci√≥n de Pol√≠ticas P√∫blicas');
 
-  --Carreras del 'Instituto de IngenierÌa y AgronomÌa'
+  --Carreras del 'Instituto de Ingenier√≠a y Agronom√≠a'
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'IngenierÌa en PetrÛleo');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Ingenier√≠a en Petr√≥leo');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'BioingenierÌa');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Bioingenier√≠a');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'IngenierÌa Electromec·nica');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Ingenier√≠a Electromec√°nica');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'IngenierÌa en Inform·tica');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Ingenier√≠a en Inform√°tica');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'IngenierÌa Industrial');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Ingenier√≠a Industrial');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'Tecnicatura Universitaria en ProducciÛn Vegetal Intensiva');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Tecnicatura Universitaria en Producci√≥n Vegetal Intensiva');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'Tecnicatura Universitaria en Emprendimientos Agropecuarios');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Tecnicatura Universitaria en Emprendimientos Agropecuarios');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'Licenciatura en AdministraciÛn Agraria');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Licenciatura en Administraci√≥n Agraria');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'Licenciatura en Ciencias Agrarias');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Licenciatura en Ciencias Agrarias');
   INSERT INTO carrera(instituto_id, descripcion)
-  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de IngenierÌa y AgronomÌa'),'IngenierÌa en Transporte');
+  VALUES ((SELECT instituto_id FROM instituto WHERE nombre='Instituto de Ingenier√≠a y Agronom√≠a'),'Ingenier√≠a en Transporte');
 
   --Estados
   INSERT INTO estado(descripcion)
   VALUES ('Enviado');
   INSERT INTO estado(descripcion)
-  VALUES ('En revisiÛn');
+  VALUES ('En revisi√≥n');
   INSERT INTO estado(descripcion)
   VALUES ('A corregir');
   INSERT INTO estado(descripcion)
@@ -160,35 +161,35 @@ BEGIN;
 
   --Inserts de prueba
   INSERT INTO planestudio(carrera_id,ano_id)
-  VALUES ((SELECT carrera_id FROM carrera WHERE descripcion='IngenierÌa en PetrÛleo'),(SELECT ano_id FROM ano WHERE ano=2015));
+  VALUES ((SELECT carrera_id FROM carrera WHERE descripcion='Ingenier√≠a en Petr√≥leo'),(SELECT ano_id FROM ano WHERE ano=2015));
   INSERT INTO planestudio(carrera_id,ano_id)
-  VALUES ((SELECT carrera_id FROM carrera WHERE descripcion='IngenierÌa en Inform·tica'),(SELECT ano_id FROM ano WHERE ano=2015));
+  VALUES ((SELECT carrera_id FROM carrera WHERE descripcion='Ingenier√≠a en Inform√°tica'),(SELECT ano_id FROM ano WHERE ano=2015));
 
   INSERT INTO materia(nombre,optativa)
-  VALUES ('Matem·tica I', FALSE);
+  VALUES ('Matem√°tica I', FALSE);
   INSERT INTO materia(nombre,optativa)
-  VALUES ('Matem·tica II', FALSE);
+  VALUES ('Matem√°tica II', FALSE);
   INSERT INTO materia(nombre,optativa)
-  VALUES ('Matem·tica III', FALSE);
+  VALUES ('Matem√°tica III', FALSE);
 
   INSERT INTO planmateria(planestudio_id,materia_id)
   VALUES (
     (SELECT planestudio_id FROM planestudio
-      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='IngenierÌa en Inform·tica')
+      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingenier√≠a en Inform√°tica')
       AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
-    (SELECT materia_id FROM materia WHERE nombre='Matem·tica I'));
+    (SELECT materia_id FROM materia WHERE nombre='Matem√°tica I'));
   INSERT INTO planmateria(planestudio_id,materia_id)
   VALUES (
     (SELECT planestudio_id FROM planestudio
-      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='IngenierÌa en Inform·tica')
+      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingenier√≠a en Inform√°tica')
       AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
-    (SELECT materia_id FROM materia WHERE nombre='Matem·tica II'));
+    (SELECT materia_id FROM materia WHERE nombre='Matem√°tica II'));
   INSERT INTO planmateria(planestudio_id,materia_id)
   VALUES (
     (SELECT planestudio_id FROM planestudio
-      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='IngenierÌa en Inform·tica')
+      WHERE carrera_id=(SELECT carrera_id FROM carrera WHERE descripcion='Ingenier√≠a en Inform√°tica')
       AND ano_id=(SELECT ano_id FROM ano WHERE ano=2015)),
-    (SELECT materia_id FROM materia WHERE nombre='Matem·tica III'));
+    (SELECT materia_id FROM materia WHERE nombre='Matem√°tica III'));
 
   INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
   VALUES (1,14,(SELECT CURRENT_DATE),'Programa de la materia XX 2012');
@@ -251,21 +252,21 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (25,'materia/update','Actualizar materias');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (26,'materia/create','Crear materias');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (27,'materia/view','Ver materias');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (28,'ano/delete','Eliminar aÒos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (29,'ano/index','Ver lista de aÒos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (30,'ano/update','Actualizar aÒos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (31,'ano/create','Crear aÒos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (32,'ano/view','Ver aÒos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (28,'ano/delete','Eliminar anios');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (29,'ano/index','Ver lista de anios');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (30,'ano/update','Actualizar anios');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (31,'ano/create','Crear anios');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (32,'ano/view','Ver anios');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (33,'sector/delete','Eliminar sectores');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (34,'sector/index','Ver lista de sectores');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (35,'sector/update','Actualizar sectores');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (36,'sector/create','Crear sectores');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (37,'sector/view','Ver sectores');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (38,'asignsector/delete','Eliminar asignaciÛn de acciones');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (39,'asignsector/index','Ver lista de asignaciÛn de acciones');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (40,'asignsector/update','Actualizar asignaciÛn de acciones');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (41,'asignsector/create','Crear asignaciÛn de acciones');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (42,'asignsector/view','Ver asignaciÛn de acciones');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (38,'asignsector/delete','Eliminar asignaci√≥n de acciones');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (39,'asignsector/index','Ver lista de asignaci√≥n de acciones');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (40,'asignsector/update','Actualizar asignaci√≥n de acciones');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (41,'asignsector/create','Crear asignaci√≥n de acciones');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (42,'asignsector/view','Ver asignaci√≥n de acciones');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (43,'usuario/delete','Eliminar usuarios');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (44,'usuario/index','Ver lista de usuarios');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (45,'usuario/update','Actualizar usuarios');
@@ -334,11 +335,11 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (50,1);--acceso a planestudio/update
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (51,1);--acceso a planestudio/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (52,1);--acceso a planestudio/delete	
-	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (32,1);--acceso a aÒo/view
-	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (29,1);--acceso a aÒo/index
-	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (30,1);--acceso a aÒo/update
-	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (31,1);--acceso a aÒo/create
-	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (28,1);--acceso a aÒo/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (32,1);--acceso a a√±o/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (29,1);--acceso a a√±o/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (30,1);--acceso a a√±o/update
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (31,1);--acceso a a√±o/create
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (28,1);--acceso a a√±o/delete
 ---
 -- Acciones configurables para: 'Usuario del sistema CPE','Usr CPE', id2
 ---
@@ -386,7 +387,7 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,4);--acceso a archivprograma/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,4);--acceso a archivoprograma/delete
 ---
--- Acciones configurables para: 'Usuario del Instituto de Ciencias de la Salud - Licenciatura en KinesiologÌa y FisiatrÌa','ICS/Kin',id5
+-- Acciones configurables para: 'Usuario del Instituto de Ciencias de la Salud - Licenciatura en Kinesiolog√≠a y Fisiatr√≠a','ICS/Kin',id5
 ---
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,5);--acceso a programa/view
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,5);--acceso a programa/index
@@ -406,7 +407,7 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,6);--acceso a archivprograma/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,6);--acceso a archivoprograma/delete
 ---
--- Acciones configurables para: 'Usuario del Instituto de Ciencias de la Salud - BioquÌmica','ICS/BioquÌmica',id7
+-- Acciones configurables para: 'Usuario del Instituto de Ciencias de la Salud - Bioqu√≠mica','ICS/Bioqu√≠mica',id7
 ---
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,7);--acceso a programa/view
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,7);--acceso a programa/index
@@ -416,7 +417,7 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,7);--acceso a archivprograma/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,7);--acceso a archivoprograma/delete
 ---
--- Acciones configurables para: 'Usuario del Instituto de Ciencias de la Salud - Licenciatura en EnfermerÌa','ICS/EnfermerÌa',id8
+-- Acciones configurables para: 'Usuario del Instituto de Ciencias de la Salud - Licenciatura en Enfermer√≠a','ICS/Enfermer√≠a',id8
 ---
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,8);--acceso a programa/view
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (59,8);--acceso a programa/index
@@ -636,5 +637,74 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (6,29);--acceso a archivprograma/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (3,29);--acceso a archivoprograma/delete
 
+----
+-- Modos de lectura escritura
+--
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|LECTOESCR_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|LECTOESCR_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|LECTOESCR_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|LECTOESCR_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|LECTURA_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|LECTURA_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|LECTURA_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|LECTURA_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|ESCRITURA_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|ESCRITURA_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|ESCRITURA_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|ESCRITURA_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|INACCESIBLE_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|INACCESIBLE_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|INACCESIBLE_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTOESCR_SECTOR|INACCESIBLE_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|LECTOESCR_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|LECTOESCR_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|LECTOESCR_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|LECTOESCR_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|LECTURA_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|LECTURA_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|LECTURA_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|LECTURA_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|ESCRITURA_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|ESCRITURA_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|ESCRITURA_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|ESCRITURA_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|INACCESIBLE_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|INACCESIBLE_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|INACCESIBLE_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|LECTURA_SECTOR|INACCESIBLE_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|LECTOESCR_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|LECTOESCR_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|LECTOESCR_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|LECTOESCR_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|LECTURA_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|LECTURA_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|LECTURA_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|LECTURA_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|ESCRITURA_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|ESCRITURA_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|ESCRITURA_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|ESCRITURA_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|INACCESIBLE_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|INACCESIBLE_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|INACCESIBLE_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|ESCRITURA_SECTOR|INACCESIBLE_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|LECTOESCR_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|LECTOESCR_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|LECTOESCR_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|LECTOESCR_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|LECTURA_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|LECTURA_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|LECTURA_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|LECTURA_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|ESCRITURA_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|ESCRITURA_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|ESCRITURA_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|ESCRITURA_USUARIO|INACCESIBLE');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|INACCESIBLE_USUARIO|LECTOESCR');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|INACCESIBLE_USUARIO|LECTURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|INACCESIBLE_USUARIO|ESCRITURA');
+	INSERT INTO moderw(moderw)VALUES('OTROS|INACCESIBLE_SECTOR|INACCESIBLE_USUARIO|INACCESIBLE');
+
 	END;
+
 COMMIT;

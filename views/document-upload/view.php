@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'estado_id',
             'archivo',
             'fecha',
-            'mode_reg',
+            'moderw_id',
         ],
     ]) ?>
 
