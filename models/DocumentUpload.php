@@ -13,7 +13,7 @@ use Yii;
  * @property integer $estado_id
  * @property string $archivo
  * @property string $fecha
- * @property string $mode_reg
+ * @property integer $mode_id
  *
  * @property Estado $estado
  * @property Programa $programa
@@ -39,7 +39,7 @@ class DocumentUpload extends \yii\db\ActiveRecord
             [['archivo'], 'file'],
             [['archivo'], 'required'],
             [['fecha'], 'safe'],
-            [['mode_reg'], 'string'],
+            [['moderw_id'], 'integer'],
             [['estado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::className(), 'targetAttribute' => ['estado_id' => 'estado_id']],
             [['programa_id'], 'exist', 'skipOnError' => true, 'targetClass' => Programa::className(), 'targetAttribute' => ['programa_id' => 'programa_id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usuario_id' => 'usuario_id']],
@@ -58,7 +58,7 @@ class DocumentUpload extends \yii\db\ActiveRecord
             'estado_id' => 'Estado ID',
             'archivo' => 'Archivo',
             'fecha' => 'Fecha',
-            'mode_reg' => 'Mode Reg',
+            'moderw_id' => 'Moderw_ID',
         ];
     }
 

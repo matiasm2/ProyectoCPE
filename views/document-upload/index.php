@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\Moderw;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentUploadSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -30,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombreUsuario',
             'descripcionEstado',
             'archivo',
+            'fecha',
 				[
 					'label' => 'File',
 					'format' => 'raw',
@@ -38,6 +40,14 @@ $this->params['breadcrumbs'][] = $this->title;
 						return Html::a($data->archivo, $url);
 					},
 				],
+			[
+              'label' => 'Modo de publicación',
+              'attribute' => 'moderw_id',
+              'value' => function($model){
+                return Moderw::find()->where(['moderw_id'=>$model->moderw_id])->one()->moderw;
+              }
+            ],
+
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

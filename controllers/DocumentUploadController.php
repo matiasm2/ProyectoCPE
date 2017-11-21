@@ -7,6 +7,7 @@ use app\models\DocumentUpload;
 use app\models\DocumentUploadSearch;
 use app\models\Estado;
 use app\models\Programa;
+use app\models\Moderw;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -90,6 +91,7 @@ class DocumentUploadController extends Controller
         $model = new DocumentUpload();
 		$subModelEstado = new Estado();
 		$subModelPrograma = new Programa();
+		$subModelModerw = new Moderw();
 		if ($model->load(Yii::$app->request->post())){
 				$model->usuario_id=Yii::$app->user->identity->usuario_id;
 				$model->archivo= UploadedFile::getInstance($model,'archivo');
@@ -99,10 +101,14 @@ class DocumentUploadController extends Controller
 			else return $this->render('errorup');
 		  } else return $this->render('create', ['model' => $model,
 				'subModelEstado' => $subModelEstado,
-				'subModelPrograma' => $subModelPrograma,]);
+				'subModelPrograma' => $subModelPrograma,
+				'subModelModerw' => $subModelModerw,
+				]);
 		} else return $this->render('create', ['model' => $model,
 				'subModelEstado' => $subModelEstado,
-						'subModelPrograma' => $subModelPrograma,]);
+				'subModelPrograma' => $subModelPrograma,
+				'subModelModerw' => $subModelModerw,
+				]);
     }
 
     /**
@@ -115,6 +121,7 @@ class DocumentUploadController extends Controller
         $model = $this->findModel($id);
 		$subModelEstado = new Estado();
 		$subModelPrograma = new Programa();
+		$subModelModerw = new Moderw();
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
 		} else {
@@ -122,6 +129,7 @@ class DocumentUploadController extends Controller
 				'model' => $model,
 				'subModelEstado' => $subModelEstado,
 				'subModelPrograma' => $subModelPrograma,
+				'subModelModerw' => $subModelModerw,
 				]);
 		}
     }

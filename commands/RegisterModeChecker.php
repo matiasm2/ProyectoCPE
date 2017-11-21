@@ -14,6 +14,7 @@ use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use app\models\Usuario;
 use app\models\DocumentUpload;
+use app\models\Sector;
 
 /**
  * Clase usada en cada uno de los controladores de los registros de a
@@ -107,6 +108,55 @@ class RegisterModeChecker extends Controller{
 			else return false;
 		}
 	}
+	
+	/**
+	 * Devuelve la consulta con los elementos accesibles al modelo indicado por joinModel.
+	 **/
+	 public static function queryMode($query,$joinModel){
+		if(!Yii::$app->user->isGuest){
+			$ref=new Sector();
+			$query -> leftJoin('moderw','moderw.moderw_id='.$joinModel.'.moderw_id');
+			$query -> andFilterWhere(['like','moderw.moderw', 'OTROS|LECTOESCR']);
+			$query -> orFilterWhere(['like','moderw.moderw', 'OTROS|LECTURA']);
+			$query -> orFilterWhere(['like','moderw.moderw', 'OTROS|ESCRITURA']);
+			
+			$query -> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTOESCR'])
+			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTURA'])
+			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|ESCRITURA'])
+			-> Where('usuario_id=:usuario_id',[':usuario_id' => $ref -> usuarios]);
+			
+			$query -> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTOESCR'])
+			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTURA'])
+			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|ESCRITURA'])
+			->  Where('usuario_id=:usuario_id',[':usuario_id' => Yii::$app->user->identity->usuario_id]);
+		}
+		return $query;
+	 }
+	 
+	/**
+	 * Devuelve la consulta con los elementos accesibles al modelo,  requisito: debe estar joineado previamente con 
+	 * moderw.
+	 **/
+	 public static function joinedQueryMode($query){
+		if(!Yii::$app->user->isGuest){
+			$ref=new Sector();
+			$query -> andFilterWhere(['like','moderw.moderw', 'OTROS|LECTOESCR']);
+			$query -> orFilterWhere(['like','moderw.moderw', 'OTROS|LECTURA']);
+			$query -> orFilterWhere(['like','moderw.moderw', 'OTROS|ESCRITURA']);
+			
+			$query -> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTOESCR'])
+			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTURA'])
+			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|ESCRITURA'])
+			-> Where('usuario_id=:usuario_id',[':usuario_id' => $ref -> usuarios]);
+			
+			$query -> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTOESCR'])
+			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTURA'])
+			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|ESCRITURA'])
+			-> Where('usuario_id=:usuario_id',[':usuario_id' => Yii::$app->user->identity->usuario_id]);
+		}
+		return $query;
+	 }
+	 
 	public static function test($currentModeRegister,$msg){
 		/**
 		 * DocumentUpload class for table "archivoprograma".

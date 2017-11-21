@@ -25,9 +25,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'archivo') ?>
 
-    <?php // echo $form->field($model, 'fecha') ?>
-
-    <?php // echo $form->field($model, 'mode_reg') ?>
+    <?= $form->field($model, 'moderw_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
