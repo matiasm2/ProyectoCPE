@@ -140,19 +140,17 @@ class RegisterModeChecker extends Controller{
 	 public static function joinedQueryMode($query){
 		if(!Yii::$app->user->isGuest){
 			$ref=new Sector();
-			$query -> andFilterWhere(['like','moderw.moderw', 'OTROS|LECTOESCR']);
-			$query -> orFilterWhere(['like','moderw.moderw', 'OTROS|LECTURA']);
-			$query -> orFilterWhere(['like','moderw.moderw', 'OTROS|ESCRITURA']);
-			
-			$query -> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTOESCR'])
+			$query -> Where(['like','moderw.moderw', 'OTROS|LECTOESCR'])
+			-> orFilterWhere(['like','moderw.moderw', 'OTROS|LECTURA'])
+			-> orFilterWhere(['like','moderw.moderw', 'OTROS|ESCRITURA'])
+			-> andWhere('usuario_id=:usuario_id',[':usuario_id' => $ref -> usuarios])
+			-> andWhere('usuario_id=:usuario_id',[':usuario_id' => Yii::$app->user->identity->usuario_id])
+			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTOESCR'])
 			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTURA'])
 			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|ESCRITURA'])
-			-> Where('usuario_id=:usuario_id',[':usuario_id' => $ref -> usuarios]);
-			
-			$query -> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTOESCR'])
+			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTOESCR'])
 			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTURA'])
-			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|ESCRITURA'])
-			-> Where('usuario_id=:usuario_id',[':usuario_id' => Yii::$app->user->identity->usuario_id]);
+			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|ESCRITURA']);
 		}
 		return $query;
 	 }
