@@ -119,7 +119,7 @@ background-color:rgba(228, 228, 228, 1);
 margin-right: 8px;
 margin-top: 8px;
 width: 257px;
-height: 140px;
+height: 230px;
 text-align: center;
 }
 #instituto1{
@@ -127,7 +127,7 @@ background-color:rgba(228, 228, 228, 1);
 margin-right: 8px;
 margin-top: 8px;
 width: 257px;
-height: 140px;
+height: 230px;
 text-align: center;
 padding-top: 20px;
 }
@@ -135,4 +135,42 @@ padding-top: 20px;
 td
 {
     padding:0 1px 0 12px;
+}
+#estadisticoInst{
+background-color:rgba(228, 228, 228, 1);
+margin-right: 8px;
+margin-top: 8px;
+width: 500px;
+height: 330px;
+text-align: center;
+padding-top: 20px;
+}
+
+#tableinst{
+width: 400px;
+margin-top: 45px
+}
+
+#progresIns{
+    margin-top: 25px
+
+}
+
+b { 
+    color: #286090; 
+    font-size: 30px
+}
+
+.tdPorIns{
+font-size: 15px;
+
+}
+
+#allInst{
+    margin-top: 70px
+}
+.tableAll{
+
+margin-top: 42px
+
 }

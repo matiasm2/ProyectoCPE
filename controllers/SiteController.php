@@ -12,9 +12,12 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Usuario;
+use app\models\Usuariocarrera;
+use app\models\Carrera;
 use app\models\RegisterForm;
 use app\models\Sector;
 use app\models\Estado;
+use app\models\Instituto;
 use app\models\Usuariotipo;
 use app\models\InvalidoUsuarioModel;
 use app\models\Asignsector;
@@ -78,38 +81,41 @@ class SiteController extends Controller{
      * @return string
      */
  public function actionIndex(){
-        try{
-			if(Yii::$app->user->isGuest) {$msg='No logoneado...';} 
+    try{
+		$numUsr=Usuario::find()->count();
+		$instituto = "";
+		$carrera = "";
+		$countEstadosFaltantesPorIns = 0;
+		$countEstadosEntregadoPorIns = 0;
+		if(Yii::$app->user->isGuest) {$msg='No logoneado...';} 
 			else {$msg='Logoneado!';
 				}
-			$numUsr=Usuario::find()->count();
-			if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/indexUserAdmCPE'))) {
-				 $estadosFaltantesIngyAgr = Estado::getFaltantes("Instituto de Ingeniería y Agronomía");
-				 $countEstadosFaltantesIngyAgr = count ($estadosFaltantesIngyAgr);
+		if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/indexUserAdmCPE'))) {
+			 $estadosFaltantesIngyAgr = Estado::getFaltantes("Instituto de Ingeniería y Agronomía");
+			 $countEstadosFaltantesIngyAgr = count ($estadosFaltantesIngyAgr);
 
-				$estadosEntregadosIngyAgr = Estado::getEntregados("Instituto de Ingeniería y Agronomía");
-				$countEstadosEntregadoIngyAgr = count ($estadosEntregadosIngyAgr);
+			$estadosEntregadosIngyAgr = Estado::getEntregados("Instituto de Ingeniería y Agronomía");
+			$countEstadosEntregadoIngyAgr = count ($estadosEntregadosIngyAgr);
 
-				$estadosFaltantesEIni= Estado::getFaltantes("Instituto de Estudios Iniciales");
-				$countEstadosFaltantesEIni  = count ($estadosFaltantesEIni );
-				 
-				$estadosEntregadosEIni = Estado::getEntregados("Instituto de Estudios Iniciales");
-				$countEstadosEntregadoEIni  = count ($estadosEntregadosEIni);
+			$estadosFaltantesEIni= Estado::getFaltantesIniciales();
+			$countEstadosFaltantesEIni  = count ($estadosFaltantesEIni );
+			 
+			$estadosEntregadosEIni = Estado::getEntregadosIniciales();
+			$countEstadosEntregadoEIni  = count ($estadosEntregadosEIni);
 
-				$estadosFaltantesSalud= Estado::getFaltantes("Instituto de Ciencias de la Salud");
-				$countEstadosFaltantesSalud  = count ($estadosFaltantesSalud );
-				 
-				$estadosEntregadosSalud = Estado::getEntregados("Instituto de Ciencias de la Salud");
-				$countEstadosEntregadoSalud  = count ($estadosEntregadosSalud);
+			$estadosFaltantesSalud= Estado::getFaltantes("Instituto de Ciencias de la Salud");
+			$countEstadosFaltantesSalud  = count ($estadosFaltantesSalud );
+			 
+			$estadosEntregadosSalud = Estado::getEntregados("Instituto de Ciencias de la Salud");
+			$countEstadosEntregadoSalud  = count ($estadosEntregadosSalud);
 
-				$estadosFaltantesSocyAdm= Estado::getFaltantes("Instituto de Ciencias Sociales y Administración");
-				$countEstadosFaltantesSocyAdm = count ($estadosFaltantesSocyAdm );
-				 
-				$estadosEntregadosSocyAdm = Estado::getEntregados("Instituto de Ciencias Sociales y Administración");
-				$countEstadosEntregadoSocyAdm  = count ($estadosEntregadosSocyAdm);
+			$estadosFaltantesSocyAdm= Estado::getFaltantes("Instituto de Ciencias Sociales y Administración");
+			$countEstadosFaltantesSocyAdm = count ($estadosFaltantesSocyAdm );
+			 
+			$estadosEntregadosSocyAdm = Estado::getEntregados("Instituto de Ciencias Sociales y Administración");
+			$countEstadosEntregadoSocyAdm  = count ($estadosEntregadosSocyAdm);
 
-
-				return $this->render('indexUserAdmCPE',['msg' => $msg,
+			return $this->render('indexUserAdmCPE',[
 				'countFaltantesIngyAgr' => $countEstadosFaltantesIngyAgr,
 				'countEntregadosIngyAgr' => $countEstadosEntregadoIngyAgr,
 				'countFaltantesEIni' => $countEstadosFaltantesEIni,
@@ -118,11 +124,46 @@ class SiteController extends Controller{
 				'countEntregadosSalud' => $countEstadosEntregadoSalud,
 				'countFaltantesSocyAdm' => $countEstadosFaltantesSocyAdm,
 				'countEntregadosSocyAdm' => $countEstadosEntregadoSocyAdm,]);
+		}
+		else if (Yii::$app->user->identity != null) {
+			$instituto = Yii::$app->user->identity->getSector()->one()->descripcion;
+
+			$carrera_id = Yii::$app->user->identity->getUsuariocarreras()->one();
+			if ($carrera_id){
+				$carreraid = $carrera_id->carrera_id;
+				$carrera = Carrera::find()->where("carrera_id=:carrera_id", [":carrera_id" => $carreraid])->one()->descripcion;
+
+				$instituto_id = Carrera::find()->where("carrera_id=:carrera_id", [":carrera_id" => $carreraid])->one()->instituto_id;
+
+				$instituto = Instituto::find()->where("instituto_id=:instituto_id", [":instituto_id" => $instituto_id])->one()->nombre;
+
+				$estadosFaltantesPorIns = Estado::getFaltantesPorInst($instituto,$carrera);
+				$countEstadosFaltantesPorIns = count ($estadosFaltantesPorIns);
+
+				$estadosEntregadosPorIns = Estado::getEntregadosPorInst($instituto,$carrera);
+				$countEstadosEntregadoPorIns = count ($estadosEntregadosPorIns);	
+			}else{
+				$estadosFaltantesPorIns = Estado::getFaltantesIniciales();
+				$countEstadosFaltantesPorIns = count ($estadosFaltantesPorIns);
+
+				$estadosEntregadosPorIns = Estado::getEntregadosIniciales();
+				$countEstadosEntregadoPorIns = count ($estadosEntregadosPorIns);	
+
 			}
-			else{
-			   return $this->render('index',['msg' => $msg,]); 
-			}
- 		} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+		   	return $this->render('index',['instituto'=>$instituto,
+		   		'carrera'=>$carrera,
+		   		'countEstadosFaltantesPorIns' => $countEstadosFaltantesPorIns,
+		   		'countEstadosEntregadoPorIns' => $countEstadosEntregadoPorIns,]); 
+		}
+		else{
+			return $this->render('index',[
+				'carrera'=>$carrera,
+				'instituto'=>$instituto,	
+				'countEstadosFaltantesPorIns' => $countEstadosFaltantesPorIns,
+		   		'countEstadosEntregadoPorIns' => $countEstadosEntregadoPorIns,]);
+		}
+		
+		} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
    }
 	
     /**
@@ -242,6 +283,8 @@ class SiteController extends Controller{
 						$table = new Usuario();/*se crea nuevo registro de la tabla usuario*/
 						$this->fillModelUsuario($table, $model);/*llena nuevo registro con valores del formulario*/
 						if ($table->insert()) {/*si inserta nuevo registro a la tabla usuario: */
+							$sector = Sector::find()->where("sector_id=:sector_id", [":sector_id" => $model->sector_id])->one()->descripcion;
+							$this->setUsuarioCarrera($sector, $table->usuario_id);
 							$msg = $this->sendConfirm($table);/* llama a la funcion que envía email de confirmación */
 							$this->nullModelRegister($model);/* llama a la funcion que borra el formulario */
 						} else $msg = "Ha ocurrido un error al llevar a cabo tu  registro\n";/* error causado porque falla la base de datos */
@@ -252,6 +295,20 @@ class SiteController extends Controller{
  		} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
     }
     
+    private function setUsuarioCarrera($sector, $usuario_id){
+		$carrera = explode("- ", trim($sector, "- "));
+		unset($carrera[0]); 
+		$final_carrera = implode($carrera);
+		$carrera_id = Carrera::find()->where("descripcion=:descripcion", [":descripcion" => $final_carrera])->one();
+		if ($carrera_id){
+			$carreraid = $carrera_id->carrera_id;
+			$table = new Usuariocarrera();
+			$table->carrera_id = $carreraid;
+			$table->usuario_id = $usuario_id;
+			$table->insert();
+		}
+
+	}
 	/**
 	 * Borra campos del formulario.
 	 * */

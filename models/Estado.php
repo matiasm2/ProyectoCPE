@@ -12,6 +12,7 @@ use Yii;
  *
  * @property Archivoprograma[] $archivoprogramas
  */
+
 class Estado extends \yii\db\ActiveRecord
 {
     /**
@@ -63,7 +64,7 @@ class Estado extends \yii\db\ActiveRecord
         return Estado::find()->all();
     }
 
-    public static function getFaltantes($instituto){
+   public static function getFaltantes($instituto){
         $connection = Yii::$app->getDb();
         $estados = $connection->createCommand("SELECT *
                         FROM instituto ins
@@ -142,4 +143,168 @@ class Estado extends \yii\db\ActiveRecord
                         WHERE ano.ano=date_part('year', CURRENT_DATE) AND ins.nombre='$instituto' AND (estado.descripcion='Completo' OR estado.descripcion='Firmado');")->queryAll();
         return $estados;
     }
+
+
+    public static function getFaltantesPorInst($instituto,$carrera){
+        $connection = Yii::$app->getDb();
+        $estados = $connection->createCommand("SELECT *
+                        FROM instituto ins
+                        INNER JOIN
+                        carrera car
+                        ON
+                        ins.instituto_id=car.instituto_id
+                        INNER JOIN
+                        planestudio planes
+                        ON
+                        planes.carrera_id=car.carrera_id
+                        INNER JOIN
+                        planmateria planma
+                        ON
+                        planma.planestudio_id=planes.planestudio_id
+                        INNER JOIN
+                        programa prog
+                        ON
+                        prog.planmateria_id=planma.planmateria_id
+                        INNER JOIN
+                        materia ma
+                        ON
+                        ma.materia_id=planma.materia_id
+                        INNER JOIN
+                        archivoprograma arch
+                        ON
+                        arch.programa_id=prog.programa_id
+                        INNER JOIN
+                        ano ano
+                        ON
+                        ano.ano_id=prog.ano_id
+                        INNER JOIN
+                        estado estado
+                        ON
+                        estado.estado_id=arch.estado_id
+                        WHERE ano.ano=date_part('year', CURRENT_DATE) AND ins.nombre='$instituto' AND car.descripcion='$carrera' AND(estado.descripcion='A corregir' OR estado.descripcion='Enviado' OR estado.descripcion='En revisión');")->queryAll();
+        return $estados;
+    }
+
+     public static function getEntregadosPorInst($instituto, $carrera){
+        $connection = Yii::$app->getDb();
+        $estados = $connection->createCommand("SELECT *
+                        FROM instituto ins
+                        INNER JOIN
+                        carrera car
+                        ON
+                        ins.instituto_id=car.instituto_id
+                        INNER JOIN
+                        planestudio planes
+                        ON
+                        planes.carrera_id=car.carrera_id
+                        INNER JOIN
+                        planmateria planma
+                        ON
+                        planma.planestudio_id=planes.planestudio_id
+                        INNER JOIN
+                        programa prog
+                        ON
+                        prog.planmateria_id=planma.planmateria_id
+                        INNER JOIN
+                        materia ma
+                        ON
+                        ma.materia_id=planma.materia_id
+                        INNER JOIN
+                        archivoprograma arch
+                        ON
+                        arch.programa_id=prog.programa_id
+                        INNER JOIN
+                        ano ano
+                        ON
+                        ano.ano_id=prog.ano_id
+                        INNER JOIN
+                        estado estado
+                        ON
+                        estado.estado_id=arch.estado_id
+                        WHERE ano.ano=date_part('year', CURRENT_DATE) AND ins.nombre='$instituto' AND car.descripcion='$carrera' AND (estado.descripcion='Completo' OR estado.descripcion='Firmado');")->queryAll();
+        return $estados;
+    }
+
+
+ public static function getFaltantesIniciales(){
+        $connection = Yii::$app->getDb();
+        $estados = $connection->createCommand("SELECT *
+                    FROM planestudio planes
+                    INNER JOIN
+                    planmateria planma
+                    ON
+                    planma.planestudio_id=planes.planestudio_id
+                    INNER JOIN
+                    programa prog
+                    ON
+                    prog.planmateria_id=planma.planmateria_id
+                    INNER JOIN
+                    materia ma
+                    ON
+                    ma.materia_id=planma.materia_id
+                    INNER JOIN
+                    archivoprograma arch
+                    ON
+                    arch.programa_id=prog.programa_id
+                    INNER JOIN
+                    ano ano
+                    ON
+                    ano.ano_id=prog.ano_id
+                    INNER JOIN
+                    estado estado
+                    ON
+                    estado.estado_id=arch.estado_id
+                    INNER JOIN 
+                    usuario usu
+                    ON
+                    usu.usuario_id=arch.usuario_id
+                    INNER JOIN
+                    sector sec
+                    ON
+                    usu.sector_id=sec.sector_id
+                    WHERE ano.ano=date_part('year', CURRENT_DATE) AND sec.shortname='Usr IEI' AND(estado.descripcion='A corregir' OR estado.descripcion='Enviado' OR estado.descripcion='En revisión');")->queryAll();
+        return $estados;
+    }
+
+     public static function getEntregadosIniciales(){
+        $connection = Yii::$app->getDb();
+        $estados = $connection->createCommand("SELECT *
+                    FROM planestudio planes
+                    INNER JOIN
+                    planmateria planma
+                    ON
+                    planma.planestudio_id=planes.planestudio_id
+                    INNER JOIN
+                    programa prog
+                    ON
+                    prog.planmateria_id=planma.planmateria_id
+                    INNER JOIN
+                    materia ma
+                    ON
+                    ma.materia_id=planma.materia_id
+                    INNER JOIN
+                    archivoprograma arch
+                    ON
+                    arch.programa_id=prog.programa_id
+                    INNER JOIN
+                    ano ano
+                    ON
+                    ano.ano_id=prog.ano_id
+                    INNER JOIN
+                    estado estado
+                    ON
+                    estado.estado_id=arch.estado_id
+                    INNER JOIN 
+                    usuario usu
+                    ON
+                    usu.usuario_id=arch.usuario_id
+                    INNER JOIN
+                    sector sec
+                    ON
+                    usu.sector_id=sec.sector_id
+                        WHERE ano.ano=date_part('year', CURRENT_DATE) AND sec.shortname='Usr IEI' AND (estado.descripcion='Completo' OR estado.descripcion='Firmado');")->queryAll();
+        return $estados;
+    }
+
+
 }
