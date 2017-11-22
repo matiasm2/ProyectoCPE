@@ -18,17 +18,19 @@ class EstadoQuery extends \yii\db\ActiveQuery
      * @inheritdoc
      * @return Estado[]|array
      */
-    public function all($db = null)
-    {
-        return parent::all($db);
+    public function all($db = null){
+		return parent::all($db);
     }
 
     /**
      * @inheritdoc
      * @return Estado|array|null
      */
-    public function one($db = null)
-    {
+    public function one($db = null){
         return parent::one($db);
     }
+    
+    public function fromInstitutos(){
+		return $this->Where('descripcion=:descripcion',[':descripcion'=>'Enviado'])->all();
+	}
 }

@@ -13,7 +13,7 @@ use yii\helpers\ArrayHelper;
 <div class="document-upload-form">
 	<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($model, "estado_id")->dropDownList(ArrayHelper::map($subModelEstado->find()->all(), 'estado_id', 'descripcion'))?>
+    <?= $form->field($model, "estado_id")->dropDownList(ArrayHelper::map($subModelEstado->getAllEstados(), 'estado_id', 'descripcion'))?>
 
     <?= $form->field($model, "programa_id")->dropDownList(ArrayHelper::map($subModelPrograma->find()->all(), 'programa_id', 'descripcion'))?>
 

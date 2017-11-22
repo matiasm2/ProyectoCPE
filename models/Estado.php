@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\commands\RegisterModeChecker;
 
 /**
  * This is the model class for table "estado".
@@ -56,12 +57,13 @@ class Estado extends \yii\db\ActiveRecord
      * @inheritdoc
      * @return EstadoQuery the active query used by this AR class.
      */
-    public static function find()
-    {
+    public static function find(){
         return new EstadoQuery(get_called_class());
     }
-      public static function getAllEstados(){
-        return Estado::find()->all();
+    
+	public static function getAllEstados(){
+        //~ return Estado::find()->all();/*Se incerta interferencia de resultados*/
+        return RegisterModeChecker::estadoQyery(Estado::find());
     }
 
    public static function getFaltantes($instituto){
