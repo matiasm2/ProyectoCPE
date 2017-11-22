@@ -20,9 +20,6 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, "programa_id")->dropDownList(
             ArrayHelper::map($subModelPrograma->find()->all(), 'programa_id', 'descripcion')) ?>
 
-    <?= $form->field($model, 'archivo')->widget(FileInput::classname(),
-    ['options' => ['accept' => 'upload/*','multiple'=> false],
-    'pluginOptions'=>['showPreview'=>false,'showCaption'=>true,'showRemove'=>false, 'showUpload'=>false,],]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

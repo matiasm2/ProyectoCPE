@@ -15,6 +15,7 @@ use yii\helpers\StringHelper;
 use app\models\Usuario;
 use app\models\DocumentUpload;
 use app\models\Sector;
+use app\models\Estado;
 
 /**
  * Clase usada en cada uno de los controladores de los registros de a
@@ -109,29 +110,28 @@ class RegisterModeChecker extends Controller{
 		}
 	}
 	
-	/**
-	 * Devuelve la consulta con los elementos accesibles al modelo indicado por joinModel.
-	 **/
-	 public static function queryMode($query,$joinModel){
-		if(!Yii::$app->user->isGuest){
-			$ref=new Sector();
-			$query -> leftJoin('moderw','moderw.moderw_id='.$joinModel.'.moderw_id');
-			$query -> andFilterWhere(['like','moderw.moderw', 'OTROS|LECTOESCR']);
-			$query -> orFilterWhere(['like','moderw.moderw', 'OTROS|LECTURA']);
-			$query -> orFilterWhere(['like','moderw.moderw', 'OTROS|ESCRITURA']);
-			
-			$query -> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTOESCR'])
-			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTURA'])
-			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|ESCRITURA'])
-			-> Where('usuario_id=:usuario_id',[':usuario_id' => $ref -> usuarios]);
-			
-			$query -> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTOESCR'])
-			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTURA'])
-			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|ESCRITURA'])
-			->  Where('usuario_id=:usuario_id',[':usuario_id' => Yii::$app->user->identity->usuario_id]);
-		}
-		return $query;
-	 }
+	//~ /**
+	 //~ * Devuelve la consulta con los elementos accesibles al modelo indicado por joinModel y los campos 
+	 //~ * usuario_id y sector_id del logoneado..
+	 //~ **/
+	 //~ public static function queryMode($query,$joinModel){
+		//~ if(!Yii::$app->user->isGuest){
+			//~ $ref=new Sector();
+			//~ $query  -> Where(['like','moderw.moderw', 'OTROS|LECTOESCR'])
+			//~ -> orFilterWhere(['like','moderw.moderw', 'OTROS|LECTURA'])
+			//~ -> orFilterWhere(['like','moderw.moderw', 'OTROS|ESCRITURA'])
+			//~ -> andWhere('usuario_id=:usuario_id',[':usuario_id' => $ref -> usuarios])
+			//~ -> andWhere('usuario_id=:usuario_id',[':usuario_id' => Yii::$app->user->identity->usuario_id])
+			//~ -> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTOESCR'])
+			//~ -> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTURA'])
+			//~ -> orFilterWhere(['like','moderw.moderw', '_SECTOR|ESCRITURA'])
+			//~ -> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTOESCR'])
+			//~ -> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTURA'])
+			//~ -> orFilterWhere(['like','moderw.moderw', '_USUARIO|ESCRITURA']);
+		//~ }
+		//~ return $query;
+	 //~ }
+	 
 	 
 	/**
 	 * Devuelve la consulta con los elementos accesibles al modelo,  requisito: debe estar joineado previamente con 
@@ -142,17 +142,27 @@ class RegisterModeChecker extends Controller{
 			$ref=new Sector();
 			$query -> Where(['like','moderw.moderw', 'OTROS|LECTOESCR'])
 			-> orFilterWhere(['like','moderw.moderw', 'OTROS|LECTURA'])
-			-> orFilterWhere(['like','moderw.moderw', 'OTROS|ESCRITURA'])
-			-> andWhere('usuario_id=:usuario_id',[':usuario_id' => $ref -> usuarios])
-			-> andWhere('usuario_id=:usuario_id',[':usuario_id' => Yii::$app->user->identity->usuario_id])
-			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTOESCR'])
+			-> orFilterWhere(['like','moderw.moderw', 'OTROS|ESCRITURA']);
+			$query -> Where('usuario_id=:usuario_id',[':usuario_id' => $ref -> usuarios])
+			-> andFilterWhere(['like','moderw.moderw', '_SECTOR|LECTOESCR'])
 			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTURA'])
-			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|ESCRITURA'])
-			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTOESCR'])
+			-> orFilterWhere(['like','moderw.moderw', '_SECTOR|ESCRITURA']);
+			$query -> Where('usuario_id=:usuario_id',[':usuario_id' => Yii::$app->user->identity->usuario_id])
+			-> andFilterWhere(['like','moderw.moderw', '_USUARIO|LECTOESCR'])
 			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTURA'])
 			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|ESCRITURA']);
 		}
 		return $query;
+	 }
+	 
+	/**
+	 * Interfiere y devuelve la consulta con los elementos accesibles al modelo indicado por el sector_id
+	 * del logoneado..
+	 **/
+	 public static function estadoQyery($modelFind){
+		if(Yii::$app->user->identity->getSector()->one()->sector_id < 4)/*Si el sector del logoneado es menor a 4 entonces*/
+			return $modelFind->all();									/*no es un usuario de Institutos... devuelve todo*/	
+		else return $modelFind->fromInstitutos(); /* Sino filtra segun la funcion definida en la clase EstadoQuery*/
 	 }
 	 
 	public static function test($currentModeRegister,$msg){
