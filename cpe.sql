@@ -198,23 +198,29 @@ CREATE DATABASE cpe_db WITH ENCODING 'UTF8';
 	);
 	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.planes TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE planes_planes_id_seq TO cpewebuser;
-
-		--FUNCION TRIGGER. Inserta los id de carrera y ano (de la tabla planes) en la tabla planestudio
-		CREATE OR REPLACE FUNCTION test()
-  		RETURNS trigger AS
-		$$
-		BEGIN
-        	INSERT INTO planestudio(carrera_id,ano_id)
-         	VALUES(NEW.carrera_id,NEW.ano_id);
-
-    		RETURN NEW;
-		END;
-		$$ language plpgsql;
-		--TRIGGER DECLARADO. Dispara el trigger luego de que se insertan valores en planes. Se guardan en planestudio
-		CREATE TRIGGER planestudio
-  			AFTER INSERT
-  			ON planes
-  			FOR EACH ROW
-  			EXECUTE PROCEDURE test();
+	
+	---
+	--FUNCION TRIGGER. Inserta los id de carrera y ano (de la tabla planes) en la tabla planestudio y 
+	--en la tabla planmateria
+	CREATE OR REPLACE FUNCTION test()
+	RETURNS trigger AS
+	$$
+	BEGIN
+		INSERT INTO planestudio(carrera_id,ano_id) VALUES(NEW.carrera_id,NEW.ano_id);
+		INSERT INTO planmateria(planestudio_id,materia_id)VALUES (
+			(SELECT planestudio_id FROM planestudio WHERE carrera_id=
+				(SELECT NEW.carrera_id FROM carrera WHERE carrera_id=NEW.carrera_id)
+				AND ano_id=NEW.ano_id)
+			,NEW.materia_id);
+		RETURN NEW;
+	END;
+	$$ language plpgsql;
+	
+	--TRIGGER DECLARADO. Dispara el trigger luego de que se insertan valores en planes. Se guardan en planestudio
+	CREATE TRIGGER planestudio
+		AFTER INSERT
+		ON planes
+		FOR EACH ROW
+		EXECUTE PROCEDURE test();
 
 COMMIT;

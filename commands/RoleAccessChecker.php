@@ -92,6 +92,7 @@ class RoleAccessChecker extends Controller{
 					   (self::actionIsAsignSector('planestudio/index')) ? (['label' => 'Planes de Estudio', 'url' => ['/planestudio/index']]):(''),
 					   (self::actionIsAsignSector('planmateria/index')) ? (['label' => 'Plan de Estudio x Materia', 'url' => ['/planmateria/index']]):(''),
 					   (self::actionIsAsignSector('programa/index')) ? (['label' => 'Programas', 'url' => ['/programa/index']]):(''),
+					   (self::actionIsAsignSector('planes/index')) ? (['label' => 'Planes', 'url' => ['/planes/index']]):(''),
 					],
 					'visible' => !(Yii::$app->user->isGuest),
 				  ],
