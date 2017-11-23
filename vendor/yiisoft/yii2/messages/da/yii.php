@@ -43,7 +43,7 @@ return [
   'Page not found.' => 'Siden blev ikke fundet.',
   'Please fix the following errors:' => 'Ret venligst følgende fejl:',
   'Please upload a file.' => 'Venligst upload en fil.',
-  'Showing <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.' => 'Viser <b>{begin, number}-{end, number}</b> af <b>{totalCount, number}</b> {totalCount, plural, one{element} other{elementer}}.',
+  'Showing<b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.' => 'Viser <b>{begin, number}-{end, number}</b> af <b>{totalCount, number}</b> {totalCount, plural, one{element} other{elementer}}.',
   'The file "{file}" is not an image.' => 'Filen "{file}" er ikke et billede.',
   'The file "{file}" is too big. Its size cannot exceed {formattedLimit}.' => 'Filen "{file}" er for stor. Størrelsen må ikke overstige {formattedLimit}.',
   'The file "{file}" is too small. Its size cannot be smaller than {formattedLimit}.' => 'Filen "{file}" er for lille. Størrelsen må ikke være mindre end {formattedLimit}.',

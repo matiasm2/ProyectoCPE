@@ -76,7 +76,7 @@ return [
     'Page not found.' => 'Stránka nenalezena.',
     'Please fix the following errors:' => 'Opravte prosím následující chyby:',
     'Please upload a file.' => 'Nahrajte prosím soubor.',
-    'Showing <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.' => '{totalCount, plural, one{Zobrazen} few{Zobrazeny} other{Zobrazeno}} <b>{totalCount, plural, one{{begin, number}} other{{begin, number}-{end, number}}}</b> z <b>{totalCount, number}</b> {totalCount, plural, one{záznamu} other{záznamů}}.',
+    'Mostrando <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.' => '{totalCount, plural, one{Zobrazen} few{Zobrazeny} other{Zobrazeno}} <b>{totalCount, plural, one{{begin, number}} other{{begin, number}-{end, number}}}</b> z <b>{totalCount, number}</b> {totalCount, plural, one{záznamu} other{záznamů}}.',
     'The file "{file}" is not an image.' => 'Soubor "{file}" není obrázek.',
     'The file "{file}" is too big. Its size cannot exceed {formattedLimit}.' => 'Soubor "{file}" je příliš velký. Velikost souboru nesmí přesáhnout {formattedLimit}.',
     'The file "{file}" is too small. Its size cannot be smaller than {formattedLimit}.' => 'Soubor "{file}" je příliš malý. Velikost souboru nesmí být méně než {formattedLimit}.',
