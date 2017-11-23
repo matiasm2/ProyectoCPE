@@ -10,7 +10,7 @@ use Yii;
  * @property integer $planes_id
  * @property integer $ano_id
  * @property integer $carrera_id
- * @property integer $ano_nivel
+ * @property string $ano_nivel
  * @property integer $instituto_id
  * @property integer $materia_id
  *
@@ -35,7 +35,8 @@ class Planes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ano_id', 'carrera_id', 'ano_nivel', 'instituto_id', 'materia_id'], 'integer'],
+            [['ano_id', 'carrera_id', 'instituto_id', 'materia_id'], 'integer'],
+            [['ano_nivel'], 'string'],
             [['ano_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ano::className(), 'targetAttribute' => ['ano_id' => 'ano_id']],
             [['carrera_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrera::className(), 'targetAttribute' => ['carrera_id' => 'carrera_id']],
             [['instituto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instituto::className(), 'targetAttribute' => ['instituto_id' => 'instituto_id']],
@@ -50,9 +51,9 @@ class Planes extends \yii\db\ActiveRecord
     {
         return [
             'planes_id' => 'Planes ID',
-            'ano_id' => 'Ano ID',
+            'ano_id' => 'Año ID',
             'carrera_id' => 'Carrera ID',
-            'ano_nivel' => 'Ano Nivel',
+            'ano_nivel' => 'Año Nivel',
             'instituto_id' => 'Instituto ID',
             'materia_id' => 'Materia ID',
         ];

@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
               ArrayHelper::map($subModel3->find()->all(), 'carrera_id', 'descripcion'))
       		?>
 
-    <?= $form->field($model, 'ano_nivel')->textInput() ?>
+    <?= $form->field($model, 'ano_nivel')->dropDownList([ ' - ' => ' - ', '1º año' => '1º año', '2º año' => '2º año', '3º año' => '3º año', '4º año' => '4º año', '5º año' => '5º año', '6º año' => '6º año', ], ['prompt' => '']) ?>
 
     <?= $form->field($model, "instituto_id")
   				    ->dropDownList(

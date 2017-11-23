@@ -137,7 +137,7 @@ class RegisterModeChecker extends Controller{
 	 * Devuelve la consulta con los elementos accesibles al modelo,  requisito: debe estar joineado previamente con 
 	 * moderw.
 	 **/
-	 public static function joinedQueryMode($query){
+	public static function joinedQueryMode($query){
 		if(!Yii::$app->user->isGuest){
 			$ref=new Sector();
 			$query -> Where(['like','moderw.moderw', 'OTROS|LECTOESCR'])
@@ -153,18 +153,22 @@ class RegisterModeChecker extends Controller{
 			-> orFilterWhere(['like','moderw.moderw', '_USUARIO|ESCRITURA']);
 		}
 		return $query;
-	 }
+	}
 	 
 	/**
-	 * Interfiere y devuelve la consulta con los elementos accesibles al modelo indicado por el sector_id
-	 * del logoneado..
-	 **/
-	 public static function estadoQyery($modelFind){
+	* Interfiere y devuelve la consulta con los elementos accesibles al modelo indicado por el sector_id
+	* del logoneado..
+	**/
+	public static function estadoQyery($modelFind){
 		if(Yii::$app->user->identity->getSector()->one()->sector_id < 4)/*Si el sector del logoneado es menor a 4 entonces*/
 			return $modelFind->all();									/*no es un usuario de Institutos... devuelve todo*/	
 		else return $modelFind->fromInstitutos(); /* Sino filtra segun la funcion definida en la clase EstadoQuery*/
-	 }
-	 
+	}
+
+	public static function formatDocument($model){
+		return 'archivo';
+	}
+
 	public static function test($currentModeRegister,$msg){
 		/**
 		 * DocumentUpload class for table "archivoprograma".

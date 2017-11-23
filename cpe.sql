@@ -1,6 +1,4 @@
-CREATE DATABASE cpe_db
--- ~ WITH ENCODING 'LATIN1'
-;
+CREATE DATABASE cpe_db WITH ENCODING 'UTF8';
 	DO
 	$body$
 	BEGIN
@@ -145,7 +143,6 @@ CREATE DATABASE cpe_db
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE moderw_moderw_id_seq TO cpewebuser;
 
 
-
 	CREATE TABLE public.archivoprograma (
 		archivoprograma_id SERIAL PRIMARY KEY,
 		programa_id   integer REFERENCES programa,
@@ -182,11 +179,20 @@ CREATE DATABASE cpe_db
 	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.asignsector TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE asignsector_asignsector_id_seq TO cpewebuser;
 
+	CREATE TYPE enum_ano_niv AS ENUM (
+		' - ',
+		'1º año',
+		'2º año',
+		'3º año',
+		'4º año',
+		'5º año',
+		'6º año');
+
 	CREATE TABLE public.planes(
 		planes_id SERIAL PRIMARY KEY,
 		ano_id  integer REFERENCES ano,
 		carrera_id  integer REFERENCES carrera,
-		ano_nivel integer,
+		ano_nivel enum_ano_niv,
 		instituto_id integer REFERENCES instituto,
 		materia_id  integer REFERENCES materia
 	);

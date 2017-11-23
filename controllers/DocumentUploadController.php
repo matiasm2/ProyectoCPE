@@ -96,21 +96,20 @@ class DocumentUploadController extends Controller
 				$model->usuario_id=Yii::$app->user->identity->usuario_id;
 				$model->archivo= UploadedFile::getInstance($model,'archivo');
 				$model->fecha=date('Y-m-d');
-		  if ($model->save()) {
-			if ($model->upload()) return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
-			else return $this->render('errorup');
-		  } else return $this->render('create', ['model' => $model,
-				'subModelEstado' => $subModelEstado,
-				'subModelPrograma' => $subModelPrograma,
-				'subModelModerw' => $subModelModerw,
-				]);
+			if (($model->save())&&($model->upload())){
+				$new='dato'.date('YmdHis.').$model->archivo->extension;
+				rename('uploads/'.$model->archivo,'uploads/'.$new);
+				$model->archivo=$new;
+				$model->save();
+				return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
+			}
+			else return $this->redirect(['error/error',]);
 		} else return $this->render('create', ['model' => $model,
 				'subModelEstado' => $subModelEstado,
 				'subModelPrograma' => $subModelPrograma,
-				'subModelModerw' => $subModelModerw,
-				]);
-    }
-
+				'subModelModerw' => $subModelModerw,]);
+	}
+	
     /**
      * Updates an existing DocumentUpload model.
      * If update is successful, the browser will be redirected to the 'view' page.
