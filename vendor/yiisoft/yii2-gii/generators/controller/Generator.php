@@ -11,15 +11,18 @@ use Yii;
 use yii\gii\CodeFile;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
-use yii\helpers\StringHelper;
 
 /**
  * This generator will generate a controller and one or a few action view files.
  *
  * @property array $actionIDs An array of action IDs entered by the user. This property is read-only.
+ * @property string $controllerClass The controller class name without the namespace part. This property is
+ * read-only.
  * @property string $controllerFile The controller class file path. This property is read-only.
- * @property string $controllerID The controller ID. This property is read-only.
- * @property string $controllerNamespace The namespace of the controller class. This property is read-only.
+ * @property string $controllerID The controller ID (without the module ID prefix). This property is
+ * read-only.
+ * @property \yii\base\Module $module The module that the new controller belongs to. This property is
+ * read-only.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -27,22 +30,30 @@ use yii\helpers\StringHelper;
 class Generator extends \yii\gii\Generator
 {
     /**
-     * @var string the controller class name
+     * @var string the controller ID
      */
-    public $controllerClass;
-    /**
-     * @var string the controller's view path
-     */
-    public $viewPath;
+    public $controller;
     /**
      * @var string the base class of the controller
      */
     public $baseClass = 'yii\web\Controller';
     /**
+     * @var string the namespace of the controller class
+     */
+    public $ns;
+    /**
      * @var string list of action IDs separated by commas or spaces
      */
     public $actions = 'index';
 
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+        $this->ns = \Yii::$app->controllerNamespace;
+    }
 
     /**
      * @inheritdoc
@@ -57,7 +68,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getDescription()
     {
-        return 'This generator helps you to quickly generate a new controller class with
+        return 'This generator helps you to quickly generate a new controller class,
             one or several controller actions and their corresponding views.';
     }
 
@@ -67,13 +78,12 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['controllerClass', 'actions', 'baseClass'], 'filter', 'filter' => 'trim'],
-            [['controllerClass', 'baseClass'], 'required'],
-            ['controllerClass', 'match', 'pattern' => '/^[\w\\\\]*Controller$/', 'message' => 'Only word characters and backslashes are allowed, and the class name must end with "Controller".'],
-            ['controllerClass', 'validateNewClass'],
-            ['baseClass', 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
-            ['actions', 'match', 'pattern' => '/^[a-z][a-z0-9\\-,\\s]*$/', 'message' => 'Only a-z, 0-9, dashes (-), spaces and commas are allowed.'],
-            ['viewPath', 'safe'],
+            [['controller', 'actions', 'baseClass', 'ns'], 'filter', 'filter' => 'trim'],
+            [['controller', 'baseClass'], 'required'],
+            [['controller'], 'match', 'pattern' => '/^[a-z][a-z0-9\\-\\/]*$/', 'message' => 'Only a-z, 0-9, dashes (-) and slashes (/) are allowed.'],
+            [['actions'], 'match', 'pattern' => '/^[a-z][a-z0-9\\-,\\s]*$/', 'message' => 'Only a-z, 0-9, dashes (-), spaces and commas are allowed.'],
+            [['baseClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
+            [['ns'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
         ]);
     }
 
@@ -84,9 +94,9 @@ class Generator extends \yii\gii\Generator
     {
         return [
             'baseClass' => 'Base Class',
-            'controllerClass' => 'Controller Class',
-            'viewPath' => 'View Path',
+            'controller' => 'Controller ID',
             'actions' => 'Action IDs',
+            'ns' => 'Controller Namespace',
         ];
     }
 
@@ -106,7 +116,7 @@ class Generator extends \yii\gii\Generator
      */
     public function stickyAttributes()
     {
-        return ['baseClass'];
+        return ['ns', 'baseClass'];
     }
 
     /**
@@ -115,19 +125,19 @@ class Generator extends \yii\gii\Generator
     public function hints()
     {
         return [
-            'controllerClass' => 'This is the name of the controller class to be generated. You should
-                provide a fully qualified namespaced class (e.g. <code>app\controllers\PostController</code>),
-                and class name should be in CamelCase ending with the word <code>Controller</code>. Make sure the class
-                is using the same namespace as specified by your application\'s controllerNamespace property.',
+            'controller' => 'Controller ID should be in lower case and may contain module ID(s) separated by slashes. For example:
+                <ul>
+                    <li><code>order</code> generates <code>OrderController.php</code></li>
+                    <li><code>order-item</code> generates <code>OrderItemController.php</code></li>
+                    <li><code>admin/user</code> generates <code>UserController.php</code> within the <code>admin</code> module.</li>
+                </ul>',
             'actions' => 'Provide one or multiple action IDs to generate empty action method(s) in the controller. Separate multiple action IDs with commas or spaces.
                 Action IDs should be in lower case. For example:
                 <ul>
                     <li><code>index</code> generates <code>actionIndex()</code></li>
                     <li><code>create-order</code> generates <code>actionCreateOrder()</code></li>
                 </ul>',
-            'viewPath' => 'Specify the directory for storing the view scripts for the controller. You may use path alias here, e.g.,
-                <code>/var/www/basic/controllers/views/order</code>, <code>@app/views/order</code>. If not set, it will default
-                to <code>@app/views/ControllerID</code>',
+            'ns' => 'This is the namespace that the new controller class will use.',
             'baseClass' => 'This is the class that the new controller class will extend from. Please make sure the class exists and can be autoloaded.',
         ];
     }
@@ -139,9 +149,9 @@ class Generator extends \yii\gii\Generator
     {
         $actions = $this->getActionIDs();
         if (in_array('index', $actions)) {
-            $route = $this->getControllerID() . '/index';
+            $route = $this->controller . '/index';
         } else {
-            $route = $this->getControllerID() . '/' . reset($actions);
+            $route = $this->controller . '/' . reset($actions);
         }
         $link = Html::a('try it now', Yii::$app->getUrlManager()->createUrl($route), ['target' => '_blank']);
 
@@ -183,41 +193,58 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return string the controller class file path
+     * @return string the controller class name without the namespace part.
      */
-    public function getControllerFile()
+    public function getControllerClass()
     {
-        return Yii::getAlias('@' . str_replace('\\', '/', $this->controllerClass)) . '.php';
+        return Inflector::id2camel($this->getControllerID()) . 'Controller';
     }
 
     /**
-     * @return string the controller ID
+     * @return string the controller ID (without the module ID prefix)
      */
     public function getControllerID()
     {
-        $name = StringHelper::basename($this->controllerClass);
-        return Inflector::camel2id(substr($name, 0, strlen($name) - 10));
-    }
-
-    /**
-     * @param string $action the action ID
-     * @return string the action view file path
-     */
-    public function getViewFile($action)
-    {
-        if (empty($this->viewPath)) {
-            return Yii::getAlias('@app/views/' . $this->getControllerID() . "/$action.php");
+        if (($pos = strrpos($this->controller, '/')) !== false) {
+            return substr($this->controller, $pos + 1);
         } else {
-            return Yii::getAlias($this->viewPath . "/$action.php");
+            return $this->controller;
         }
     }
 
     /**
-     * @return string the namespace of the controller class
+     * @return \yii\base\Module the module that the new controller belongs to
      */
-    public function getControllerNamespace()
+    public function getModule()
     {
-        $name = StringHelper::basename($this->controllerClass);
-        return ltrim(substr($this->controllerClass, 0, - (strlen($name) + 1)), '\\');
+        if (($pos = strrpos($this->controller, '/')) !== false) {
+            $id = substr($this->controller, 0, $pos);
+            if (($module = Yii::$app->getModule($id)) !== null) {
+                return $module;
+            }
+        }
+
+        return Yii::$app;
+    }
+
+    /**
+     * @return string the controller class file path
+     */
+    public function getControllerFile()
+    {
+        $module = $this->getModule();
+
+        return $module->getControllerPath() . '/' . $this->getControllerClass() . '.php';
+    }
+
+    /**
+     * @param  string $action the action ID
+     * @return string the action view file path
+     */
+    public function getViewFile($action)
+    {
+        $module = $this->getModule();
+
+        return $module->getViewPath() . '/' . $this->getControllerID() . '/' . $action . '.php';
     }
 }

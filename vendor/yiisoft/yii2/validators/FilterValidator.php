@@ -17,12 +17,9 @@ use yii\base\InvalidConfigException;
  * and save the processed value back to the attribute. The filter must be
  * a valid PHP callback with the following signature:
  *
- * ```php
- * function foo($value) {
- *     // compute $newValue here
- *     return $newValue;
- * }
- * ```
+ * ~~~
+ * function foo($value) {...return $newValue; }
+ * ~~~
  *
  * Many PHP functions qualify this signature (e.g. `trim()`).
  *
@@ -37,25 +34,21 @@ class FilterValidator extends Validator
      * @var callable the filter. This can be a global function name, anonymous function, etc.
      * The function signature must be as follows,
      *
-     * ```php
-     * function foo($value) {
-     *     // compute $newValue here
-     *     return $newValue;
-     * }
-     * ```
+     * ~~~
+     * function foo($value) {...return $newValue; }
+     * ~~~
      */
     public $filter;
     /**
-     * @var bool whether the filter should be skipped if an array input is given.
-     * If true and an array input is given, the filter will not be applied.
+     * @var boolean whether the filter should be skipped if an array input is given.
+     * If false and an array input is given, the filter will not be applied.
      */
     public $skipOnArray = false;
     /**
-     * @var bool this property is overwritten to be false so that this validator will
+     * @var boolean this property is overwritten to be false so that this validator will
      * be applied when the value being validated is empty.
      */
     public $skipOnEmpty = false;
-
 
     /**
      * @inheritdoc
@@ -71,39 +64,11 @@ class FilterValidator extends Validator
     /**
      * @inheritdoc
      */
-    public function validateAttribute($model, $attribute)
+    public function validateAttribute($object, $attribute)
     {
-        $value = $model->$attribute;
+        $value = $object->$attribute;
         if (!$this->skipOnArray || !is_array($value)) {
-            $model->$attribute = call_user_func($this->filter, $value);
+            $object->$attribute = call_user_func($this->filter, $value);
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function clientValidateAttribute($model, $attribute, $view)
-    {
-        if ($this->filter !== 'trim') {
-            return null;
-        }
-
-        ValidationAsset::register($view);
-        $options = $this->getClientOptions($model, $attribute);
-
-        return 'value = yii.validation.trim($form, attribute, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getClientOptions($model, $attribute)
-    {
-        $options = [];
-        if ($this->skipOnEmpty) {
-            $options['skipOnEmpty'] = 1;
-        }
-
-        return $options;
     }
 }

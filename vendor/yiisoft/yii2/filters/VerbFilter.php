@@ -11,6 +11,7 @@ use Yii;
 use yii\base\ActionEvent;
 use yii\base\Behavior;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\MethodNotAllowedHttpException;
 
 /**
@@ -23,25 +24,25 @@ use yii\web\MethodNotAllowedHttpException;
  * For example, the following declarations will define a typical set of allowed
  * request methods for REST CRUD actions.
  *
- * ```php
+ * ~~~
  * public function behaviors()
  * {
  *     return [
  *         'verbs' => [
  *             'class' => \yii\filters\VerbFilter::className(),
  *             'actions' => [
- *                 'index'  => ['GET'],
- *                 'view'   => ['GET'],
- *                 'create' => ['GET', 'POST'],
- *                 'update' => ['GET', 'PUT', 'POST'],
- *                 'delete' => ['POST', 'DELETE'],
+ *                 'index'  => ['get'],
+ *                 'view'   => ['get'],
+ *                 'create' => ['get', 'post'],
+ *                 'update' => ['get', 'put', 'post'],
+ *                 'delete' => ['post', 'delete'],
  *             ],
  *         ],
  *     ];
  * }
- * ```
+ * ~~~
  *
- * @see https://tools.ietf.org/html/rfc2616#section-14.7
+ * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.7
  * @author Carsten Brandt <mail@cebe.cc>
  * @since 2.0
  */
@@ -54,22 +55,21 @@ class VerbFilter extends Behavior
      * allowed methods (e.g. GET, HEAD, PUT) as the value.
      * If an action is not listed all request methods are considered allowed.
      *
-     * You can use `'*'` to stand for all actions. When an action is explicitly
-     * specified, it takes precedence over the specification given by `'*'`.
+     * You can use '*' to stand for all actions. When an action is explicitly
+     * specified, it takes precedence over the specification given by '*'.
      *
      * For example,
      *
-     * ```php
+     * ~~~
      * [
-     *   'create' => ['GET', 'POST'],
-     *   'update' => ['GET', 'PUT', 'POST'],
-     *   'delete' => ['POST', 'DELETE'],
-     *   '*' => ['GET'],
+     *   'create' => ['get', 'post'],
+     *   'update' => ['get', 'put', 'post'],
+     *   'delete' => ['post', 'delete'],
+     *   '*' => ['get'],
      * ]
-     * ```
+     * ~~~
      */
     public $actions = [];
-
 
     /**
      * Declares event handlers for the [[owner]]'s events.
@@ -82,8 +82,8 @@ class VerbFilter extends Behavior
 
     /**
      * @param ActionEvent $event
-     * @return bool
-     * @throws MethodNotAllowedHttpException when the request method is not allowed.
+     * @return boolean
+     * @throws HttpException when the request method is not allowed.
      */
     public function beforeAction($event)
     {
@@ -100,9 +100,9 @@ class VerbFilter extends Behavior
         $allowed = array_map('strtoupper', $verbs);
         if (!in_array($verb, $allowed)) {
             $event->isValid = false;
-            // https://tools.ietf.org/html/rfc2616#section-14.7
+            // http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.7
             Yii::$app->getResponse()->getHeaders()->set('Allow', implode(', ', $allowed));
-            throw new MethodNotAllowedHttpException('Method Not Allowed. This URL can only handle the following request methods: ' . implode(', ', $allowed) . '.');
+            throw new MethodNotAllowedHttpException('Method Not Allowed. This url can only handle the following request methods: ' . implode(', ', $allowed) . '.');
         }
 
         return $event->isValid;

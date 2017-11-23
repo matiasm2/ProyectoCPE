@@ -1,14 +1,14 @@
 <?php
-/**
- * This is the template for generating a CRUD controller class file.
- */
 
 use yii\db\ActiveRecordInterface;
 use yii\helpers\StringHelper;
 
-
-/* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\crud\Generator */
+/**
+ * This is the template for generating a CRUD controller class file.
+ *
+ * @var yii\web\View $this
+ * @var yii\gii\generators\crud\Generator $generator
+ */
 
 $controllerClass = StringHelper::basename($generator->controllerClass);
 $modelClass = StringHelper::basename($generator->modelClass);
@@ -17,7 +17,7 @@ if ($modelClass === $searchModelClass) {
     $searchModelAlias = $searchModelClass . 'Search';
 }
 
-/* @var $class ActiveRecordInterface */
+/** @var ActiveRecordInterface $class */
 $class = $generator->modelClass;
 $pks = $class::primaryKey();
 $urlParams = $generator->generateUrlParams();
@@ -31,11 +31,7 @@ namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>
 
 use Yii;
 use <?= ltrim($generator->modelClass, '\\') ?>;
-<?php if (!empty($generator->searchModelClass)): ?>
 use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
-<?php else: ?>
-use yii\data\ActiveDataProvider;
-<?php endif; ?>
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -45,16 +41,13 @@ use yii\filters\VerbFilter;
  */
 class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['post'],
                 ],
             ],
         ];
@@ -66,23 +59,13 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionIndex()
     {
-<?php if (!empty($generator->searchModelClass)): ?>
-        $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>;
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         return $this->render('index', [
+            'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
         ]);
-<?php else: ?>
-        $dataProvider = new ActiveDataProvider([
-            'query' => <?= $modelClass ?>::find(),
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-<?php endif; ?>
     }
 
     /**
@@ -104,7 +87,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionCreate()
     {
-        $model = new <?= $modelClass ?>();
+        $model = new <?= $modelClass ?>;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', <?= $urlParams ?>]);

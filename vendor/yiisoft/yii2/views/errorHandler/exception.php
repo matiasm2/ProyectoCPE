@@ -1,11 +1,10 @@
 <?php
-/* @var $this \yii\web\View */
-/* @var $exception \Exception */
-/* @var $handler \yii\web\ErrorHandler */
+/**
+ * @var \Exception $exception
+ * @var \yii\web\ErrorHandler $handler
+ */
 ?>
-<?php if (method_exists($this, 'beginPage')): ?>
-    <?php $this->beginPage() ?>
-<?php endif ?>
+<?php if (method_exists($this, 'beginPage')) $this->beginPage(); ?>
 <!doctype html>
 <html lang="en">
 
@@ -13,16 +12,12 @@
     <meta charset="utf-8"/>
 
     <title><?php
-        $name = $handler->getExceptionName($exception);
         if ($exception instanceof \yii\web\HttpException) {
-            echo (int) $exception->statusCode . ' ' . $handler->htmlEncode($name);
+            echo (int) $exception->statusCode . ' ' . $handler->htmlEncode($exception->getName());
+        } elseif ($exception instanceof \yii\base\Exception) {
+            echo $handler->htmlEncode($exception->getName() . ' – ' . get_class($exception));
         } else {
-            $name = $handler->getExceptionName($exception);
-            if ($name !== null) {
-                echo $handler->htmlEncode($name . ' – ' . get_class($exception));
-            } else {
-                echo $handler->htmlEncode(get_class($exception));
-            }
+            echo $handler->htmlEncode(get_class($exception));
         }
     ?></title>
 
@@ -54,11 +49,8 @@ h1,h2,h3,p,img,ul li{
     font-family: Arial,sans-serif;
     color: #505050;
 }
-/*corresponds to min-width of 860px for some elements (.header .footer .element ...)*/
-@media screen and (min-width: 960px) {
-    html,body{
-        overflow-x: hidden;
-    }
+html,body{
+    overflow-x: hidden;
 }
 
 /* header */
@@ -83,55 +75,13 @@ h1,h2,h3,p,img,ul li{
 .header h1 a:hover{
     color: #e51717;
 }
-.header img.erroricon{
+.header img{
     float: right;
     margin-top: -15px;
-    margin-left: 50px;
-}
-.header .tools{
-    float: right;
-}
-.header .tools a {
-    border-radius: 5px;
-    width: 25px;
-    text-align: center;
-    margin-right: 7px;
-}
-.header .tools a,
-.header .tools span{
-    display: block;
-    float: left;
-    height: 25px;
-    padding: 5px;
-}
-.header .tools span{
-    display: none;
-}
-.header .tools a:hover{
-    background: #fff;
-    text-decoration: none;
-}
-.header .tools a:active img{
-    position: relative;
-    left: 2px;
-    top: 2px;
-}
-.header .tools textarea{
-    position: absolute;
-    top: -500px;
-    right: 300px;
-    width: 750px;
-    height: 150px;
 }
 .header h2{
     font-size: 20px;
     line-height: 1.25;
-}
-.header pre{
-    margin: 10px 0;
-    overflow-y: scroll;
-    font-family: Courier, monospace;
-    font-size: 14px;
 }
 
 /* previous exceptions */
@@ -150,8 +100,8 @@ h1,h2,h3,p,img,ul li{
     filter: progid:DXImageTransform.Microsoft.BasicImage(mirror=1);
     font-size: 26px;
     position: absolute;
-    margin-top: -3px;
-    margin-left: -30px;
+    margin-top: -5px;
+    margin-left: -25px;
     color: #e51717;
 }
 .header .previous h2{
@@ -176,11 +126,6 @@ h1,h2,h3,p,img,ul li{
     font-size: 14px;
     color: #aaa;
 }
-.header .previous pre{
-    font-family: Courier, monospace;
-    font-size: 14px;
-    margin: 10px 0;
-}
 
 /* call stack */
 .call-stack{
@@ -193,7 +138,6 @@ h1,h2,h3,p,img,ul li{
 .call-stack ul li .element-wrap{
     cursor: pointer;
     padding: 15px 0;
-    background-color: #fdfdfd;
 }
 .call-stack ul li.application .element-wrap{
     background-color: #fafafa;
@@ -224,19 +168,17 @@ h1,h2,h3,p,img,ul li{
     color: #505050;
 }
 .call-stack ul li .at{
-    float: right;
-    display: inline-block;
-    width: 7em;
-    padding-left: 1em;
-    text-align: left;
+    position: absolute;
+    right: 110px; /* 50px + 60px */
     color: #aaa;
 }
 .call-stack ul li.application .at{
     color: #505050;
 }
 .call-stack ul li .line{
-    display: inline-block;
-    width: 3em;
+    position: absolute;
+    right: 50px;
+    width: 60px;
     text-align: right;
 }
 .call-stack ul li .code-wrap{
@@ -252,7 +194,7 @@ h1,h2,h3,p,img,ul li{
     position: absolute;
     width: 100%;
     z-index: 100;
-    margin-top: 0;
+    margin-top: -61px;
 }
 .call-stack ul li .hover-line{
     background: none;
@@ -276,8 +218,8 @@ h1,h2,h3,p,img,ul li{
     color: #aaa;
     line-height: 20px;
     font-size: 12px;
-    margin-top: 1px;
-    font-family: Consolas, monospace;
+    margin-top: -63px;
+    font-family: Consolas, Courier New, monospace;
 }
 .call-stack ul li .code pre{
     position: relative;
@@ -285,7 +227,7 @@ h1,h2,h3,p,img,ul li{
     left: 50px;
     line-height: 20px;
     font-size: 12px;
-    font-family: Consolas, monospace;
+    font-family: Consolas, Courier New, monospace;
     display: inline;
 }
 @-moz-document url-prefix() {
@@ -310,7 +252,7 @@ h1,h2,h3,p,img,ul li{
 .request .code pre{
     font-size: 14px;
     line-height: 18px;
-    font-family: Consolas, monospace;
+    font-family: Consolas, Courier New, monospace;
     display: inline;
     word-wrap: break-word;
 }
@@ -344,94 +286,93 @@ h1,h2,h3,p,img,ul li{
 }
 
 /* highlight.js */
-.comment{
+pre .subst,pre .title{
+    font-weight: normal;
+    color: #505050;
+}
+pre .comment,pre .template_comment,pre .javadoc,pre .diff .header{
     color: #808080;
     font-style: italic;
 }
-.keyword{
+pre .annotation,pre .decorator,pre .preprocessor,pre .doctype,pre .pi,pre .chunk,pre .shebang,pre .apache .cbracket,
+pre .prompt,pre .http .title{
+    color: #808000;
+}
+pre .tag,pre .pi{
+    background: #efefef;
+}
+pre .tag .title,pre .id,pre .attr_selector,pre .pseudo,pre .literal,pre .keyword,pre .hexcolor,pre .css .function,
+pre .ini .title,pre .css .class,pre .list .title,pre .clojure .title,pre .nginx .title,pre .tex .command,
+pre .request,pre .status{
     color: #000080;
 }
-.number{
+pre .attribute,pre .rules .keyword,pre .number,pre .date,pre .regexp,pre .tex .special{
     color: #00a;
 }
-.number{
+pre .number,pre .regexp{
     font-weight: normal;
 }
-.string, .value{
+pre .string,pre .value,pre .filter .argument,pre .css .function .params,pre .apache .tag{
     color: #0a0;
 }
-.symbol, .char {
+pre .symbol,pre .ruby .symbol .string,pre .char,pre .tex .formula{
     color: #505050;
     background: #d0eded;
     font-style: italic;
 }
-.phpdoc{
+pre .phpdoc,pre .yardoctag,pre .javadoctag{
     text-decoration: underline;
 }
-.variable{
+pre .variable,pre .envvar,pre .apache .sqbracket,pre .nginx .built_in{
     color: #a00;
 }
-
-body pre {
-    pointer-events: none;
+pre .addition{
+    background: #baeeba;
 }
-body.mousedown pre {
-    pointer-events: auto;
+pre .deletion{
+    background: #ffc8bd;
+}
+pre .diff .change{
+    background: #bccff9;
 }
     </style>
 </head>
 
 <body>
     <div class="header">
-        <div class="tools">
-            <textarea id="clipboard"><?= $handler->htmlEncode($exception) ?></textarea>
-            <span id="copied">Copied!</span>
-            <!-- Icon Credit: Font Awesome by Dave Gandy - http://fontawesome.io ; fa-clipboard, fa-stackoverflow, fa-google-->
-            <a href="#" id="copy-stacktrace" title="Copy the stacktrace for use in a bug report or pastebin">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAZCAYAAAArK+5dAAAABGdBTUEAALGPC/xhBQAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAR1JREFUSMftlTFKxEAYhb8n2c7CarGR9RAWHkFsvMIqCy4iVpZ6AS9gIXqDbbdYLEUstLPwBt5AXQw+mxTDkkyymWwh+CAQMsP/zZt/XkbAEbAPiOVlYGr7rmqCgCcgo71y27tVg9lC8Wvbt3UVJV0CB0ENYoBQG5K2Gqx6vak9Ac8kyvZO1dgaK1YnAEnDpj2I6azk2wXQB04l9WzftAbYfixZ+Wfx+gocS2IR0lUPToCXAjLqHGD7o9jCB2AcQjo7RbbnwDlwH0Ky1LpFLyYluzKW9J7qYAbkwCB4wj/BYeMkx9JakY0JMPgbSf4HJAPeVgnIgBGwHXFzBWy2Btj+irmQNE91UKfvAtTmas1luy6Re8AQ6C1Z/AeY/gK6sUu5CuQ0NQAAAABJRU5ErkJggg==" alt="Copy Stacktrace"/>
-            </a>
-            <a href="https://stackoverflow.com/search?<?= http_build_query(['q' => $exception->getMessage()]) ?>" title="Search error on Stackoverflow" target="_blank">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAZCAYAAADaILXQAAAABGdBTUEAALGPC/xhBQAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAc9JREFUSMe11MuLzlEcx/GXuTQpCzQYl3EL0UxNNDRNsWAht40UC7OzkT9BsrCQkI2ysJeSknssRsl9lFyGGrkUjRqDlEth2HzU0+SZeeZ5PN86nfP7ds7n+z3v7/f8qMw6MFEVbDt6cKTYhtoKxOuxAXPxFQ8rFa/D76z7s27PuIWBSlDsxmGMz3cNjgXPWUwoV3gh7kboBJrib8SV+A+Ui+UDHmEVpmMtHuAV+rAO8/ERveUwf4Nr6Ezm6/E2vnosxQpcx2Ap4u059BJD+IRLaEUzVifJ49k7E8txrhTxfdiGjRF/ji+4HN6LsSxIDgXXTdyoLaH15qWYk4JjMxrC+WoCdUS8DTtxEb9GEx/CbZzOQ1mQIO3YmvUZ3MPK3Kb77+FxYyxoAzahK2zhZ0TP437BIxuxW6ZhP2bn0XwOgl6cSgvOwlQswkm8H860mLWGcWeBrx9P8DjzjnBux7PhAoVYmjO/w49kvAYtCdRYpCYv0iU9mBEaA/heKN6TeUuuPNymJEhLxpKCf0kXnoZ7E3bhTt0YijmQTuguuPWcBOor1sfF7Gj6txS78C9njSraSJnvTV9XRXywGpnvwbcy9SaPJt5WDeYH/2MtX8Mf2fhjE3QWPKAAAAAASUVORK5CYII=" alt="Search Stackoverflow"/>
-            </a>
-            <a href="https://www.google.com/search?<?= http_build_query(['q' => $exception->getMessage()]) ?>" title="Search error on Google" target="_blank">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAZCAYAAAAxFw7TAAAABGdBTUEAALGPC/xhBQAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAZZJREFUOMvl1T9IlVEYBvCf37301+iPFgYtBhUYQUIQiGaEgVCDELg11l5jo2MNgTg5NYiTNN2GIKJIA0MwGlIMFQoirAjRoUiq5XxwOHz33rrq1APf8pznPO/7nu897+G/Q1ONtYPoxVkcxk58wxJe4g1+/41hK25gAKUaAecxjFcxmW44h1F0IqtTXSuuBN1MTpYjQRfu18mqCF+KSj6GMTQn4qd4iHdYx1FcxHXswxAqRVHuhbTz7zku1MjqCLqr/eWTGE/4W3jRSNtk6Eu4x42a5YbnE25iM41dRlvCva2irRRoU6xk2B8R6/ixiQQPZViNiOZwxRrFRhmf0BKRHZgtEE+E3ouxG4Nxk5cxjdMRea2K4YMC7lJiuJDhSSLqr9a0CXbgZsJNlfAVJ9AeLfRgEe9rmN0Noy3HGobyQTCHq0GYb+jH8SD8jo1wly+HO3wmCTKC2aYtmDYwidv4FW/+gNeh3F3/YPYMd/CzaMB+xCPswak6Q/ZzqGg4HEfdN+VAeFM6w5uyN5znchj703lW24o/8/BJk5VnLk0AAAAASUVORK5CYII=" alt="Search Google"/>
-            </a>
         <?php if ($exception instanceof \yii\base\ErrorException): ?>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAABACAMAAACHi2FiAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6Mjk0MTdEMEI1QjhGMTFFM0I3QzE5ODkzMUQwNUQyMzYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6Mjk0MTdEMEE1QjhGMTFFM0I3QzE5ODkzMUQwNUQyMzYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NThCMjFBODBDNTUwMTFFMkE0QzFFREYxQTMyMDUzRTEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NThCMjFBODFDNTUwMTFFMkE0QzFFREYxQTMyMDUzRTEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6hNq0vAAACylBMVEXz8/Plc3P////menry8vLtvLzz8fHjqqrkq6vcjIzos7P7+/vlra39/f3+/v7nsLDy7u7qtrbrubn39/fw6urturrlvLzv7+/pzs7mrq7eiIjnhYXmv7/lycnjsbHv0tLgiIjtv7/x8PD4+Pjy7e3twcHtxMTpsbHjs7Py5+fv4eHvycnr0tLvzs7p1dXu1tbptrbptLTwzs7w0NDnj4/t5eXlj4/bkpLv5eXokpLv2Njv2trx4eHv7e3nycnt3Nzsycnci4vehobg4ODx2dnira3mkJDls7Pw7u7w7e3o09Pw5eXy5eXr2dnvzMzz6enkjIznwcHjjY3vy8v19fXt09Pny8vu6urrzs7lwcHpubnq3d3n0dHl5eXv0NDlzMzsz8/e3t7bmZnqvLzkx8fiiors4uLy4+Pqs7PolpbrxMTntrbvvb3ktrbbj4/lzs7jp6fdq6vlv7/rtLTp4eHt6urjxsby3t7p3Nzp6enqycnd3d3p0NDfwcHnzs7uv7/68vLw5+fnxMTx4+Pq4+Pq3t7grq7jkJDw0tLtzMzppKTuwsLm5ubkxMToxMTYqqrjurrei4vjqKjpwsLejo7XoKDt3t7w1NT56+vlpaXv3NznxsbckJDY1tbpxsblsbHp3d3blZXx3t748PDrzMzowcHrurrq1tba2trs7Ozu3t7vxMTjrq7xw8PusrLcoaHd1NTgpaXZuLj17e3bqan9+PjgkJDa0tL78PDq1dXutLTt1dXms7PspaXuwcHfmZncqKjj4+PalpbjwsLozMzktLTv4+PYzc3jl5ft5+fv5+fq6urjxcXfjIzt2dngk5ProqLdwMDq0NDkurrllZXdlZXooqLkubnmtLTkrq7t0dHoy8vVtrbr6enx29vipKT89/fz6+vi3NzYnp7Y09Pu6en01NTe1tbXy8vnl5fUrq7o5ubn29v8+vq7vBJbAAAEwklEQVR42syYVWMbRxCAj09sWYql2AI7ZohjxxRz7LimxIEGG26aNNRAG2qo3KTMzMzMzMzMzPwfuijtrU53jpSHzIt2duc+rWZnZ+YkCIeCNMh5ak3DQYLlikDkLCGHNaIPTYawHCUrVrksl8PPaSKCZcVSwYYQrYeBVc3RMmGVIYRc9nxAxLBOMDkjV1QzgY3xiEaR1RG02bJMaGNFc5FrM4ApN5jDPHdnsrWPTVn6hIyO03UQWXX0+SlH/fLyFKocbvXIiIrFMHkSmMibSFHXrejb8+e1BOaygrWTI/KnXEYin/WFg8G5dz14ETEstYAdSZ6Zxp6jzMBOULySJLm7jiN6nQVsPbGpZuZKGVbRP24JSsm7NMxAOjremA8S6iJi80xiaQ252ViOLvYhmHsqG7esUwoDgRnc+d9K9HFyoFNYfF5lby+BdWCY93wWxqSjQuBgeRwe55D19Ujzq3B8NfQb3Um9F+/sKgaWb2QBUf2C1higvnapNwvCGpwh1p4GrIYdeGFWI9yar2YWA3PxLFHMLQ8YLnDeMrqydQTYPUuUlg0/+q58uolo/atisfmTE7Ae0Vby24FdfUJtGmhKfCN/mwbtWHIUnYTZ0iAfWs0OG1gcJlpTlvhUSqBOt6Z5umAxMV9zjT6JInE0A4v3PWk8MCc1iVrBcJKJwmHltgt1bnViFQ973bBeUFDAqjnorihxUY+BQN+OXeLUt+xwotHtPGwlQ5r07a93vnFBL0NbhqvTic3MFdmrkM0O+jmWlkzIRY+u2FUshJc+cRPzSwzGGNYKNxsS9VAxh/KflWS9eK7g9knekvAflyad3KFpXCXwoAkt2s1y1DxZZg/98aVBfI+94Y+K2EOTQdpiYMeYZMJS/uT2K5gFssI7H/BRgJ/Z/Vql03GEWcnnYa+UEJbkEx7iYYmkZd5MpcCWuClMCh7LL9o0ZCmwaxjYxdnCvmRgbx4ojL++nyZ9VjjbHKao6jk1prShbTs3r4pvStjP3kpP85a/khRnKLbkxtPDAgquKpiTLTa4M7nBlg2YdvLZTNr4DZt9j4pOnV1P8FXyyYEPf39MevK+dczPuw0bXbEWNItC1UrSz848M003O97gm7a2NkM+a8VGX+ObgDvQnxoC6brZYqt8tojevfzR9Z/VlqWJ9jl38OnctGfRci1rQIBrkGjPONb8dcG6OEVw56BV4OT592U4EUfNXxdkm1IXqRXUSCSCxg/seanv4aK0PWOtbFvRI+0VZPTez0rJ3F2o0ZM7TWA9tIo5NzkNCOckqldUUNgLYa/kC+4gzcg9M1NoUbw1x1Rl8cZk3tE37lNOxYVNj7218F4M/iEIE2c3NepI3VsIHfRqONxOi/sXYahOgKr+Khx2fQKnz3gEwhIRV20SGoAWX2Bs9q7H6mpPIgSmo/nP/5N8DS3IC07dc4pZoIUW0pJFG6fxRF8QouH0Nl5Yd/9zA2gwX7F9F76EwC5PaSHquSMetn+p2Z3GG5p6gImXTSBjuHl/ymvYPHvYZI/uBK7N96csOMT+f5f3M11D6WheUqGYzO/tBrPfQMzy7zaDAHT5s/1/BHrBMQTaQ0d8KOs/W+bRRmNYyZoltG6pNG00DmH5X4ABADmwra2S/uwNAAAAAElFTkSuQmCC" class="erroricon" alt="Error"/>
-            </div>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAABACAMAAACHi2FiAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6Mjk0MTdEMEI1QjhGMTFFM0I3QzE5ODkzMUQwNUQyMzYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6Mjk0MTdEMEE1QjhGMTFFM0I3QzE5ODkzMUQwNUQyMzYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NThCMjFBODBDNTUwMTFFMkE0QzFFREYxQTMyMDUzRTEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NThCMjFBODFDNTUwMTFFMkE0QzFFREYxQTMyMDUzRTEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6hNq0vAAACylBMVEXz8/Plc3P////m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" alt="Error"/>
             <h1>
                 <span><?= $handler->htmlEncode($exception->getName()) ?></span>
                 &ndash; <?= $handler->addTypeLinks(get_class($exception)) ?>
             </h1>
         <?php else: ?>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA6CAMAAAA3Dq9LAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QUFDNzhCNUM1QjhDMTFFM0I3QzE5ODkzMUQwNUQyMzYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QUFDNzhCNUI1QjhDMTFFM0I3QzE5ODkzMUQwNUQyMzYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NzBFREE5RDFDNDdEMTFFMkJGNUU4MkNCQUY4MUM3RUEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NzBFREE5RDJDNDdEMTFFMkJGNUU4MkNCQUY4MUM3RUEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5g4xOFAAADAFBMVEUAAAD////lc3PahobplZXhl5felpbdlpbqoKDln5/moqLgn5/ppqbopaXmpqborKznrKziqKjlq6vnrq7psLDnr6/irKzpsrLqtLTps7Pst7ferKzqtrbntLTturrtvLzqvLzourrhtbXrwMDov7/sw8PrwsLowMDhvb3tysrqycntz8/qzMzqzs7u1NTr09Ps19fo1NTv29vo1dXx4ODx4uLw4uLx5OTq39/x5+fx6Ojw5+fo39/x6enw6Ojp4eHz7Ozy6+vt5+fq5OTz7u7y7e3s5+fz8PDy7+/x7u7z8fHy8PDt6+vz8vLz8/Py8vLw8PDv7+/t7e0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACxvAGHAAAB9klEQVR42qTXfVvBUBgG8Od6qGwx75WoVCKJSlR6pZJSQt//w8S2w86cPXaO+z9n8xu7bs8Z+KXSDgWDoTZ5ClAHm2GcJNxUBfoRNBPpKwInaKesBnQ1BmjvSkAeZ8mrAC1tDmgtBSCFjmTkgQZyuZUGDB6IygJ1dKUuCRhuwJADKriQmgzQ0xcBXQYooiBl/0BXEwHiQgNV4oAd++WxX4CV+PRvZObnyP4IHZ8AK/E1W7giCg1EiS/ZygVRaCA6VGUrVaLQQJR4EcCGD8CgAGM54CjxDDgnCg1Eic/YYokoNBAlLrHFgmOxQgMdZ4kLIkDvkUAelwFYpICWJgT2uN9UhwC4SYyHbDmN3hMaiEmcFgP8JgHEIJwBMX495QXUXBMk5gFwhQZiEjNgECMmNBCTOPZtHXhCYpMAahLv7E+zu43EJgH0JPZKZRHoaDLAvNAzICM4zTWVhYUGYYmtxB/H06E8fokLNomuC0gJrpJgV0kIDuZ5oCH6okkGJEX7VIsDDGmAFRqEJfYD4I0D0FWA6ByooApgFRo8HidM4NN+ZvYADAZ4ljh3YCbndbxmAXIldj/1gGsSy6U8BQaaOqAPJsADrpD7CfC1tgLwPL0HW+rv3zRv4uu66vs37qwefGQDSsm+sSoPR2OFjIZL/zf6yb8AAwCmB2Y7BrVl9wAAAABJRU5ErkJggg==" class="erroricon" alt="Exception"/>
-            </div>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA6CAMAAAA3Dq9LAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QUFDNzhCNUM1QjhDMTFFM0I3QzE5ODkzMUQwNUQyMzYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QUFDNzhCNUI1QjhDMTFFM0I3QzE5ODkzMUQwNUQyMzYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NzBFREE5RDFDNDdEMTFFMkJGNUU4MkNCQUY4MUM3RUEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NzBFREE5RDJDNDdEMTFFMkJGNUU4MkNCQUY4MUM3RUEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5g4xOFAAADAFBMVEUAAAD////lc3PahobplZXhl5felpbdlpbqoKDln5/moqLgn5/ppqbopaXmpqborKznrKziqKjlq6vnrq7psLDnr6/irKzpsrLqtLTps7Pst7ferKzqtrbntLTturrtvLzqvLzourrhtbXrwMDov7/sw8PrwsLowMDhvb3tysrqycntz8/qzMzqzs7u1NTr09Ps19fo1NTv29vo1dXx4ODx4uLw4uLx5OTq39/x5+fx6Ojw5+fo39/x6enw6Ojp4eHz7Ozy6+vt5+fq5OTz7u7y7e3s5+fz8PDy7+/x7u7z8fHy8PDt6+vz8vLz8/Py8vLw8PDv7+/t7e0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACxvAGHAAAB9klEQVR42qTXfVvBUBgG8Od6qGwx75WoVCKJSlR6pZJSQt//w8S2w86cPXaO+z9n8xu7bs8Z+KXSDgWDoTZ5ClAHm2GcJNxUBfoRNBPpKwInaKesBnQ1BmjvSkAeZ8mrAC1tDmgtBSCFjmTkgQZyuZUGDB6IygJ1dKUuCRhuwJADKriQmgzQ0xcBXQYooiBl/0BXEwHiQgNV4oAd++WxX4CV+PRvZObnyP4IHZ8AK/E1W7giCg1EiS/ZygVRaCA6VGUrVaLQQJR4EcCGD8CgAGM54CjxDDgnCg1Eic/YYokoNBAlLrHFgmOxQgMdZ4kLIkDvkUAelwFYpICWJgT2uN9UhwC4SYyHbDmN3hMaiEmcFgP8JgHEIJwBMX495QXUXBMk5gFwhQZiEjNgECMmNBCTOPZtHXhCYpMAahLv7E+zu43EJgH0JPZKZRHoaDLAvNAzICM4zTWVhYUGYYmtxB/H06E8fokLNomuC0gJrpJgV0kIDuZ5oCH6okkGJEX7VIsDDGmAFRqEJfYD4I0D0FWA6ByooApgFRo8HidM4NN+ZvYADAZ4ljh3YCbndbxmAXIldj/1gGsSy6U8BQaaOqAPJsADrpD7CfC1tgLwPL0HW+rv3zRv4uu66vs37qwefGQDSsm+sSoPR2OFjIZL/zf6yb8AAwCmB2Y7BrVl9wAAAABJRU5ErkJggg==" alt="Exception"/>
             <h1><?php
                 if ($exception instanceof \yii\web\HttpException) {
                     echo '<span>' . $handler->createHttpStatusLink($exception->statusCode, $handler->htmlEncode($exception->getName())) . '</span>';
                     echo ' &ndash; ' . $handler->addTypeLinks(get_class($exception));
+                } elseif ($exception instanceof \yii\base\Exception) {
+                    echo '<span>' . $handler->htmlEncode($exception->getName()) . '</span>';
+                    echo ' &ndash; ' . $handler->addTypeLinks(get_class($exception));
                 } else {
-                    $name = $handler->getExceptionName($exception);
-                    if ($name !== null) {
-                        echo '<span>' . $handler->htmlEncode($name) . '</span>';
-                        echo ' &ndash; ' . $handler->addTypeLinks(get_class($exception));
-                    } else {
-                        echo '<span>' . $handler->htmlEncode(get_class($exception)) . '</span>';
-                    }
+                    echo '<span>' . $handler->htmlEncode(get_class($exception)) . '</span>';
                 }
             ?></h1>
         <?php endif; ?>
         <h2><?= nl2br($handler->htmlEncode($exception->getMessage())) ?></h2>
 
-        <?php if ($exception instanceof \yii\db\Exception && !empty($exception->errorInfo)): ?>
-            <pre>Error Info: <?= $handler->htmlEncode(print_r($exception->errorInfo, true)) ?></pre>
-        <?php endif ?>
-
         <?= $handler->renderPreviousExceptions($exception) ?>
     </div>
 
     <div class="call-stack">
-        <?= $handler->renderCallStack($exception) ?>
+        <ul>
+            <?= $handler->renderCallStackItem($exception->getFile(), $exception->getLine(), null, null, 1) ?>
+            <?php for ($i = 0, $trace = $exception->getTrace(), $length = count($trace); $i < $length; ++$i): ?>
+                <?= $handler->renderCallStackItem(@$trace[$i]['file'] ?: null, @$trace[$i]['line'] ?: null,
+                    @$trace[$i]['class'] ?: null, @$trace[$i]['function'] ?: null, $i + 2) ?>
+            <?php endfor; ?>
+        </ul>
     </div>
 
     <div class="request">
@@ -452,33 +393,70 @@ var hljs=new function(){function l(o){return o.replace(/&/gm,"&amp;").replace(/<
     </script>
 
     <script type="text/javascript">
+/*! Sizzle v1.9.4-pre | (c) 2013 jQuery Foundation, Inc. | jquery.org/license
+//@ sourceMappingURL=sizzle.min.map
+*/(function(e,t){function n(e,t,n,r){var o,i,u,l,a,c,s,f,p,d;if((t?t.ownerDocument||t:U)!==H&&q(t),t=t||H,n=n||[],!e||"string"!=typeof e)return n;if(1!==(l=t.nodeType)&&9!==l)return[];if(O&&!r){if(o=Ct.exec(e))if(u=o[1]){if(9===l){if(i=t.getElementById(u),!i||!i.parentNode)return n;if(i.id===u)return n.push(i),n}else if(t.ownerDocument&&(i=t.ownerDocument.getElementById(u))&&j(t,i)&&i.id===u)return n.push(i),n}else{if(o[2])return ot.apply(n,t.getElementsByTagName(e)),n;if((u=o[3])&&S.getElementsByClassName&&t.getElementsByClassName)return ot.apply(n,t.getElementsByClassName(u)),n}if(S.qsa&&(!k||!k.test(e))){if(f=s=G,p=t,d=9===l&&e,1===l&&"object"!==t.nodeName.toLowerCase()){for(c=g(e),(s=t.getAttribute("id"))?f=s.replace(Tt,"\\$&"):t.setAttribute("id",f),f="[id='"+f+"'] ",a=c.length;a--;)c[a]=f+m(c[a]);p=mt.test(e)&&t.parentNode||t,d=c.join(",")}if(d)try{return ot.apply(n,p.querySelectorAll(d)),n}catch(h){}finally{s||t.removeAttribute("id")}}}return w(e.replace(dt,"$1"),t,n,r)}function r(e){return xt.test(e+"")}function o(){function e(n,r){return t.push(n+=" ")>L.cacheLength&&delete e[t.shift()],e[n]=r}var t=[];return e}function i(e){return e[G]=!0,e}function u(e){var t=H.createElement("div");try{return!!e(t)}catch(n){return!1}finally{t.parentNode&&t.parentNode.removeChild(t),t=null}}function l(e,t,n){e=e.split("|");for(var r,o=e.length,i=n?null:t;o--;)(r=L.attrHandle[e[o]])&&r!==t||(L.attrHandle[e[o]]=i)}function a(e,t){var n=e.getAttributeNode(t);return n&&n.specified?n.value:e[t]===!0?t.toLowerCase():null}function c(e,t){return e.getAttribute(t,"type"===t.toLowerCase()?1:2)}function s(e){return"input"===e.nodeName.toLowerCase()?e.defaultValue:t}function f(e,t){var n=t&&e,r=n&&1===e.nodeType&&1===t.nodeType&&(~t.sourceIndex||_)-(~e.sourceIndex||_);if(r)return r;if(n)for(;n=n.nextSibling;)if(n===t)return-1;return e?1:-1}function p(e){return function(t){var n=t.nodeName.toLowerCase();return"input"===n&&t.type===e}}function d(e){return function(t){var n=t.nodeName.toLowerCase();return("input"===n||"button"===n)&&t.type===e}}function h(e){return i(function(t){return t=+t,i(function(n,r){for(var o,i=e([],n.length,t),u=i.length;u--;)n[o=i[u]]&&(n[o]=!(r[o]=n[o]))})})}function g(e,t){var r,o,i,u,l,a,c,s=K[e+" "];if(s)return t?0:s.slice(0);for(l=e,a=[],c=L.preFilter;l;){(!r||(o=ht.exec(l)))&&(o&&(l=l.slice(o[0].length)||l),a.push(i=[])),r=!1,(o=gt.exec(l))&&(r=o.shift(),i.push({value:r,type:o[0].replace(dt," ")}),l=l.slice(r.length));for(u in L.filter)!(o=bt[u].exec(l))||c[u]&&!(o=c[u](o))||(r=o.shift(),i.push({value:r,type:u,matches:o}),l=l.slice(r.length));if(!r)break}return t?l.length:l?n.error(e):K(e,a).slice(0)}function m(e){for(var t=0,n=e.length,r="";n>t;t++)r+=e[t].value;return r}function y(e,t,n){var r=t.dir,o=n&&"parentNode"===r,i=X++;return t.first?function(t,n,i){for(;t=t[r];)if(1===t.nodeType||o)return e(t,n,i)}:function(t,n,u){var l,a,c,s=V+" "+i;if(u){for(;t=t[r];)if((1===t.nodeType||o)&&e(t,n,u))return!0}else for(;t=t[r];)if(1===t.nodeType||o)if(c=t[G]||(t[G]={}),(a=c[r])&&a[0]===s){if((l=a[1])===!0||l===D)return l===!0}else if(a=c[r]=[s],a[1]=e(t,n,u)||D,a[1]===!0)return!0}}function v(e){return e.length>1?function(t,n,r){for(var o=e.length;o--;)if(!e[o](t,n,r))return!1;return!0}:e[0]}function N(e,t,n,r,o){for(var i,u=[],l=0,a=e.length,c=null!=t;a>l;l++)(i=e[l])&&(!n||n(i,r,o))&&(u.push(i),c&&t.push(l));return u}function b(e,t,n,r,o,u){return r&&!r[G]&&(r=b(r)),o&&!o[G]&&(o=b(o,u)),i(function(i,u,l,a){var c,s,f,p=[],d=[],h=u.length,g=i||E(t||"*",l.nodeType?[l]:l,[]),m=!e||!i&&t?g:N(g,p,e,l,a),y=n?o||(i?e:h||r)?[]:u:m;if(n&&n(m,y,l,a),r)for(c=N(y,d),r(c,[],l,a),s=c.length;s--;)(f=c[s])&&(y[d[s]]=!(m[d[s]]=f));if(i){if(o||e){if(o){for(c=[],s=y.length;s--;)(f=y[s])&&c.push(m[s]=f);o(null,y=[],c,a)}for(s=y.length;s--;)(f=y[s])&&(c=o?ut.call(i,f):p[s])>-1&&(i[c]=!(u[c]=f))}}else y=N(y===u?y.splice(h,y.length):y),o?o(null,u,y,a):ot.apply(u,y)})}function x(e){for(var t,n,r,o=e.length,i=L.relative[e[0].type],u=i||L.relative[" "],l=i?1:0,a=y(function(e){return e===t},u,!0),c=y(function(e){return ut.call(t,e)>-1},u,!0),s=[function(e,n,r){return!i&&(r||n!==P)||((t=n).nodeType?a(e,n,r):c(e,n,r))}];o>l;l++)if(n=L.relative[e[l].type])s=[y(v(s),n)];else{if(n=L.filter[e[l].type].apply(null,e[l].matches),n[G]){for(r=++l;o>r&&!L.relative[e[r].type];r++);return b(l>1&&v(s),l>1&&m(e.slice(0,l-1).concat({value:" "===e[l-2].type?"*":""})).replace(dt,"$1"),n,r>l&&x(e.slice(l,r)),o>r&&x(e=e.slice(r)),o>r&&m(e))}s.push(n)}return v(s)}function C(e,t){var r=0,o=t.length>0,u=e.length>0,l=function(i,l,a,c,s){var f,p,d,h=[],g=0,m="0",y=i&&[],v=null!=s,b=P,x=i||u&&L.find.TAG("*",s&&l.parentNode||l),C=V+=null==b?1:Math.random()||.1;for(v&&(P=l!==H&&l,D=r);null!=(f=x[m]);m++){if(u&&f){for(p=0;d=e[p++];)if(d(f,l,a)){c.push(f);break}v&&(V=C,D=++r)}o&&((f=!d&&f)&&g--,i&&y.push(f))}if(g+=m,o&&m!==g){for(p=0;d=t[p++];)d(y,h,l,a);if(i){if(g>0)for(;m--;)y[m]||h[m]||(h[m]=nt.call(c));h=N(h)}ot.apply(c,h),v&&!i&&h.length>0&&g+t.length>1&&n.uniqueSort(c)}return v&&(V=C,P=b),y};return o?i(l):l}function E(e,t,r){for(var o=0,i=t.length;i>o;o++)n(e,t[o],r);return r}function w(e,t,n,r){var o,i,u,l,a,c=g(e);if(!r&&1===c.length){if(i=c[0]=c[0].slice(0),i.length>2&&"ID"===(u=i[0]).type&&S.getById&&9===t.nodeType&&O&&L.relative[i[1].type]){if(t=(L.find.ID(u.matches[0].replace(At,St),t)||[])[0],!t)return n;e=e.slice(i.shift().value.length)}for(o=bt.needsContext.test(e)?0:i.length;o--&&(u=i[o],!L.relative[l=u.type]);)if((a=L.find[l])&&(r=a(u.matches[0].replace(At,St),mt.test(i[0].type)&&t.parentNode||t))){if(i.splice(o,1),e=r.length&&m(i),!e)return ot.apply(n,r),n;break}}return R(e,c)(r,t,!O,n,mt.test(e)),n}function T(){}var A,S,D,L,B,I,R,P,$,q,H,M,O,k,F,z,j,G="sizzle"+-new Date,U=e.document,V=0,X=0,J=o(),K=o(),Q=o(),W=!1,Y=function(){return 0},Z=typeof t,_=1<<31,et={}.hasOwnProperty,tt=[],nt=tt.pop,rt=tt.push,ot=tt.push,it=tt.slice,ut=tt.indexOf||function(e){for(var t=0,n=this.length;n>t;t++)if(this[t]===e)return t;return-1},lt="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",at="[\\x20\\t\\r\\n\\f]",ct="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",st=ct.replace("w","w#"),ft="\\["+at+"*("+ct+")"+at+"*(?:([*^$|!~]?=)"+at+"*(?:(['\"])((?:\\\\.|[^\\\\])*?)\\3|("+st+")|)|)"+at+"*\\]",pt=":("+ct+")(?:\\(((['\"])((?:\\\\.|[^\\\\])*?)\\3|((?:\\\\.|[^\\\\()[\\]]|"+ft.replace(3,8)+")*)|.*)\\)|)",dt=RegExp("^"+at+"+|((?:^|[^\\\\])(?:\\\\.)*)"+at+"+$","g"),ht=RegExp("^"+at+"*,"+at+"*"),gt=RegExp("^"+at+"*([>+~]|"+at+")"+at+"*"),mt=RegExp(at+"*[+~]"),yt=RegExp("="+at+"*([^\\]'\"]*)"+at+"*\\]","g"),vt=RegExp(pt),Nt=RegExp("^"+st+"$"),bt={ID:RegExp("^#("+ct+")"),CLASS:RegExp("^\\.("+ct+")"),TAG:RegExp("^("+ct.replace("w","w*")+")"),ATTR:RegExp("^"+ft),PSEUDO:RegExp("^"+pt),CHILD:RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+at+"*(even|odd|(([+-]|)(\\d*)n|)"+at+"*(?:([+-]|)"+at+"*(\\d+)|))"+at+"*\\)|)","i"),bool:RegExp("^(?:"+lt+")$","i"),needsContext:RegExp("^"+at+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+at+"*((?:-\\d)?\\d*)"+at+"*\\)|)(?=[^-]|$)","i")},xt=/^[^{]+\{\s*\[native \w/,Ct=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,Et=/^(?:input|select|textarea|button)$/i,wt=/^h\d$/i,Tt=/'|\\/g,At=RegExp("\\\\([\\da-f]{1,6}"+at+"?|("+at+")|.)","ig"),St=function(e,t,n){var r="0x"+t-65536;return r!==r||n?t:0>r?String.fromCharCode(r+65536):String.fromCharCode(55296|r>>10,56320|1023&r)};try{ot.apply(tt=it.call(U.childNodes),U.childNodes),tt[U.childNodes.length].nodeType}catch(Dt){ot={apply:tt.length?function(e,t){rt.apply(e,it.call(t))}:function(e,t){for(var n=e.length,r=0;e[n++]=t[r++];);e.length=n-1}}}I=n.isXML=function(e){var t=e&&(e.ownerDocument||e).documentElement;return t?"HTML"!==t.nodeName:!1},S=n.support={},q=n.setDocument=function(e){var n=e?e.ownerDocument||e:U;return n!==H&&9===n.nodeType&&n.documentElement?(H=n,M=n.documentElement,O=!I(n),S.attributes=u(function(e){return e.innerHTML="<a href='#'></a>",l("type|href|height|width",c,"#"===e.firstChild.getAttribute("href")),l(lt,a,null==e.getAttribute("disabled")),e.className="i",!e.getAttribute("className")}),S.input=u(function(e){return e.innerHTML="<input>",e.firstChild.setAttribute("value",""),""===e.firstChild.getAttribute("value")}),l("value",s,S.attributes&&S.input),S.getElementsByTagName=u(function(e){return e.appendChild(n.createComment("")),!e.getElementsByTagName("*").length}),S.getElementsByClassName=u(function(e){return e.innerHTML="<div class='a'></div><div class='a i'></div>",e.firstChild.className="i",2===e.getElementsByClassName("i").length}),S.getById=u(function(e){return M.appendChild(e).id=G,!n.getElementsByName||!n.getElementsByName(G).length}),S.getById?(L.find.ID=function(e,t){if(typeof t.getElementById!==Z&&O){var n=t.getElementById(e);return n&&n.parentNode?[n]:[]}},L.filter.ID=function(e){var t=e.replace(At,St);return function(e){return e.getAttribute("id")===t}}):(delete L.find.ID,L.filter.ID=function(e){var t=e.replace(At,St);return function(e){var n=typeof e.getAttributeNode!==Z&&e.getAttributeNode("id");return n&&n.value===t}}),L.find.TAG=S.getElementsByTagName?function(e,n){return typeof n.getElementsByTagName!==Z?n.getElementsByTagName(e):t}:function(e,t){var n,r=[],o=0,i=t.getElementsByTagName(e);if("*"===e){for(;n=i[o++];)1===n.nodeType&&r.push(n);return r}return i},L.find.CLASS=S.getElementsByClassName&&function(e,n){return typeof n.getElementsByClassName!==Z&&O?n.getElementsByClassName(e):t},F=[],k=[],(S.qsa=r(n.querySelectorAll))&&(u(function(e){e.innerHTML="<select><option selected=''></option></select>",e.querySelectorAll("[selected]").length||k.push("\\["+at+"*(?:value|"+lt+")"),e.querySelectorAll(":checked").length||k.push(":checked")}),u(function(e){var t=n.createElement("input");t.setAttribute("type","hidden"),e.appendChild(t).setAttribute("t",""),e.querySelectorAll("[t^='']").length&&k.push("[*^$]="+at+"*(?:''|\"\")"),e.querySelectorAll(":enabled").length||k.push(":enabled",":disabled"),e.querySelectorAll("*,:x"),k.push(",.*:")})),(S.matchesSelector=r(z=M.webkitMatchesSelector||M.mozMatchesSelector||M.oMatchesSelector||M.msMatchesSelector))&&u(function(e){S.disconnectedMatch=z.call(e,"div"),z.call(e,"[s!='']:x"),F.push("!=",pt)}),k=k.length&&RegExp(k.join("|")),F=F.length&&RegExp(F.join("|")),j=r(M.contains)||M.compareDocumentPosition?function(e,t){var n=9===e.nodeType?e.documentElement:e,r=t&&t.parentNode;return e===r||!(!r||1!==r.nodeType||!(n.contains?n.contains(r):e.compareDocumentPosition&&16&e.compareDocumentPosition(r)))}:function(e,t){if(t)for(;t=t.parentNode;)if(t===e)return!0;return!1},S.sortDetached=u(function(e){return 1&e.compareDocumentPosition(n.createElement("div"))}),Y=M.compareDocumentPosition?function(e,t){if(e===t)return W=!0,0;var r=t.compareDocumentPosition&&e.compareDocumentPosition&&e.compareDocumentPosition(t);return r?1&r||!S.sortDetached&&t.compareDocumentPosition(e)===r?e===n||j(U,e)?-1:t===n||j(U,t)?1:$?ut.call($,e)-ut.call($,t):0:4&r?-1:1:e.compareDocumentPosition?-1:1}:function(e,t){var r,o=0,i=e.parentNode,u=t.parentNode,l=[e],a=[t];if(e===t)return W=!0,0;if(!i||!u)return e===n?-1:t===n?1:i?-1:u?1:$?ut.call($,e)-ut.call($,t):0;if(i===u)return f(e,t);for(r=e;r=r.parentNode;)l.unshift(r);for(r=t;r=r.parentNode;)a.unshift(r);for(;l[o]===a[o];)o++;return o?f(l[o],a[o]):l[o]===U?-1:a[o]===U?1:0},n):H},n.matches=function(e,t){return n(e,null,null,t)},n.matchesSelector=function(e,t){if((e.ownerDocument||e)!==H&&q(e),t=t.replace(yt,"='$1']"),!(!S.matchesSelector||!O||F&&F.test(t)||k&&k.test(t)))try{var r=z.call(e,t);if(r||S.disconnectedMatch||e.document&&11!==e.document.nodeType)return r}catch(o){}return n(t,H,null,[e]).length>0},n.contains=function(e,t){return(e.ownerDocument||e)!==H&&q(e),j(e,t)},n.attr=function(e,n){(e.ownerDocument||e)!==H&&q(e);var r=L.attrHandle[n.toLowerCase()],o=r&&et.call(L.attrHandle,n.toLowerCase())?r(e,n,!O):t;return o===t?S.attributes||!O?e.getAttribute(n):(o=e.getAttributeNode(n))&&o.specified?o.value:null:o},n.error=function(e){throw Error("Syntax error, unrecognized expression: "+e)},n.uniqueSort=function(e){var t,n=[],r=0,o=0;if(W=!S.detectDuplicates,$=!S.sortStable&&e.slice(0),e.sort(Y),W){for(;t=e[o++];)t===e[o]&&(r=n.push(o));for(;r--;)e.splice(n[r],1)}return e},B=n.getText=function(e){var t,n="",r=0,o=e.nodeType;if(o){if(1===o||9===o||11===o){if("string"==typeof e.textContent)return e.textContent;for(e=e.firstChild;e;e=e.nextSibling)n+=B(e)}else if(3===o||4===o)return e.nodeValue}else for(;t=e[r];r++)n+=B(t);return n},L=n.selectors={cacheLength:50,createPseudo:i,match:bt,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(e){return e[1]=e[1].replace(At,St),e[3]=(e[4]||e[5]||"").replace(At,St),"~="===e[2]&&(e[3]=" "+e[3]+" "),e.slice(0,4)},CHILD:function(e){return e[1]=e[1].toLowerCase(),"nth"===e[1].slice(0,3)?(e[3]||n.error(e[0]),e[4]=+(e[4]?e[5]+(e[6]||1):2*("even"===e[3]||"odd"===e[3])),e[5]=+(e[7]+e[8]||"odd"===e[3])):e[3]&&n.error(e[0]),e},PSEUDO:function(e){var n,r=!e[5]&&e[2];return bt.CHILD.test(e[0])?null:(e[3]&&e[4]!==t?e[2]=e[4]:r&&vt.test(r)&&(n=g(r,!0))&&(n=r.indexOf(")",r.length-n)-r.length)&&(e[0]=e[0].slice(0,n),e[2]=r.slice(0,n)),e.slice(0,3))}},filter:{TAG:function(e){var t=e.replace(At,St).toLowerCase();return"*"===e?function(){return!0}:function(e){return e.nodeName&&e.nodeName.toLowerCase()===t}},CLASS:function(e){var t=J[e+" "];return t||(t=RegExp("(^|"+at+")"+e+"("+at+"|$)"))&&J(e,function(e){return t.test("string"==typeof e.className&&e.className||typeof e.getAttribute!==Z&&e.getAttribute("class")||"")})},ATTR:function(e,t,r){return function(o){var i=n.attr(o,e);return null==i?"!="===t:t?(i+="","="===t?i===r:"!="===t?i!==r:"^="===t?r&&0===i.indexOf(r):"*="===t?r&&i.indexOf(r)>-1:"$="===t?r&&i.slice(-r.length)===r:"~="===t?(" "+i+" ").indexOf(r)>-1:"|="===t?i===r||i.slice(0,r.length+1)===r+"-":!1):!0}},CHILD:function(e,t,n,r,o){var i="nth"!==e.slice(0,3),u="last"!==e.slice(-4),l="of-type"===t;return 1===r&&0===o?function(e){return!!e.parentNode}:function(t,n,a){var c,s,f,p,d,h,g=i!==u?"nextSibling":"previousSibling",m=t.parentNode,y=l&&t.nodeName.toLowerCase(),v=!a&&!l;if(m){if(i){for(;g;){for(f=t;f=f[g];)if(l?f.nodeName.toLowerCase()===y:1===f.nodeType)return!1;h=g="only"===e&&!h&&"nextSibling"}return!0}if(h=[u?m.firstChild:m.lastChild],u&&v){for(s=m[G]||(m[G]={}),c=s[e]||[],d=c[0]===V&&c[1],p=c[0]===V&&c[2],f=d&&m.childNodes[d];f=++d&&f&&f[g]||(p=d=0)||h.pop();)if(1===f.nodeType&&++p&&f===t){s[e]=[V,d,p];break}}else if(v&&(c=(t[G]||(t[G]={}))[e])&&c[0]===V)p=c[1];else for(;(f=++d&&f&&f[g]||(p=d=0)||h.pop())&&((l?f.nodeName.toLowerCase()!==y:1!==f.nodeType)||!++p||(v&&((f[G]||(f[G]={}))[e]=[V,p]),f!==t)););return p-=o,p===r||0===p%r&&p/r>=0}}},PSEUDO:function(e,t){var r,o=L.pseudos[e]||L.setFilters[e.toLowerCase()]||n.error("unsupported pseudo: "+e);return o[G]?o(t):o.length>1?(r=[e,e,"",t],L.setFilters.hasOwnProperty(e.toLowerCase())?i(function(e,n){for(var r,i=o(e,t),u=i.length;u--;)r=ut.call(e,i[u]),e[r]=!(n[r]=i[u])}):function(e){return o(e,0,r)}):o}},pseudos:{not:i(function(e){var t=[],n=[],r=R(e.replace(dt,"$1"));return r[G]?i(function(e,t,n,o){for(var i,u=r(e,null,o,[]),l=e.length;l--;)(i=u[l])&&(e[l]=!(t[l]=i))}):function(e,o,i){return t[0]=e,r(t,null,i,n),!n.pop()}}),has:i(function(e){return function(t){return n(e,t).length>0}}),contains:i(function(e){return function(t){return(t.textContent||t.innerText||B(t)).indexOf(e)>-1}}),lang:i(function(e){return Nt.test(e||"")||n.error("unsupported lang: "+e),e=e.replace(At,St).toLowerCase(),function(t){var n;do if(n=O?t.lang:t.getAttribute("xml:lang")||t.getAttribute("lang"))return n=n.toLowerCase(),n===e||0===n.indexOf(e+"-");while((t=t.parentNode)&&1===t.nodeType);return!1}}),target:function(t){var n=e.location&&e.location.hash;return n&&n.slice(1)===t.id},root:function(e){return e===M},focus:function(e){return e===H.activeElement&&(!H.hasFocus||H.hasFocus())&&!!(e.type||e.href||~e.tabIndex)},enabled:function(e){return e.disabled===!1},disabled:function(e){return e.disabled===!0},checked:function(e){var t=e.nodeName.toLowerCase();return"input"===t&&!!e.checked||"option"===t&&!!e.selected},selected:function(e){return e.parentNode&&e.parentNode.selectedIndex,e.selected===!0},empty:function(e){for(e=e.firstChild;e;e=e.nextSibling)if(e.nodeName>"@"||3===e.nodeType||4===e.nodeType)return!1;return!0},parent:function(e){return!L.pseudos.empty(e)},header:function(e){return wt.test(e.nodeName)},input:function(e){return Et.test(e.nodeName)},button:function(e){var t=e.nodeName.toLowerCase();return"input"===t&&"button"===e.type||"button"===t},text:function(e){var t;return"input"===e.nodeName.toLowerCase()&&"text"===e.type&&(null==(t=e.getAttribute("type"))||t.toLowerCase()===e.type)},first:h(function(){return[0]}),last:h(function(e,t){return[t-1]}),eq:h(function(e,t,n){return[0>n?n+t:n]}),even:h(function(e,t){for(var n=0;t>n;n+=2)e.push(n);return e}),odd:h(function(e,t){for(var n=1;t>n;n+=2)e.push(n);return e}),lt:h(function(e,t,n){for(var r=0>n?n+t:n;--r>=0;)e.push(r);return e}),gt:h(function(e,t,n){for(var r=0>n?n+t:n;t>++r;)e.push(r);return e})}};for(A in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})L.pseudos[A]=p(A);for(A in{submit:!0,reset:!0})L.pseudos[A]=d(A);R=n.compile=function(e,t){var n,r=[],o=[],i=Q[e+" "];if(!i){for(t||(t=g(e)),n=t.length;n--;)i=x(t[n]),i[G]?r.push(i):o.push(i);i=Q(e,C(o,r))}return i},L.pseudos.nth=L.pseudos.eq,T.prototype=L.filters=L.pseudos,L.setFilters=new T,S.sortStable=G.split("").sort(Y).join("")===G,q(),[0,0].sort(Y),S.detectDuplicates=W,"function"==typeof define&&define.amd?define(function(){return n}):e.Sizzle=n})(window);
+    </script>
+
+    <script type="text/javascript">
 window.onload = function() {
-    var codeBlocks = document.getElementsByTagName('pre'),
-        callStackItems = document.getElementsByClassName('call-stack-item');
+    var codeBlocks = Sizzle('pre'),
+        callStackItems = Sizzle('.call-stack-item');
 
     // highlight code blocks
     for (var i = 0, imax = codeBlocks.length; i < imax; ++i) {
         hljs.highlightBlock(codeBlocks[i], '    ');
     }
 
+    // code block hover line
+    document.onmousemove = function(e) {
+        var event = e || window.event,
+            clientY = event.clientY,
+            lineFound = false,
+            hoverLines = Sizzle('.hover-line');
+
+        for (var i = 0, imax = codeBlocks.length - 1; i < imax; ++i) {
+            var lines = codeBlocks[i].getClientRects();
+            for (var j = 0, jmax = lines.length; j < jmax; ++j) {
+                if (clientY >= lines[j].top && clientY <= lines[j].bottom) {
+                    lineFound = true;
+                    break;
+                }
+            }
+            if (lineFound) {
+                break;
+            }
+        }
+
+        for (var k = 0, kmax = hoverLines.length; k < kmax; ++k) {
+            hoverLines[k].className = 'hover-line';
+        }
+        if (lineFound) {
+            var line = Sizzle('.call-stack-item:eq(' + i + ') .hover-line:eq(' + j + ')')[0];
+            if (line) {
+                line.className = 'hover-line hover';
+            }
+        }
+    };
+
     var refreshCallStackItemCode = function(callStackItem) {
-        if (!callStackItem.getElementsByTagName('pre')[0]) {
+        if (!Sizzle('pre', callStackItem)[0]) {
             return;
         }
-        var top = callStackItem.getElementsByClassName('code-wrap')[0].offsetTop - window.pageYOffset + 3,
-            lines = callStackItem.getElementsByTagName('pre')[0].getClientRects(),
-            lineNumbers = callStackItem.getElementsByClassName('lines-item'),
-            errorLine = callStackItem.getElementsByClassName('error-line')[0],
-            hoverLines = callStackItem.getElementsByClassName('hover-line');
+        var top = callStackItem.offsetTop - window.pageYOffset,
+            lines = Sizzle('pre', callStackItem)[0].getClientRects(),
+            lineNumbers = Sizzle('.lines-item', callStackItem),
+            errorLine = Sizzle('.error-line', callStackItem)[0],
+            hoverLines = Sizzle('.hover-line', callStackItem);
         for (var i = 0, imax = lines.length; i < imax; ++i) {
             if (!lineNumbers[i]) {
                 continue;
             }
             lineNumbers[i].style.top = parseInt(lines[i].top - top) + 'px';
-            hoverLines[i].style.top = parseInt(lines[i].top - top) + 'px';
+            hoverLines[i].style.top = parseInt(lines[i].top - top - 3) + 'px';
             hoverLines[i].style.height = parseInt(lines[i].bottom - lines[i].top + 6) + 'px';
             if (parseInt(callStackItem.getAttribute('data-line')) == i) {
-                errorLine.style.top = parseInt(lines[i].top - top) + 'px';
+                errorLine.style.top = parseInt(lines[i].top - top - 3) + 'px';
                 errorLine.style.height = parseInt(lines[i].bottom - lines[i].top + 6) + 'px';
             }
         }
@@ -488,44 +466,17 @@ window.onload = function() {
         refreshCallStackItemCode(callStackItems[i]);
 
         // toggle code block visibility
-        callStackItems[i].getElementsByClassName('element-wrap')[0].addEventListener('click', function() {
+        Sizzle('.element-wrap', callStackItems[i])[0].addEventListener('click', function() {
             var callStackItem = this.parentNode,
-                code = callStackItem.getElementsByClassName('code-wrap')[0]
+                code = Sizzle('.code-wrap', callStackItem)[0];
             code.style.display = window.getComputedStyle(code).display == 'block' ? 'none' : 'block';
             refreshCallStackItemCode(callStackItem);
         });
     }
-
-    // handle copy stacktrace action on clipboard button
-    document.getElementById('copy-stacktrace').onclick = function(e) {
-        e.preventDefault();
-        var textarea = document.getElementById('clipboard');
-        textarea.focus();
-        textarea.select();
-        try {
-            succeeded = document.execCommand('copy');
-        } catch (err) {
-            succeeded = false;
-        }
-        if (succeeded) {
-            document.getElementById('copied').style.display = 'block';
-        } else {
-            // fallback: show textarea if browser does not support copying directly
-            textarea.style.top = 0;
-        }
-    }
 };
-
-    // Highlight lines that have text in them but still support text selection:
-    document.onmousedown = function() { document.getElementsByTagName('body')[0].classList.add('mousedown'); }
-    document.onmouseup = function() { document.getElementsByTagName('body')[0].classList.remove('mousedown'); }
     </script>
-    <?php if (method_exists($this, 'endBody')): ?>
-        <?php $this->endBody() // to allow injecting code into body (mostly by Yii Debug Toolbar)?>
-    <?php endif ?>
+    <?php if (method_exists($this, 'endBody')) $this->endBody(); // to allow injecting code into body (mostly by Yii Debug Toolbar) ?>
 </body>
 
 </html>
-<?php if (method_exists($this, 'endPage')): ?>
-    <?php $this->endPage() ?>
-<?php endif ?>
+<?php if (method_exists($this, 'endPage')) $this->endPage(); ?>

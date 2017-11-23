@@ -12,8 +12,6 @@ use Yii;
 /**
  * OptionsAction responds to the OPTIONS request by sending back an `Allow` header.
  *
- * For more details and usage information on OptionsAction, see the [guide article on rest controllers](guide:rest-controllers).
- *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
@@ -27,7 +25,6 @@ class OptionsAction extends \yii\base\Action
      * @var array the HTTP verbs that are supported by the resource URL
      */
     public $resourceOptions = ['GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
-
 
     /**
      * Responds to the OPTIONS request.

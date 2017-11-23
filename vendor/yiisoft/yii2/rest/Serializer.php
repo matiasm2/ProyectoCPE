@@ -8,7 +8,6 @@
 namespace yii\rest;
 
 use Yii;
-use yii\base\Arrayable;
 use yii\base\Component;
 use yii\base\Model;
 use yii\data\DataProviderInterface;
@@ -90,18 +89,6 @@ class Serializer extends Component
      */
     public $collectionEnvelope;
     /**
-     * @var string the name of the envelope (e.g. `_links`) for returning the links objects.
-     * It takes effect only, if `collectionEnvelope` is set.
-     * @since 2.0.4
-     */
-    public $linksEnvelope = '_links';
-    /**
-     * @var string the name of the envelope (e.g. `_meta`) for returning the pagination object.
-     * It takes effect only, if `collectionEnvelope` is set.
-     * @since 2.0.4
-     */
-    public $metaEnvelope = '_meta';
-    /**
      * @var Request the current request. If not set, the `request` application component will be used.
      */
     public $request;
@@ -109,16 +96,6 @@ class Serializer extends Component
      * @var Response the response to be sent. If not set, the `response` application component will be used.
      */
     public $response;
-    /**
-     * @var bool whether to preserve array keys when serializing collection data.
-     * Set this to `true` to allow serialization of a collection as a JSON object where array keys are
-     * used to index the model objects. The default is to serialize all collections as array, regardless
-     * of how the array is indexed.
-     * @see serializeDataProvider()
-     * @since 2.0.10
-     */
-    public $preserveKeys = false;
-
 
     /**
      * @inheritdoc
@@ -144,15 +121,13 @@ class Serializer extends Component
      */
     public function serialize($data)
     {
-        if ($data instanceof Model && $data->hasErrors()) {
-            return $this->serializeModelErrors($data);
-        } elseif ($data instanceof Arrayable) {
-            return $this->serializeModel($data);
+        if ($data instanceof Model) {
+            return $data->hasErrors() ? $this->serializeModelErrors($data) : $this->serializeModel($data);
         } elseif ($data instanceof DataProviderInterface) {
             return $this->serializeDataProvider($data);
+        } else {
+            return $data;
         }
-
-        return $data;
     }
 
     /**
@@ -168,8 +143,8 @@ class Serializer extends Component
         $expand = $this->request->get($this->expandParam);
 
         return [
-            is_string($fields) ? preg_split('/\s*,\s*/', $fields, -1, PREG_SPLIT_NO_EMPTY) : [],
-            is_string($expand) ? preg_split('/\s*,\s*/', $expand, -1, PREG_SPLIT_NO_EMPTY) : [],
+            preg_split('/\s*,\s*/', $fields, -1, PREG_SPLIT_NO_EMPTY),
+            preg_split('/\s*,\s*/', $expand, -1, PREG_SPLIT_NO_EMPTY),
         ];
     }
 
@@ -180,12 +155,7 @@ class Serializer extends Component
      */
     protected function serializeDataProvider($dataProvider)
     {
-        if ($this->preserveKeys) {
-            $models = $dataProvider->getModels();
-        } else {
-            $models = array_values($dataProvider->getModels());
-        }
-        $models = $this->serializeModels($models);
+        $models = $this->serializeModels($dataProvider->getModels());
 
         if (($pagination = $dataProvider->getPagination()) !== false) {
             $this->addPaginationHeaders($pagination);
@@ -195,16 +165,16 @@ class Serializer extends Component
             return null;
         } elseif ($this->collectionEnvelope === null) {
             return $models;
+        } else {
+            $result = [
+                $this->collectionEnvelope => $models,
+            ];
+            if ($pagination !== false) {
+                return array_merge($result, $this->serializePagination($pagination));
+            } else {
+                return $result;
+            }
         }
-
-        $result = [
-            $this->collectionEnvelope => $models,
-        ];
-        if ($pagination !== false) {
-            return array_merge($result, $this->serializePagination($pagination));
-        }
-
-        return $result;
     }
 
     /**
@@ -216,11 +186,11 @@ class Serializer extends Component
     protected function serializePagination($pagination)
     {
         return [
-            $this->linksEnvelope => Link::serialize($pagination->getLinks(true)),
-            $this->metaEnvelope => [
+            '_links' => Link::serialize($pagination->getLinks(true)),
+            '_meta' => [
                 'totalCount' => $pagination->totalCount,
                 'pageCount' => $pagination->getPageCount(),
-                'currentPage' => $pagination->getPage() + 1,
+                'currentPage' => $pagination->getPage(),
                 'perPage' => $pagination->getPageSize(),
             ],
         ];
@@ -247,17 +217,18 @@ class Serializer extends Component
 
     /**
      * Serializes a model object.
-     * @param Arrayable $model
+     * @param Model $model
      * @return array the array representation of the model
      */
     protected function serializeModel($model)
     {
         if ($this->request->getIsHead()) {
             return null;
-        }
+        } else {
+            list ($fields, $expand) = $this->getRequestedFields();
 
-        list($fields, $expand) = $this->getRequestedFields();
-        return $model->toArray($fields, $expand);
+            return $model->toArray($fields, $expand);
+        }
     }
 
     /**
@@ -286,9 +257,9 @@ class Serializer extends Component
      */
     protected function serializeModels(array $models)
     {
-        list($fields, $expand) = $this->getRequestedFields();
+        list ($fields, $expand) = $this->getRequestedFields();
         foreach ($models as $i => $model) {
-            if ($model instanceof Arrayable) {
+            if ($model instanceof Model) {
                 $models[$i] = $model->toArray($fields, $expand);
             } elseif (is_array($model)) {
                 $models[$i] = ArrayHelper::toArray($model);

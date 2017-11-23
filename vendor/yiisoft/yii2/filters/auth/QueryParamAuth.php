@@ -7,6 +7,9 @@
 
 namespace yii\filters\auth;
 
+use Yii;
+use yii\web\UnauthorizedHttpException;
+
 /**
  * QueryParamAuth is an action filter that supports the authentication based on the access token passed through a query parameter.
  *
@@ -20,7 +23,6 @@ class QueryParamAuth extends AuthMethod
      */
     public $tokenParam = 'access-token';
 
-
     /**
      * @inheritdoc
      */
@@ -28,7 +30,7 @@ class QueryParamAuth extends AuthMethod
     {
         $accessToken = $request->get($this->tokenParam);
         if (is_string($accessToken)) {
-            $identity = $user->loginByAccessToken($accessToken, get_class($this));
+            $identity = $user->loginByAccessToken($accessToken);
             if ($identity !== null) {
                 return $identity;
             }
@@ -38,5 +40,13 @@ class QueryParamAuth extends AuthMethod
         }
 
         return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function handleFailure($response)
+    {
+        throw new UnauthorizedHttpException('You are requesting with an invalid access token.');
     }
 }

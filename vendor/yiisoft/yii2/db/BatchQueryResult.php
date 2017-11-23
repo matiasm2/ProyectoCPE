@@ -7,13 +7,13 @@
 
 namespace yii\db;
 
-use yii\base\BaseObject;
+use yii\base\Object;
 
 /**
  * BatchQueryResult represents a batch query from which you can retrieve data in batches.
  *
  * You usually do not instantiate BatchQueryResult directly. Instead, you obtain it by
- * calling [[Query::batch()]] or [[Query::each()]]. Because BatchQueryResult implements the [[\Iterator]] interface,
+ * calling [[Query::batch()]] or [[Query::each()]]. Because BatchQueryResult implements the `Iterator` interface,
  * you can iterate it to obtain a batch of data in each iteration. For example,
  *
  * ```php
@@ -28,7 +28,7 @@ use yii\base\BaseObject;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class BatchQueryResult extends BaseObject implements \Iterator
+class BatchQueryResult extends Object implements \Iterator
 {
     /**
      * @var Connection the DB connection to be used when performing batch query.
@@ -41,15 +41,14 @@ class BatchQueryResult extends BaseObject implements \Iterator
      */
     public $query;
     /**
-     * @var int the number of rows to be returned in each batch.
+     * @var integer the number of rows to be returned in each batch.
      */
     public $batchSize = 100;
     /**
-     * @var bool whether to return a single row during each iteration.
+     * @var boolean whether to return a single row during each iteration.
      * If false, a whole batch of rows will be returned in each iteration.
      */
     public $each = false;
-
     /**
      * @var DataReader the data reader associated with this batch query.
      */
@@ -63,10 +62,9 @@ class BatchQueryResult extends BaseObject implements \Iterator
      */
     private $_value;
     /**
-     * @var string|int the key for the current iteration
+     * @var string|integer the key for the current iteration
      */
     private $_key;
-
 
     /**
      * Destructor.
@@ -94,7 +92,7 @@ class BatchQueryResult extends BaseObject implements \Iterator
 
     /**
      * Resets the iterator to the initial state.
-     * This method is required by the interface [[\Iterator]].
+     * This method is required by the interface Iterator.
      */
     public function rewind()
     {
@@ -104,7 +102,7 @@ class BatchQueryResult extends BaseObject implements \Iterator
 
     /**
      * Moves the internal pointer to the next dataset.
-     * This method is required by the interface [[\Iterator]].
+     * This method is required by the interface Iterator.
      */
     public function next()
     {
@@ -144,13 +142,13 @@ class BatchQueryResult extends BaseObject implements \Iterator
             $rows[] = $row;
         }
 
-        return $this->query->populate($rows);
+        return $this->query->prepareResult($rows);
     }
 
     /**
      * Returns the index of the current dataset.
-     * This method is required by the interface [[\Iterator]].
-     * @return int the index of the current row.
+     * This method is required by the interface Iterator.
+     * @return integer the index of the current row.
      */
     public function key()
     {
@@ -159,7 +157,7 @@ class BatchQueryResult extends BaseObject implements \Iterator
 
     /**
      * Returns the current dataset.
-     * This method is required by the interface [[\Iterator]].
+     * This method is required by the interface Iterator.
      * @return mixed the current dataset.
      */
     public function current()
@@ -169,8 +167,8 @@ class BatchQueryResult extends BaseObject implements \Iterator
 
     /**
      * Returns whether there is a valid dataset at the current position.
-     * This method is required by the interface [[\Iterator]].
-     * @return bool whether there is a valid dataset at the current position.
+     * This method is required by the interface Iterator.
+     * @return boolean whether there is a valid dataset at the current position.
      */
     public function valid()
     {

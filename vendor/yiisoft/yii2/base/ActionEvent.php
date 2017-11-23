@@ -26,12 +26,11 @@ class ActionEvent extends Event
      */
     public $result;
     /**
-     * @var bool whether to continue running the action. Event handlers of
+     * @var boolean whether to continue running the action. Event handlers of
      * [[Controller::EVENT_BEFORE_ACTION]] may set this property to decide whether
      * to continue running the current action.
      */
     public $isValid = true;
-
 
     /**
      * Constructor.

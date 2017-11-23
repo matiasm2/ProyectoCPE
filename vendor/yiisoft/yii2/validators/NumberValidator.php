@@ -8,9 +8,8 @@
 namespace yii\validators;
 
 use Yii;
-use yii\helpers\Json;
-use yii\helpers\StringHelper;
 use yii\web\JsExpression;
+use yii\helpers\Json;
 
 /**
  * NumberValidator validates that the attribute value is a number.
@@ -25,17 +24,15 @@ use yii\web\JsExpression;
 class NumberValidator extends Validator
 {
     /**
-     * @var bool whether the attribute value can only be an integer. Defaults to false.
+     * @var boolean whether the attribute value can only be an integer. Defaults to false.
      */
     public $integerOnly = false;
     /**
-     * @var int|float upper limit of the number. Defaults to null, meaning no upper limit.
-     * @see tooBig for the customized message used when the number is too big.
+     * @var integer|float upper limit of the number. Defaults to null, meaning no upper limit.
      */
     public $max;
     /**
-     * @var int|float lower limit of the number. Defaults to null, meaning no lower limit.
-     * @see tooSmall for the customized message used when the number is too small.
+     * @var integer|float lower limit of the number. Defaults to null, meaning no lower limit.
      */
     public $min;
     /**
@@ -55,7 +52,6 @@ class NumberValidator extends Validator
      * that matches floating numbers with optional exponential part (e.g. -1.23e-10).
      */
     public $numberPattern = '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/';
-
 
     /**
      * @inheritdoc
@@ -78,23 +74,22 @@ class NumberValidator extends Validator
     /**
      * @inheritdoc
      */
-    public function validateAttribute($model, $attribute)
+    public function validateAttribute($object, $attribute)
     {
-        $value = $model->$attribute;
-        if (is_array($value) || (is_object($value) && !method_exists($value, '__toString'))) {
-            $this->addError($model, $attribute, $this->message);
+        $value = $object->$attribute;
+        if (is_array($value)) {
+            $this->addError($object, $attribute, $this->message);
             return;
         }
         $pattern = $this->integerOnly ? $this->integerPattern : $this->numberPattern;
-
-        if (!preg_match($pattern, StringHelper::normalizeNumber($value))) {
-            $this->addError($model, $attribute, $this->message);
+        if (!preg_match($pattern, "$value")) {
+            $this->addError($object, $attribute, $this->message);
         }
         if ($this->min !== null && $value < $this->min) {
-            $this->addError($model, $attribute, $this->tooSmall, ['min' => $this->min]);
+            $this->addError($object, $attribute, $this->tooSmall, ['min' => $this->min]);
         }
         if ($this->max !== null && $value > $this->max) {
-            $this->addError($model, $attribute, $this->tooBig, ['max' => $this->max]);
+            $this->addError($object, $attribute, $this->tooBig, ['max' => $this->max]);
         }
     }
 
@@ -103,68 +98,55 @@ class NumberValidator extends Validator
      */
     protected function validateValue($value)
     {
-        if (is_array($value) || is_object($value)) {
+        if (is_array($value)) {
             return [Yii::t('yii', '{attribute} is invalid.'), []];
         }
         $pattern = $this->integerOnly ? $this->integerPattern : $this->numberPattern;
-        if (!preg_match($pattern, StringHelper::normalizeNumber($value))) {
+        if (!preg_match($pattern, "$value")) {
             return [$this->message, []];
         } elseif ($this->min !== null && $value < $this->min) {
             return [$this->tooSmall, ['min' => $this->min]];
         } elseif ($this->max !== null && $value > $this->max) {
             return [$this->tooBig, ['max' => $this->max]];
+        } else {
+            return null;
         }
-
-        return null;
     }
 
     /**
      * @inheritdoc
      */
-    public function clientValidateAttribute($model, $attribute, $view)
+    public function clientValidateAttribute($object, $attribute, $view)
     {
-        ValidationAsset::register($view);
-        $options = $this->getClientOptions($model, $attribute);
-
-        return 'yii.validation.number(value, messages, ' . Json::htmlEncode($options) . ');';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getClientOptions($model, $attribute)
-    {
-        $label = $model->getAttributeLabel($attribute);
+        $label = $object->getAttributeLabel($attribute);
 
         $options = [
             'pattern' => new JsExpression($this->integerOnly ? $this->integerPattern : $this->numberPattern),
-            'message' => $this->formatMessage($this->message, [
+            'message' => Yii::$app->getI18n()->format($this->message, [
                 'attribute' => $label,
-            ]),
+            ], Yii::$app->language),
         ];
 
         if ($this->min !== null) {
-            // ensure numeric value to make javascript comparison equal to PHP comparison
-            // https://github.com/yiisoft/yii2/issues/3118
-            $options['min'] = is_string($this->min) ? (float) $this->min : $this->min;
-            $options['tooSmall'] = $this->formatMessage($this->tooSmall, [
+            $options['min'] = $this->min;
+            $options['tooSmall'] = Yii::$app->getI18n()->format($this->tooSmall, [
                 'attribute' => $label,
                 'min' => $this->min,
-            ]);
+            ], Yii::$app->language);
         }
         if ($this->max !== null) {
-            // ensure numeric value to make javascript comparison equal to PHP comparison
-            // https://github.com/yiisoft/yii2/issues/3118
-            $options['max'] = is_string($this->max) ? (float) $this->max : $this->max;
-            $options['tooBig'] = $this->formatMessage($this->tooBig, [
+            $options['max'] = $this->max;
+            $options['tooBig'] = Yii::$app->getI18n()->format($this->tooBig, [
                 'attribute' => $label,
                 'max' => $this->max,
-            ]);
+            ], Yii::$app->language);
         }
         if ($this->skipOnEmpty) {
             $options['skipOnEmpty'] = 1;
         }
 
-        return $options;
+        ValidationAsset::register($view);
+
+        return 'yii.validation.number(value, messages, ' . Json::encode($options) . ');';
     }
 }

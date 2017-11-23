@@ -15,18 +15,15 @@ namespace yii\base;
  * and make them directly accessible via the component. It can also respond to the events triggered in the component
  * and thus intercept the normal code execution.
  *
- * For more details and usage information on Behavior, see the [guide article on behaviors](guide:concept-behaviors).
- *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class Behavior extends BaseObject
+class Behavior extends \yii\base\Object
 {
     /**
-     * @var Component|null the owner of this behavior
+     * @var Component the owner of this behavior
      */
     public $owner;
-
 
     /**
      * Declares event handlers for the [[owner]]'s events.
@@ -38,7 +35,7 @@ class Behavior extends BaseObject
      * attached to the owner; and they will be detached from the events when
      * the behavior is detached from the component.
      *
-     * The callbacks can be any of the following:
+     * The callbacks can be any of the followings:
      *
      * - method in this behavior: `'handleClick'`, equivalent to `[$this, 'handleClick']`
      * - object method: `[$object, 'handleClick']`
@@ -47,12 +44,12 @@ class Behavior extends BaseObject
      *
      * The following is an example:
      *
-     * ```php
+     * ~~~
      * [
-     *     Model::EVENT_BEFORE_VALIDATE => 'myBeforeValidate',
-     *     Model::EVENT_AFTER_VALIDATE => 'myAfterValidate',
+     *	 Model::EVENT_BEFORE_VALIDATE => 'myBeforeValidate',
+     *	 Model::EVENT_AFTER_VALIDATE => 'myAfterValidate',
      * ]
-     * ```
+     * ~~~
      *
      * @return array events (array keys) and the corresponding event handler methods (array values).
      */

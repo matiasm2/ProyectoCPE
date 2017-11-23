@@ -9,19 +9,18 @@ namespace yii\log;
 
 use Yii;
 use yii\base\Component;
-use yii\base\ErrorHandler;
 
 /**
  * Dispatcher manages a set of [[Target|log targets]].
  *
- * Dispatcher implements the [[dispatch()]]-method that forwards the log messages from a [[Logger]] to
+ * Dispatcher implements [[dispatch()]] that forwards the log messages from [[Logger]] to
  * the registered log [[targets]].
  *
- * An instance of Dispatcher is registered as a core application component and can be accessed using `Yii::$app->log`.
+ * Dispatcher is registered as a core application component and can be accessed using `Yii::$app->log`.
  *
  * You may configure the targets in application configuration, like the following:
  *
- * ```php
+ * ~~~
  * [
  *     'components' => [
  *         'log' => [
@@ -42,19 +41,19 @@ use yii\base\ErrorHandler;
  *         ],
  *     ],
  * ]
- * ```
+ * ~~~
  *
- * Each log target can have a name and can be referenced via the [[targets]] property as follows:
+ * Each log target can have a name and can be referenced via the [[targets]] property
+ * as follows:
  *
- * ```php
+ * ~~~
  * Yii::$app->log->targets['file']->enabled = false;
- * ```
+ * ~~~
  *
- * @property int $flushInterval How many messages should be logged before they are sent to targets. This
+ * @property integer $flushInterval How many messages should be logged before they are sent to targets. This
  * method returns the value of [[Logger::flushInterval]].
- * @property Logger $logger The logger. If not set, [[\Yii::getLogger()]] will be used. Note that the type of
- * this property differs in getter and setter. See [[getLogger()]] and [[setLogger()]] for details.
- * @property int $traceLevel How many application call stacks should be logged together with each message.
+ * @property Logger $logger The logger. If not set, [[\Yii::getLogger()]] will be used.
+ * @property integer $traceLevel How many application call stacks should be logged together with each message.
  * This method returns the value of [[Logger::traceLevel]]. Defaults to 0.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -67,7 +66,6 @@ class Dispatcher extends Component
      * or the configuration for creating the log target instance.
      */
     public $targets = [];
-
     /**
      * @var Logger the logger.
      */
@@ -79,7 +77,6 @@ class Dispatcher extends Component
      */
     public function __construct($config = [])
     {
-        // ensure logger gets set before any other config option
         if (isset($config['logger'])) {
             $this->setLogger($config['logger']);
             unset($config['logger']);
@@ -115,26 +112,21 @@ class Dispatcher extends Component
         if ($this->_logger === null) {
             $this->setLogger(Yii::getLogger());
         }
-
         return $this->_logger;
     }
 
     /**
      * Sets the connected logger.
-     * @param Logger|string|array $value the logger to be used. This can either be a logger instance
-     * or a configuration that will be used to create one using [[Yii::createObject()]].
+     * @param Logger $value the logger.
      */
     public function setLogger($value)
     {
-        if (is_string($value) || is_array($value)) {
-            $value = Yii::createObject($value);
-        }
         $this->_logger = $value;
         $this->_logger->dispatcher = $this;
     }
 
     /**
-     * @return int how many application call stacks should be logged together with each message.
+     * @return integer how many application call stacks should be logged together with each message.
      * This method returns the value of [[Logger::traceLevel]]. Defaults to 0.
      */
     public function getTraceLevel()
@@ -143,7 +135,7 @@ class Dispatcher extends Component
     }
 
     /**
-     * @param int $value how many application call stacks should be logged together with each message.
+     * @param integer $value how many application call stacks should be logged together with each message.
      * This method will set the value of [[Logger::traceLevel]]. If the value is greater than 0,
      * at most that number of call stacks will be logged. Note that only application call stacks are counted.
      * Defaults to 0.
@@ -154,7 +146,7 @@ class Dispatcher extends Component
     }
 
     /**
-     * @return int how many messages should be logged before they are sent to targets.
+     * @return integer how many messages should be logged before they are sent to targets.
      * This method returns the value of [[Logger::flushInterval]].
      */
     public function getFlushInterval()
@@ -163,7 +155,7 @@ class Dispatcher extends Component
     }
 
     /**
-     * @param int $value how many messages should be logged before they are sent to targets.
+     * @param integer $value how many messages should be logged before they are sent to targets.
      * This method will set the value of [[Logger::flushInterval]].
      * Defaults to 1000, meaning the [[Logger::flush()]] method will be invoked once every 1000 messages logged.
      * Set this property to be 0 if you don't want to flush messages until the application terminates.
@@ -178,30 +170,14 @@ class Dispatcher extends Component
     /**
      * Dispatches the logged messages to [[targets]].
      * @param array $messages the logged messages
-     * @param bool $final whether this method is called at the end of the current application
+     * @param boolean $final whether this method is called at the end of the current application
      */
     public function dispatch($messages, $final)
     {
-        $targetErrors = [];
         foreach ($this->targets as $target) {
             if ($target->enabled) {
-                try {
-                    $target->collect($messages, $final);
-                } catch (\Exception $e) {
-                    $target->enabled = false;
-                    $targetErrors[] = [
-                        'Unable to send log via ' . get_class($target) . ': ' . ErrorHandler::convertExceptionToString($e),
-                        Logger::LEVEL_WARNING,
-                        __METHOD__,
-                        microtime(true),
-                        [],
-                    ];
-                }
+                $target->collect($messages, $final);
             }
-        }
-
-        if (!empty($targetErrors)) {
-            $this->dispatch($targetErrors, true);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 namespace yii\bootstrap;
 
+use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -200,9 +201,6 @@ class ActiveField extends \yii\widgets\ActiveField
                 $this->template = $options['template'];
                 unset($options['template']);
             }
-            if (isset($options['label'])) {
-                $this->parts['{labelTitle}'] = $options['label'];
-            }
             if ($this->form->layout === 'horizontal') {
                 Html::addCssClass($this->wrapperOptions, $this->horizontalCssClasses['offset']);
             }
@@ -224,9 +222,6 @@ class ActiveField extends \yii\widgets\ActiveField
             } else {
                 $this->template = $options['template'];
                 unset($options['template']);
-            }
-            if (isset($options['label'])) {
-                $this->parts['{labelTitle}'] = $options['label'];
             }
             if ($this->form->layout === 'horizontal') {
                 Html::addCssClass($this->wrapperOptions, $this->horizontalCssClasses['offset']);
@@ -255,10 +250,8 @@ class ActiveField extends \yii\widgets\ActiveField
                 ];
             }
         }  elseif (!isset($options['item'])) {
-            $itemOptions = isset($options['itemOptions']) ? $options['itemOptions'] : [];
-            $options['item'] = function ($index, $label, $name, $checked, $value) use ($itemOptions) {
-                $options = array_merge(['label' => $label, 'value' => $value], $itemOptions);
-                return '<div class="checkbox">' . Html::checkbox($name, $checked, $options) . '</div>';
+            $options['item'] = function ($index, $label, $name, $checked, $value) {
+                return '<div class="checkbox">' . Html::checkbox($name, $checked, ['label' => $label, 'value' => $value]) . '</div>';
             };
         }
         parent::checkboxList($items, $options);
@@ -283,31 +276,11 @@ class ActiveField extends \yii\widgets\ActiveField
                 ];
             }
         }  elseif (!isset($options['item'])) {
-            $itemOptions = isset($options['itemOptions']) ? $options['itemOptions'] : [];
-            $options['item'] = function ($index, $label, $name, $checked, $value) use ($itemOptions) {
-                $options = array_merge(['label' => $label, 'value' => $value], $itemOptions);
-                return '<div class="radio">' . Html::radio($name, $checked, $options) . '</div>';
+            $options['item'] = function ($index, $label, $name, $checked, $value) {
+                return '<div class="radio">' . Html::radio($name, $checked, ['label' => $label, 'value' => $value]) . '</div>';
             };
         }
         parent::radioList($items, $options);
-        return $this;
-    }
-
-    /**
-     * Renders Bootstrap static form control.
-     * @param array $options the tag options in terms of name-value pairs. These will be rendered as
-     * the attributes of the resulting tag. There are also a special options:
-     *
-     * - encode: boolean, whether value should be HTML-encoded or not.
-     *
-     * @return $this the field object itself
-     * @since 2.0.5
-     * @see http://getbootstrap.com/css/#forms-controls-static
-     */
-    public function staticControl($options = [])
-    {
-        $this->adjustLabelFor($options);
-        $this->parts['{input}'] = Html::activeStaticControl($this->model, $this->attribute, $options);
         return $this;
     }
 
@@ -330,8 +303,8 @@ class ActiveField extends \yii\widgets\ActiveField
     }
 
     /**
-     * @param bool $value whether to render a inline list
-     * @return $this the field object itself
+     * @param boolean $value whether to render a inline list
+     * @return static the field object itself
      * Make sure you call this method before [[checkboxList()]] or [[radioList()]] to have any effect.
      */
     public function inline($value = true)
@@ -403,13 +376,8 @@ class ActiveField extends \yii\widgets\ActiveField
                 $label = Html::encode($this->model->getAttributeLabel($attribute));
             }
         }
-        if (!isset($options['for'])) {
-            $options['for'] = Html::getInputId($this->model, $this->attribute);
-        }
         $this->parts['{beginLabel}'] = Html::beginTag('label', $options);
         $this->parts['{endLabel}'] = Html::endTag('label');
-        if (!isset($this->parts['{labelTitle}'])) {
-            $this->parts['{labelTitle}'] = $label;
-        }
+        $this->parts['{labelTitle}'] = $label;
     }
 }

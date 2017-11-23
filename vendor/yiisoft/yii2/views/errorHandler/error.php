@@ -1,13 +1,16 @@
 <?php
-/* @var $exception \yii\web\HttpException|\Exception */
-/* @var $handler \yii\web\ErrorHandler */
+/**
+ * @var \Exception $exception
+ * @var \yii\web\ErrorHandler $handler
+ */
 if ($exception instanceof \yii\web\HttpException) {
     $code = $exception->statusCode;
 } else {
     $code = $exception->getCode();
 }
-$name = $handler->getExceptionName($exception);
-if ($name === null) {
+if ($exception instanceof \yii\base\Exception) {
+    $name = $exception->getName();
+} else {
     $name = 'Error';
 }
 if ($code) {
@@ -19,11 +22,8 @@ if ($exception instanceof \yii\base\UserException) {
 } else {
     $message = 'An internal server error occurred.';
 }
-
-if (method_exists($this, 'beginPage')) {
-    $this->beginPage();
-}
 ?>
+<?php if (method_exists($this, 'beginPage')) $this->beginPage(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,11 +80,7 @@ if (method_exists($this, 'beginPage')) {
     <div class="version">
         <?= date('Y-m-d H:i:s', time()) ?>
     </div>
-    <?php if (method_exists($this, 'endBody')): ?>
-        <?php $this->endBody() // to allow injecting code into body (mostly by Yii Debug Toolbar)?>
-    <?php endif ?>
+    <?php if (method_exists($this, 'endBody')) $this->endBody(); // to allow injecting code into body (mostly by Yii Debug Toolbar) ?>
 </body>
 </html>
-<?php if (method_exists($this, 'endPage')): ?>
-    <?php $this->endPage() ?>
-<?php endif ?>
+<?php if (method_exists($this, 'endPage')) $this->endPage(); ?>

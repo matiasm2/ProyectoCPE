@@ -25,7 +25,7 @@ trait ActiveQueryTrait
      */
     public $with;
     /**
-     * @var bool whether to return each record as an array. If false (default), an object
+     * @var boolean whether to return each record as an array. If false (default), an object
      * of [[modelClass]] will be created to represent each record.
      */
     public $asArray;
@@ -33,8 +33,8 @@ trait ActiveQueryTrait
 
     /**
      * Sets the [[asArray]] property.
-     * @param bool $value whether to return the query results in terms of arrays instead of Active Records.
-     * @return $this the query object itself
+     * @param boolean $value whether to return the query results in terms of arrays instead of Active Records.
+     * @return static the query object itself
      */
     public function asArray($value = true)
     {
@@ -53,31 +53,31 @@ trait ActiveQueryTrait
      * For example, `orders.address` means the `address` relation defined
      * in the model class corresponding to the `orders` relation.
      *
-     * The following are some usage examples:
+     * The followings are some usage examples:
      *
-     * ```php
+     * ~~~
      * // find customers together with their orders and country
      * Customer::find()->with('orders', 'country')->all();
      * // find customers together with their orders and the orders' shipping address
      * Customer::find()->with('orders.address')->all();
      * // find customers together with their country and orders of status 1
      * Customer::find()->with([
-     *     'orders' => function (\yii\db\ActiveQuery $query) {
+     *     'orders' => function ($query) {
      *         $query->andWhere('status = 1');
      *     },
      *     'country',
      * ])->all();
-     * ```
+     * ~~~
      *
      * You can call `with()` multiple times. Each call will add relations to the existing ones.
      * For example, the following two statements are equivalent:
      *
-     * ```php
+     * ~~~
      * Customer::find()->with('orders', 'country')->all();
      * Customer::find()->with('orders')->with('country')->all();
-     * ```
+     * ~~~
      *
-     * @return $this the query object itself
+     * @return static the query object itself
      */
     public function with()
     {
@@ -91,7 +91,7 @@ trait ActiveQueryTrait
             $this->with = $with;
         } elseif (!empty($with)) {
             foreach ($with as $name => $value) {
-                if (is_int($name)) {
+                if (is_integer($name)) {
                     // repeating relation is fine as normalizeRelations() handle it well
                     $this->with[] = $value;
                 } else {
@@ -104,12 +104,11 @@ trait ActiveQueryTrait
     }
 
     /**
-     * Converts found rows into model instances.
+     * Converts found rows into model instances
      * @param array $rows
      * @return array|ActiveRecord[]
-     * @since 2.0.11
      */
-    protected function createModels($rows)
+    private function createModels($rows)
     {
         $models = [];
         if ($this->asArray) {
@@ -125,20 +124,18 @@ trait ActiveQueryTrait
                 $models[$key] = $row;
             }
         } else {
-            /* @var $class ActiveRecord */
+            /** @var ActiveRecord $class */
             $class = $this->modelClass;
             if ($this->indexBy === null) {
                 foreach ($rows as $row) {
                     $model = $class::instantiate($row);
-                    $modelClass = get_class($model);
-                    $modelClass::populateRecord($model, $row);
+                    $class::populateRecord($model, $row);
                     $models[] = $model;
                 }
             } else {
                 foreach ($rows as $row) {
                     $model = $class::instantiate($row);
-                    $modelClass = get_class($model);
-                    $modelClass::populateRecord($model, $row);
+                    $class::populateRecord($model, $row);
                     if (is_string($this->indexBy)) {
                         $key = $model->{$this->indexBy};
                     } else {
@@ -160,16 +157,12 @@ trait ActiveQueryTrait
      */
     public function findWith($with, &$models)
     {
-        $primaryModel = reset($models);
-        if (!$primaryModel instanceof ActiveRecordInterface) {
-            $primaryModel = new $this->modelClass();
-        }
+        $primaryModel = new $this->modelClass;
         $relations = $this->normalizeRelations($primaryModel, $with);
-        /* @var $relation ActiveQuery */
         foreach ($relations as $name => $relation) {
             if ($relation->asArray === null) {
                 // inherit asArray from primary query
-                $relation->asArray($this->asArray);
+                $relation->asArray = $this->asArray;
             }
             $relation->populateRelation($name, $models);
         }
@@ -184,7 +177,7 @@ trait ActiveQueryTrait
     {
         $relations = [];
         foreach ($with as $name => $callback) {
-            if (is_int($name)) {
+            if (is_integer($name)) {
                 $name = $callback;
                 $callback = null;
             }

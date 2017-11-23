@@ -14,8 +14,6 @@ use yii\base\InvalidConfigException;
 /**
  * BaseActiveFixture is the base class for fixture classes that support accessing fixture data as ActiveRecord objects.
  *
- * For more details and usage information on BaseActiveFixture, see the [guide article on fixtures](guide:test-fixtures).
- *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
@@ -32,16 +30,14 @@ abstract class BaseActiveFixture extends DbFixture implements \IteratorAggregate
      */
     public $data = [];
     /**
-     * @var string|bool the file path or [path alias](guide:concept-aliases) of the data file that contains the fixture data
+     * @var string|boolean the file path or path alias of the data file that contains the fixture data
      * to be returned by [[getData()]]. You can set this property to be false to prevent loading any data.
      */
     public $dataFile;
-
     /**
      * @var \yii\db\ActiveRecord[] the loaded AR models
      */
     private $_models = [];
-
 
     /**
      * Returns the AR model by the specified model name.
@@ -63,10 +59,12 @@ abstract class BaseActiveFixture extends DbFixture implements \IteratorAggregate
             throw new InvalidConfigException('The "modelClass" property must be set.');
         }
         $row = $this->data[$name];
-        /* @var $modelClass \yii\db\ActiveRecord */
+        /** @var \yii\db\ActiveRecord $modelClass */
         $modelClass = $this->modelClass;
+        /** @var \yii\db\ActiveRecord $model */
+        $model = new $modelClass;
         $keys = [];
-        foreach ($modelClass::primaryKey() as $key) {
+        foreach ($model->primaryKey() as $key) {
             $keys[$key] = isset($row[$key]) ? $row[$key] : null;
         }
 
@@ -100,19 +98,9 @@ abstract class BaseActiveFixture extends DbFixture implements \IteratorAggregate
         }
         $dataFile = Yii::getAlias($this->dataFile);
         if (is_file($dataFile)) {
-            return require $dataFile;
+            return require($dataFile);
+        } else {
+            throw new InvalidConfigException("Fixture data file does not exist: {$this->dataFile}");
         }
-
-        throw new InvalidConfigException("Fixture data file does not exist: {$this->dataFile}");
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function unload()
-    {
-        parent::unload();
-        $this->data = [];
-        $this->_models = [];
     }
 }

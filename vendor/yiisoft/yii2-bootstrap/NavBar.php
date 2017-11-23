@@ -9,6 +9,7 @@ namespace yii\bootstrap;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**
  * NavBar renders a navbar HTML component.
@@ -19,7 +20,7 @@ use yii\helpers\ArrayHelper;
  *
  * ```php
  * use yii\bootstrap\NavBar;
- * use yii\bootstrap\Nav;
+ * use yii\widgets\Menu;
  *
  * NavBar::begin(['brandLabel' => 'NavBar Test']);
  * echo Nav::widget([
@@ -27,7 +28,6 @@ use yii\helpers\ArrayHelper;
  *         ['label' => 'Home', 'url' => ['/site/index']],
  *         ['label' => 'About', 'url' => ['/site/about']],
  *     ],
- *     'options' => ['class' => 'navbar-nav'],
  * ]);
  * NavBar::end();
  * ```
@@ -56,15 +56,14 @@ class NavBar extends Widget
      */
     public $containerOptions = [];
     /**
-     * @var string|boolean the text of the brand or false if it's not used. Note that this is not HTML-encoded.
+     * @var string|boolean the text of the brand of false if it's not used. Note that this is not HTML-encoded.
      * @see http://getbootstrap.com/components/#navbar
      */
     public $brandLabel = false;
     /**
-     * @var array|string|boolean $url the URL for the brand's hyperlink tag. This parameter will be processed by [[\yii\helpers\Url::to()]]
+     * @param array|string|boolean $url the URL for the brand's hyperlink tag. This parameter will be processed by [[Url::to()]]
      * and will be used for the "href" attribute of the brand link. Default value is false that means
      * [[\yii\web\Application::homeUrl]] will be used.
-     * You may set it to `null` if you want to have no link at all.
      */
     public $brandUrl = false;
     /**
@@ -95,10 +94,13 @@ class NavBar extends Widget
     {
         parent::init();
         $this->clientOptions = false;
-        if (empty($this->options['class'])) {
-            Html::addCssClass($this->options, ['navbar', 'navbar-default']);
-        } else {
-            Html::addCssClass($this->options, ['widget' => 'navbar']);
+        Html::addCssClass($this->options, 'navbar');
+        if ($this->options['class'] === 'navbar') {
+            Html::addCssClass($this->options, 'navbar-default');
+        }
+        Html::addCssClass($this->brandOptions, 'navbar-brand');
+        if (empty($this->options['role'])) {
+            $this->options['role'] = 'navigation';
         }
         $options = $this->options;
         $tag = ArrayHelper::remove($options, 'tag', 'nav');
@@ -115,11 +117,12 @@ class NavBar extends Widget
         }
         echo $this->renderToggleButton();
         if ($this->brandLabel !== false) {
-            Html::addCssClass($this->brandOptions, ['widget' => 'navbar-brand']);
+            Html::addCssClass($this->brandOptions, 'navbar-brand');
             echo Html::a($this->brandLabel, $this->brandUrl === false ? Yii::$app->homeUrl : $this->brandUrl, $this->brandOptions);
         }
         echo Html::endTag('div');
-        Html::addCssClass($this->containerOptions, ['collapse' => 'collapse', 'widget' => 'navbar-collapse']);
+        Html::addCssClass($this->containerOptions, 'collapse');
+        Html::addCssClass($this->containerOptions, 'navbar-collapse');
         $options = $this->containerOptions;
         $tag = ArrayHelper::remove($options, 'tag', 'div');
         echo Html::beginTag($tag, $options);
@@ -136,7 +139,7 @@ class NavBar extends Widget
             echo Html::endTag('div');
         }
         $tag = ArrayHelper::remove($this->options, 'tag', 'nav');
-        echo Html::endTag($tag);
+        echo Html::endTag($tag, $this->options);
         BootstrapPluginAsset::register($this->getView());
     }
 

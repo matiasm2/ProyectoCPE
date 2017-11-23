@@ -11,7 +11,7 @@ use yii\base\InvalidParamException;
 use yii\helpers\Json;
 
 /**
- * Parses a raw HTTP request using [[\yii\helpers\Json::decode()]].
+ * Parses a raw HTTP request using [[\yii\helpers\Json::decode()]]
  *
  * To enable parsing for JSON requests you can configure [[Request::parsers]] using this class:
  *
@@ -29,14 +29,13 @@ use yii\helpers\Json;
 class JsonParser implements RequestParserInterface
 {
     /**
-     * @var bool whether to return objects in terms of associative arrays.
+     * @var boolean whether to return objects in terms of associative arrays.
      */
     public $asArray = true;
     /**
-     * @var bool whether to throw a [[BadRequestHttpException]] if the body is invalid json
+     * @var boolean whether to throw a [[BadRequestHttpException]] if the body is invalid json
      */
     public $throwException = true;
-
 
     /**
      * Parses a HTTP request body.
@@ -48,14 +47,13 @@ class JsonParser implements RequestParserInterface
     public function parse($rawBody, $contentType)
     {
         try {
-            $parameters = Json::decode($rawBody, $this->asArray);
-            return $parameters === null ? [] : $parameters;
+            return Json::decode($rawBody, $this->asArray);
         } catch (InvalidParamException $e) {
             if ($this->throwException) {
-                throw new BadRequestHttpException('Invalid JSON data in request body: ' . $e->getMessage());
+                throw new BadRequestHttpException('Invalid JSON data in request body: ' . $e->getMessage(), 0, $e);
             }
 
-            return [];
+            return null;
         }
     }
 }

@@ -1,7 +1,9 @@
 <?php
-/* @var $this YiiRequirementChecker */
-/* @var $summary array */
-/* @var $requirements array[] */
+/**
+ * @var YiiRequirementChecker $this
+ * @var array $summary
+ * @var array[] $requirements
+ */
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,11 +13,12 @@
 </head>
 <body>
 <div class="container">
-    <header>
+    <div class="header">
         <h1>Yii Application Requirement Checker</h1>
-    </header>
+    </div>
     <hr>
-    <main>
+
+    <div class="content">
         <h3>Description</h3>
         <p>
         This script checks if your server configuration meets the requirements
@@ -32,7 +35,7 @@
 
         <h3>Conclusion</h3>
         <?php if ($summary['errors'] > 0): ?>
-            <div class="alert alert-danger">
+            <div class="alert alert-error">
                 <strong>Unfortunately your server configuration does not satisfy the requirements by this application.<br>Please refer to the table below for detailed explanation.</strong>
             </div>
         <?php elseif ($summary['warnings'] > 0): ?>
@@ -50,7 +53,7 @@
         <table class="table table-bordered">
             <tr><th>Name</th><th>Result</th><th>Required By</th><th>Memo</th></tr>
             <?php foreach ($requirements as $requirement): ?>
-            <tr class="<?php echo $requirement['condition'] ? 'success' : ($requirement['mandatory'] ? 'danger' : 'warning') ?>">
+            <tr class="<?php echo $requirement['condition'] ? 'success' : ($requirement['mandatory'] ? 'error' : 'warning') ?>">
                 <td>
                 <?php echo $requirement['name'] ?>
                 </td>
@@ -66,12 +69,15 @@
             </tr>
             <?php endforeach; ?>
         </table>
-    </main>
+
+    </div>
+
     <hr>
-    <footer>
+
+    <div class="footer">
         <p>Server: <?php echo $this->getServerInfo() . ' ' . $this->getNowDate() ?></p>
         <p>Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a></p>
-    </footer>
+    </div>
 </div>
 </body>
 </html>
