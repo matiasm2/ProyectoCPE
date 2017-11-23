@@ -19,6 +19,8 @@ use yii\base\InvalidConfigException;
  * Also, if the fixture is an instance of [[ActiveFixture]], you will be able to access AR models
  * through the syntax `$this->fixtureName('model name')`.
  *
+ * For more details and usage information on FixtureTrait, see the [guide article on fixtures](guide:test-fixtures).
+ *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
@@ -32,8 +34,10 @@ trait FixtureTrait
      */
     private $_fixtures;
 
+
     /**
      * Declares the fixtures that are needed by the current test case.
+     *
      * The return value of this method must be an array of fixture configurations. For example,
      *
      * ```php
@@ -84,7 +88,7 @@ trait FixtureTrait
             $fixtures = $this->getFixtures();
         }
 
-        /** @var Fixture $fixture */
+        /* @var $fixture Fixture */
         foreach ($fixtures as $fixture) {
             $fixture->beforeLoad();
         }
@@ -108,7 +112,7 @@ trait FixtureTrait
             $fixtures = $this->getFixtures();
         }
 
-        /** @var Fixture $fixture */
+        /* @var $fixture Fixture */
         foreach ($fixtures as $fixture) {
             $fixture->beforeUnload();
         }
@@ -119,6 +123,16 @@ trait FixtureTrait
         foreach ($fixtures as $fixture) {
             $fixture->afterUnload();
         }
+    }
+
+    /**
+     * Initialize the fixtures.
+     * @since 2.0.12
+     */
+    public function initFixtures()
+    {
+        $this->unloadFixtures();
+        $this->loadFixtures();
     }
 
     /**
@@ -167,7 +181,7 @@ trait FixtureTrait
             if (!is_array($fixture)) {
                 $class = ltrim($fixture, '\\');
                 $fixtures[$name] = ['class' => $class];
-                $aliases[$class] = is_integer($name) ? $class : $name;
+                $aliases[$class] = is_int($name) ? $class : $name;
             } elseif (isset($fixture['class'])) {
                 $class = ltrim($fixture['class'], '\\');
                 $config[$class] = $fixture;

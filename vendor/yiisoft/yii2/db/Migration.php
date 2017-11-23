@@ -7,7 +7,9 @@
 
 namespace yii\db;
 
+use yii\base\Component;
 use yii\di\Instance;
+use yii\helpers\StringHelper;
 
 /**
  * Migration is the base class for representing a database migration.
@@ -17,13 +19,17 @@ use yii\di\Instance;
  * Each child class of Migration represents an individual database migration which
  * is identified by the child class name.
  *
- * Within each migration, the [[up()]] method should be overwritten to contain the logic
+ * Within each migration, the [[up()]] method should be overridden to contain the logic
  * for "upgrading" the database; while the [[down()]] method for the "downgrading"
  * logic. The "yii migrate" command manages all available migrations in an application.
  *
- * If the database supports transactions, you may also overwrite [[safeUp()]] and
+ * If the database supports transactions, you may also override [[safeUp()]] and
  * [[safeDown()]] so that if anything wrong happens during the upgrading or downgrading,
  * the whole migration can be reverted in a whole.
+ *
+ * Note that some DB queries in some DBMS cannot be put into a transaction. For some examples,
+ * please refer to [implicit commit](http://dev.mysql.com/doc/refman/5.7/en/implicit-commit.html). If this is the case,
+ * you should still implement `up()` and `down()`, instead.
  *
  * Migration provides a set of convenient methods for manipulating database data and schema.
  * For example, the [[insert()]] method can be used to easily insert a row of data into
@@ -32,31 +38,73 @@ use yii\di\Instance;
  * information showing the method parameters and execution time, which may be useful when
  * applying migrations.
  *
+ * For more details and usage information on Migration, see the [guide article on Migration](guide:db-migrations).
+ *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class Migration extends \yii\base\Component
+class Migration extends Component implements MigrationInterface
 {
+    use SchemaBuilderTrait;
+
     /**
-     * @var Connection|string the DB connection object or the application component ID of the DB connection
-     * that this migration should work with.
+     * @var Connection|array|string the DB connection object or the application component ID of the DB connection
+     * that this migration should work with. Starting from version 2.0.2, this can also be a configuration array
+     * for creating the object.
+     *
+     * Note that when a Migration object is created by the `migrate` command, this property will be overwritten
+     * by the command. If you do not want to use the DB connection provided by the command, you may override
+     * the [[init()]] method like the following:
+     *
+     * ```php
+     * public function init()
+     * {
+     *     $this->db = 'db2';
+     *     parent::init();
+     * }
+     * ```
      */
     public $db = 'db';
+    /**
+     * @var int max number of characters of the SQL outputted. Useful for reduction of long statements and making
+     * console output more compact.
+     * @since 2.0.13
+     */
+    public $maxSqlOutputLength;
+    /**
+     * @var bool indicates whether the console output should be compacted.
+     * If this is set to true, the individual commands ran within the migration will not be output to the console.
+     * Default is false, in other words the output is fully verbose by default.
+     * @since 2.0.13
+     */
+    public $compact = false;
+
 
     /**
      * Initializes the migration.
-     * This method will set [[db]] to be the 'db' application component, if it is null.
+     * This method will set [[db]] to be the 'db' application component, if it is `null`.
      */
     public function init()
     {
         parent::init();
         $this->db = Instance::ensure($this->db, Connection::className());
+        $this->db->getSchema()->refresh();
+        $this->db->enableSlaves = false;
+    }
+
+    /**
+     * @inheritdoc
+     * @since 2.0.6
+     */
+    protected function getDb()
+    {
+        return $this->db;
     }
 
     /**
      * This method contains the logic to be executed when applying this migration.
-     * Child classes may overwrite this method to provide actual migration logic.
-     * @return boolean return a false value to indicate the migration fails
+     * Child classes may override this method to provide actual migration logic.
+     * @return bool return a false value to indicate the migration fails
      * and should not proceed further. All other return values mean the migration succeeds.
      */
     public function up()
@@ -65,15 +113,16 @@ class Migration extends \yii\base\Component
         try {
             if ($this->safeUp() === false) {
                 $transaction->rollBack();
-
                 return false;
             }
             $transaction->commit();
         } catch (\Exception $e) {
-            echo "Exception: " . $e->getMessage() . ' (' . $e->getFile() . ':' . $e->getLine() . ")\n";
-            echo $e->getTraceAsString() . "\n";
+            $this->printException($e);
             $transaction->rollBack();
-
+            return false;
+        } catch (\Throwable $e) {
+            $this->printException($e);
+            $transaction->rollBack();
             return false;
         }
 
@@ -84,7 +133,7 @@ class Migration extends \yii\base\Component
      * This method contains the logic to be executed when removing this migration.
      * The default implementation throws an exception indicating the migration cannot be removed.
      * Child classes may override this method if the corresponding migrations can be removed.
-     * @return boolean return a false value to indicate the migration fails
+     * @return bool return a false value to indicate the migration fails
      * and should not proceed further. All other return values mean the migration succeeds.
      */
     public function down()
@@ -93,19 +142,29 @@ class Migration extends \yii\base\Component
         try {
             if ($this->safeDown() === false) {
                 $transaction->rollBack();
-
                 return false;
             }
             $transaction->commit();
         } catch (\Exception $e) {
-            echo "Exception: " . $e->getMessage() . ' (' . $e->getFile() . ':' . $e->getLine() . ")\n";
-            echo $e->getTraceAsString() . "\n";
+            $this->printException($e);
             $transaction->rollBack();
-
+            return false;
+        } catch (\Throwable $e) {
+            $this->printException($e);
+            $transaction->rollBack();
             return false;
         }
 
         return null;
+    }
+
+    /**
+     * @param \Throwable|\Exception $e
+     */
+    private function printException($e)
+    {
+        echo 'Exception: ' . $e->getMessage() . ' (' . $e->getFile() . ':' . $e->getLine() . ")\n";
+        echo $e->getTraceAsString() . "\n";
     }
 
     /**
@@ -114,7 +173,11 @@ class Migration extends \yii\base\Component
      * be enclosed within a DB transaction.
      * Child classes may implement this method instead of [[up()]] if the DB logic
      * needs to be within a transaction.
-     * @return boolean return a false value to indicate the migration fails
+     *
+     * Note: Not all DBMS support transactions. And some DB queries cannot be put into a transaction. For some examples,
+     * please refer to [implicit commit](http://dev.mysql.com/doc/refman/5.7/en/implicit-commit.html).
+     *
+     * @return bool return a false value to indicate the migration fails
      * and should not proceed further. All other return values mean the migration succeeds.
      */
     public function safeUp()
@@ -125,9 +188,13 @@ class Migration extends \yii\base\Component
      * This method contains the logic to be executed when removing this migration.
      * This method differs from [[down()]] in that the DB logic implemented here will
      * be enclosed within a DB transaction.
-     * Child classes may implement this method instead of [[up()]] if the DB logic
+     * Child classes may implement this method instead of [[down()]] if the DB logic
      * needs to be within a transaction.
-     * @return boolean return a false value to indicate the migration fails
+     *
+     * Note: Not all DBMS support transactions. And some DB queries cannot be put into a transaction. For some examples,
+     * please refer to [implicit commit](http://dev.mysql.com/doc/refman/5.7/en/implicit-commit.html).
+     *
+     * @return bool return a false value to indicate the migration fails
      * and should not proceed further. All other return values mean the migration succeeds.
      */
     public function safeDown()
@@ -143,10 +210,14 @@ class Migration extends \yii\base\Component
      */
     public function execute($sql, $params = [])
     {
-        echo "    > execute SQL: $sql ...";
-        $time = microtime(true);
+        $sqlOutput = $sql;
+        if ($this->maxSqlOutputLength !== null) {
+            $sqlOutput = StringHelper::truncate($sql, $this->maxSqlOutputLength, '[... hidden]');
+        }
+
+        $time = $this->beginCommand("execute SQL: $sqlOutput");
         $this->db->createCommand($sql)->bindValues($params)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -157,14 +228,13 @@ class Migration extends \yii\base\Component
      */
     public function insert($table, $columns)
     {
-        echo "    > insert into $table ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("insert into $table");
         $this->db->createCommand()->insert($table, $columns)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
-     * Creates and executes an batch INSERT SQL statement.
+     * Creates and executes a batch INSERT SQL statement.
      * The method will properly escape the column names, and bind the values to be inserted.
      * @param string $table the table that new rows will be inserted into.
      * @param array $columns the column names.
@@ -172,10 +242,9 @@ class Migration extends \yii\base\Component
      */
     public function batchInsert($table, $columns, $rows)
     {
-        echo "    > insert into $table ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("insert into $table");
         $this->db->createCommand()->batchInsert($table, $columns, $rows)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -189,10 +258,9 @@ class Migration extends \yii\base\Component
      */
     public function update($table, $columns, $condition = '', $params = [])
     {
-        echo "    > update $table ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("update $table");
         $this->db->createCommand()->update($table, $columns, $condition, $params)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -204,10 +272,9 @@ class Migration extends \yii\base\Component
      */
     public function delete($table, $condition = '', $params = [])
     {
-        echo "    > delete from $table ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("delete from $table");
         $this->db->createCommand()->delete($table, $condition, $params)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -228,10 +295,14 @@ class Migration extends \yii\base\Component
      */
     public function createTable($table, $columns, $options = null)
     {
-        echo "    > create table $table ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("create table $table");
         $this->db->createCommand()->createTable($table, $columns, $options)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        foreach ($columns as $column => $type) {
+            if ($type instanceof ColumnSchemaBuilder && $type->comment !== null) {
+                $this->db->createCommand()->addCommentOnColumn($table, $column, $type->comment)->execute();
+            }
+        }
+        $this->endCommand($time);
     }
 
     /**
@@ -241,10 +312,9 @@ class Migration extends \yii\base\Component
      */
     public function renameTable($table, $newName)
     {
-        echo "    > rename table $table to $newName ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("rename table $table to $newName");
         $this->db->createCommand()->renameTable($table, $newName)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -253,10 +323,9 @@ class Migration extends \yii\base\Component
      */
     public function dropTable($table)
     {
-        echo "    > drop table $table ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("drop table $table");
         $this->db->createCommand()->dropTable($table)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -265,10 +334,9 @@ class Migration extends \yii\base\Component
      */
     public function truncateTable($table)
     {
-        echo "    > truncate table $table ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("truncate table $table");
         $this->db->createCommand()->truncateTable($table)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -281,10 +349,12 @@ class Migration extends \yii\base\Component
      */
     public function addColumn($table, $column, $type)
     {
-        echo "    > add column $column $type to table $table ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("add column $column $type to table $table");
         $this->db->createCommand()->addColumn($table, $column, $type)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        if ($type instanceof ColumnSchemaBuilder && $type->comment !== null) {
+            $this->db->createCommand()->addCommentOnColumn($table, $column, $type->comment)->execute();
+        }
+        $this->endCommand($time);
     }
 
     /**
@@ -294,10 +364,9 @@ class Migration extends \yii\base\Component
      */
     public function dropColumn($table, $column)
     {
-        echo "    > drop column $column from table $table ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("drop column $column from table $table");
         $this->db->createCommand()->dropColumn($table, $column)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -308,10 +377,9 @@ class Migration extends \yii\base\Component
      */
     public function renameColumn($table, $name, $newName)
     {
-        echo "    > rename column $name in table $table to $newName ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("rename column $name in table $table to $newName");
         $this->db->createCommand()->renameColumn($table, $name, $newName)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -324,10 +392,12 @@ class Migration extends \yii\base\Component
      */
     public function alterColumn($table, $column, $type)
     {
-        echo "    > alter column $column in table $table to $type ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("alter column $column in table $table to $type");
         $this->db->createCommand()->alterColumn($table, $column, $type)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        if ($type instanceof ColumnSchemaBuilder && $type->comment !== null) {
+            $this->db->createCommand()->addCommentOnColumn($table, $column, $type->comment)->execute();
+        }
+        $this->endCommand($time);
     }
 
     /**
@@ -339,10 +409,9 @@ class Migration extends \yii\base\Component
      */
     public function addPrimaryKey($name, $table, $columns)
     {
-        echo "    > add primary key $name on $table (" . (is_array($columns) ? implode(',', $columns) : $columns).") ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("add primary key $name on $table (" . (is_array($columns) ? implode(',', $columns) : $columns) . ')');
         $this->db->createCommand()->addPrimaryKey($name, $table, $columns)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -352,10 +421,9 @@ class Migration extends \yii\base\Component
      */
     public function dropPrimaryKey($name, $table)
     {
-        echo "    > drop primary key $name ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("drop primary key $name");
         $this->db->createCommand()->dropPrimaryKey($name, $table)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -363,18 +431,17 @@ class Migration extends \yii\base\Component
      * The method will properly quote the table and column names.
      * @param string $name the name of the foreign key constraint.
      * @param string $table the table that the foreign key constraint will be added to.
-     * @param string $columns the name of the column to that the constraint will be added on. If there are multiple columns, separate them with commas or use an array.
+     * @param string|array $columns the name of the column to that the constraint will be added on. If there are multiple columns, separate them with commas or use an array.
      * @param string $refTable the table that the foreign key references to.
-     * @param string $refColumns the name of the column that the foreign key references to. If there are multiple columns, separate them with commas or use an array.
+     * @param string|array $refColumns the name of the column that the foreign key references to. If there are multiple columns, separate them with commas or use an array.
      * @param string $delete the ON DELETE option. Most DBMS support these options: RESTRICT, CASCADE, NO ACTION, SET DEFAULT, SET NULL
      * @param string $update the ON UPDATE option. Most DBMS support these options: RESTRICT, CASCADE, NO ACTION, SET DEFAULT, SET NULL
      */
     public function addForeignKey($name, $table, $columns, $refTable, $refColumns, $delete = null, $update = null)
     {
-        echo "    > add foreign key $name: $table (" . implode(',', (array) $columns) . ") references $refTable (" . implode(',', (array) $refColumns) . ") ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("add foreign key $name: $table (" . implode(',', (array) $columns) . ") references $refTable (" . implode(',', (array) $refColumns) . ')');
         $this->db->createCommand()->addForeignKey($name, $table, $columns, $refTable, $refColumns, $delete, $update)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -384,10 +451,9 @@ class Migration extends \yii\base\Component
      */
     public function dropForeignKey($name, $table)
     {
-        echo "    > drop foreign key $name from table $table ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("drop foreign key $name from table $table");
         $this->db->createCommand()->dropForeignKey($name, $table)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -395,15 +461,15 @@ class Migration extends \yii\base\Component
      * @param string $name the name of the index. The name will be properly quoted by the method.
      * @param string $table the table that the new index will be created for. The table name will be properly quoted by the method.
      * @param string|array $columns the column(s) that should be included in the index. If there are multiple columns, please separate them
-     * by commas or use an array. The column names will be properly quoted by the method.
-     * @param boolean $unique whether to add UNIQUE constraint on the created index.
+     * by commas or use an array. Each column name will be properly quoted by the method. Quoting will be skipped for column names that
+     * include a left parenthesis "(".
+     * @param bool $unique whether to add UNIQUE constraint on the created index.
      */
     public function createIndex($name, $table, $columns, $unique = false)
     {
-        echo "    > create" . ($unique ? ' unique' : '') . " index $name on $table (" . implode(',', (array) $columns) . ") ...";
-        $time = microtime(true);
+        $time = $this->beginCommand('create' . ($unique ? ' unique' : '') . " index $name on $table (" . implode(',', (array) $columns) . ')');
         $this->db->createCommand()->createIndex($name, $table, $columns, $unique)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
     }
 
     /**
@@ -413,9 +479,92 @@ class Migration extends \yii\base\Component
      */
     public function dropIndex($name, $table)
     {
-        echo "    > drop index $name ...";
-        $time = microtime(true);
+        $time = $this->beginCommand("drop index $name on $table");
         $this->db->createCommand()->dropIndex($name, $table)->execute();
-        echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        $this->endCommand($time);
+    }
+
+    /**
+     * Builds and execute a SQL statement for adding comment to column.
+     *
+     * @param string $table the table whose column is to be commented. The table name will be properly quoted by the method.
+     * @param string $column the name of the column to be commented. The column name will be properly quoted by the method.
+     * @param string $comment the text of the comment to be added. The comment will be properly quoted by the method.
+     * @since 2.0.8
+     */
+    public function addCommentOnColumn($table, $column, $comment)
+    {
+        $time = $this->beginCommand("add comment on column $column");
+        $this->db->createCommand()->addCommentOnColumn($table, $column, $comment)->execute();
+        $this->endCommand($time);
+    }
+
+    /**
+     * Builds a SQL statement for adding comment to table.
+     *
+     * @param string $table the table whose column is to be commented. The table name will be properly quoted by the method.
+     * @param string $comment the text of the comment to be added. The comment will be properly quoted by the method.
+     * @since 2.0.8
+     */
+    public function addCommentOnTable($table, $comment)
+    {
+        $time = $this->beginCommand("add comment on table $table");
+        $this->db->createCommand()->addCommentOnTable($table, $comment)->execute();
+        $this->endCommand($time);
+    }
+
+    /**
+     * Builds and execute a SQL statement for dropping comment from column.
+     *
+     * @param string $table the table whose column is to be commented. The table name will be properly quoted by the method.
+     * @param string $column the name of the column to be commented. The column name will be properly quoted by the method.
+     * @since 2.0.8
+     */
+    public function dropCommentFromColumn($table, $column)
+    {
+        $time = $this->beginCommand("drop comment from column $column");
+        $this->db->createCommand()->dropCommentFromColumn($table, $column)->execute();
+        $this->endCommand($time);
+    }
+
+    /**
+     * Builds a SQL statement for dropping comment from table.
+     *
+     * @param string $table the table whose column is to be commented. The table name will be properly quoted by the method.
+     * @since 2.0.8
+     */
+    public function dropCommentFromTable($table)
+    {
+        $time = $this->beginCommand("drop comment from table $table");
+        $this->db->createCommand()->dropCommentFromTable($table)->execute();
+        $this->endCommand($time);
+    }
+
+    /**
+     * Prepares for a command to be executed, and outputs to the console.
+     *
+     * @param string $description the description for the command, to be output to the console.
+     * @return float the time before the command is executed, for the time elapsed to be calculated.
+     * @since 2.0.13
+     */
+    protected function beginCommand($description)
+    {
+        if (!$this->compact) {
+            echo "    > $description ...";
+        }
+        return microtime(true);
+    }
+
+    /**
+     * Finalizes after the command has been executed, and outputs to the console the time elapsed.
+     *
+     * @param float $time the time before the command was executed.
+     * @since 2.0.13
+     */
+    protected function endCommand($time)
+    {
+        if (!$this->compact) {
+            echo ' done (time: ' . sprintf('%.3f', microtime(true) - $time) . "s)\n";
+        }
     }
 }

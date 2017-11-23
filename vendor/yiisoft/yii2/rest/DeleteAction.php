@@ -8,10 +8,12 @@
 namespace yii\rest;
 
 use Yii;
-use yii\db\ActiveRecord;
+use yii\web\ServerErrorHttpException;
 
 /**
  * DeleteAction implements the API endpoint for deleting a model.
+ *
+ * For more details and usage information on DeleteAction, see the [guide article on rest controllers](guide:rest-controllers).
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -19,12 +21,9 @@ use yii\db\ActiveRecord;
 class DeleteAction extends Action
 {
     /**
-     * @var boolean whether to start a DB transaction when deleting the model.
-     */
-    public $transactional = true;
-
-    /**
      * Deletes a model.
+     * @param mixed $id id of the model to be deleted.
+     * @throws ServerErrorHttpException on failure.
      */
     public function run($id)
     {
@@ -34,17 +33,8 @@ class DeleteAction extends Action
             call_user_func($this->checkAccess, $this->id, $model);
         }
 
-        if ($this->transactional && $model instanceof ActiveRecord) {
-            $transaction = $model->getDb()->beginTransaction();
-            try {
-                $model->delete();
-                $transaction->commit();
-            } catch (\Exception $e) {
-                $transaction->rollback();
-                throw $e;
-            }
-        } else {
-            $model->delete();
+        if ($model->delete() === false) {
+            throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
         }
 
         Yii::$app->getResponse()->setStatusCode(204);

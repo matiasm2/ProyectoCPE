@@ -44,9 +44,10 @@ use yii\base\Exception;
 class GettextMoFile extends GettextFile
 {
     /**
-     * @var boolean whether to use big-endian when reading and writing an integer.
+     * @var bool whether to use big-endian when reading and writing an integer.
      */
     public $useBigEndian = false;
+
 
     /**
      * Loads messages from an MO file.
@@ -78,7 +79,7 @@ class GettextMoFile extends GettextFile
 
         // revision
         $revision = $this->readInteger($fileHandle);
-        if ($revision != 0) {
+        if ($revision !== 0) {
             throw new Exception('Invalid MO file revision: ' . $revision . '.');
         }
 
@@ -107,10 +108,10 @@ class GettextMoFile extends GettextFile
             $id = $this->readString($fileHandle, $sourceLengths[$i], $sourceOffsets[$i]);
             $separatorPosition = strpos($id, chr(4));
 
-            if (($context && $separatorPosition !== false && substr($id, 0, $separatorPosition) === $context) ||
-                (!$context && $separatorPosition === false)) {
+
+            if ((!$context && $separatorPosition === false) || ($context && $separatorPosition !== false && strncmp($id, $context, $separatorPosition) === 0)) {
                 if ($separatorPosition !== false) {
-                    $id = substr($id, $separatorPosition+1);
+                    $id = substr($id, $separatorPosition + 1);
                 }
 
                 $message = $this->readString($fileHandle, $targetLengths[$i], $targetOffsets[$i]);
@@ -199,23 +200,23 @@ class GettextMoFile extends GettextFile
     /**
      * Reads one or several bytes.
      * @param resource $fileHandle to read from
-     * @param integer $byteCount to be read
+     * @param int $byteCount to be read
      * @return string bytes
      */
     protected function readBytes($fileHandle, $byteCount = 1)
     {
         if ($byteCount > 0) {
             return fread($fileHandle, $byteCount);
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
      * Write bytes.
      * @param resource $fileHandle to write to
      * @param string $bytes to be written
-     * @return integer how many bytes are written
+     * @return int how many bytes are written
      */
     protected function writeBytes($fileHandle, $bytes)
     {
@@ -225,7 +226,7 @@ class GettextMoFile extends GettextFile
     /**
      * Reads a 4-byte integer.
      * @param resource $fileHandle to read from
-     * @return integer the result
+     * @return int the result
      */
     protected function readInteger($fileHandle)
     {
@@ -237,8 +238,8 @@ class GettextMoFile extends GettextFile
     /**
      * Writes a 4-byte integer.
      * @param resource $fileHandle to write to
-     * @param integer $integer to be written
-     * @return integer how many bytes are written
+     * @param int $integer to be written
+     * @return int how many bytes are written
      */
     protected function writeInteger($fileHandle, $integer)
     {
@@ -248,8 +249,8 @@ class GettextMoFile extends GettextFile
     /**
      * Reads a string.
      * @param resource $fileHandle file handle
-     * @param integer $length of the string
-     * @param integer $offset of the string in the file. If null, it reads from the current position.
+     * @param int $length of the string
+     * @param int $offset of the string in the file. If null, it reads from the current position.
      * @return string the result
      */
     protected function readString($fileHandle, $length, $offset = null)
@@ -265,10 +266,10 @@ class GettextMoFile extends GettextFile
      * Writes a string.
      * @param resource $fileHandle to write to
      * @param string $string to be written
-     * @return integer how many bytes are written
+     * @return int how many bytes are written
      */
     protected function writeString($fileHandle, $string)
     {
-        return $this->writeBytes($fileHandle, $string. "\0");
+        return $this->writeBytes($fileHandle, $string . "\0");
     }
 }

@@ -11,8 +11,8 @@ use Yii;
 use yii\base\ActionFilter;
 use yii\base\BootstrapInterface;
 use yii\base\InvalidConfigException;
-use yii\web\Response;
 use yii\web\Request;
+use yii\web\Response;
 use yii\web\UnsupportedMediaTypeHttpException;
 
 /**
@@ -27,9 +27,9 @@ use yii\web\UnsupportedMediaTypeHttpException;
  * language negotiation based on the value of the GET parameter [[languageParam]] and the `Accept-Language` HTTP header.
  * If a match is found, the [[\yii\base\Application::language]] property will be set as the chosen language.
  *
- * You may use ContentNegotiator as a bootstrap component as well as an action filter.
+ * You may use ContentNegotiator as a bootstrapping component as well as an action filter.
  *
- * The following code shows how you can use ContentNegotiator as a bootstrap component. Note that in this case,
+ * The following code shows how you can use ContentNegotiator as a bootstrapping component. Note that in this case,
  * the content negotiation applies to the whole application.
  *
  * ```php
@@ -89,7 +89,7 @@ class ContentNegotiator extends ActionFilter implements BootstrapInterface
      * @var string the name of the GET parameter that specifies the response format.
      * Note that if the specified format does not exist in [[formats]], a [[UnsupportedMediaTypeHttpException]]
      * exception will be thrown.  If the parameter value is empty or if this property is null,
-     * the response format will be determined based on the `Accept` HTTP header.
+     * the response format will be determined based on the `Accept` HTTP header only.
      * @see formats
      */
     public $formatParam = '_format';
@@ -97,7 +97,7 @@ class ContentNegotiator extends ActionFilter implements BootstrapInterface
      * @var string the name of the GET parameter that specifies the [[\yii\base\Application::language|application language]].
      * Note that if the specified language does not match any of [[languages]], the first language in [[languages]]
      * will be used. If the parameter value is empty or if this property is null,
-     * the application language will be determined based on the `Accept-Language` HTTP header.
+     * the application language will be determined based on the `Accept-Language` HTTP header only.
      * @see languages
      */
     public $languageParam = '_lang';
@@ -116,7 +116,7 @@ class ContentNegotiator extends ActionFilter implements BootstrapInterface
      * Array keys are not always required. When an array value does not have a key, the matching of the requested language
      * will be based on a language fallback mechanism. For example, a value of `en` will match `en`, `en_US`, `en-US`, `en-GB`, etc.
      *
-     * If this property is empty or not set, response format negotiation will be skipped.
+     * If this property is empty or not set, language negotiation will be skipped.
      */
     public $languages;
     /**
@@ -151,12 +151,12 @@ class ContentNegotiator extends ActionFilter implements BootstrapInterface
      */
     public function negotiate()
     {
-        $request = $this->request ? : Yii::$app->getRequest();
-        $response = $this->response ? : Yii::$app->getResponse();
+        $request = $this->request ?: Yii::$app->getRequest();
+        $response = $this->response ?: Yii::$app->getResponse();
         if (!empty($this->formats)) {
             $this->negotiateContentType($request, $response);
         }
-        if (!empty($languages)) {
+        if (!empty($this->languages)) {
             Yii::$app->language = $this->negotiateLanguage($request);
         }
     }
@@ -176,9 +176,9 @@ class ContentNegotiator extends ActionFilter implements BootstrapInterface
                 $response->acceptMimeType = null;
                 $response->acceptParams = [];
                 return;
-            } else {
-                throw new UnsupportedMediaTypeHttpException('The requested response format is not supported: ' . $format);
             }
+
+            throw new UnsupportedMediaTypeHttpException('The requested response format is not supported: ' . $format);
         }
 
         $types = $request->getAcceptableContentTypes();
@@ -195,14 +195,15 @@ class ContentNegotiator extends ActionFilter implements BootstrapInterface
             }
         }
 
+        foreach ($this->formats as $type => $format) {
+            $response->format = $format;
+            $response->acceptMimeType = $type;
+            $response->acceptParams = [];
+            break;
+        }
+
         if (isset($types['*/*'])) {
-            // return the first format
-            foreach ($this->formats as $type => $format) {
-                $response->format = $this->formats[$type];
-                $response->acceptMimeType = $type;
-                $response->acceptParams = [];
-                return;
-            }
+            return;
         }
 
         throw new UnsupportedMediaTypeHttpException('None of your requested content types is supported.');
@@ -220,10 +221,11 @@ class ContentNegotiator extends ActionFilter implements BootstrapInterface
                 return $this->languages[$language];
             }
             foreach ($this->languages as $key => $supported) {
-                if (is_integer($key) && $this->isLanguageSupported($language, $supported)) {
+                if (is_int($key) && $this->isLanguageSupported($language, $supported)) {
                     return $supported;
                 }
             }
+
             return reset($this->languages);
         }
 
@@ -232,7 +234,7 @@ class ContentNegotiator extends ActionFilter implements BootstrapInterface
                 return $this->languages[$language];
             }
             foreach ($this->languages as $key => $supported) {
-                if (is_integer($key) && $this->isLanguageSupported($language, $supported)) {
+                if (is_int($key) && $this->isLanguageSupported($language, $supported)) {
                     return $supported;
                 }
             }
@@ -245,7 +247,7 @@ class ContentNegotiator extends ActionFilter implements BootstrapInterface
      * Returns a value indicating whether the requested language matches the supported language.
      * @param string $requested the requested language code
      * @param string $supported the supported language code
-     * @return boolean whether the requested language is supported
+     * @return bool whether the requested language is supported
      */
     protected function isLanguageSupported($requested, $supported)
     {
