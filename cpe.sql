@@ -1,4 +1,4 @@
-﻿CREATE DATABASE cpe_db 
+CREATE DATABASE cpe_db
 -- ~ WITH ENCODING 'LATIN1'
 ;
 	DO
@@ -20,15 +20,15 @@
 		END IF;
 	END
 	$body$;
-	
+
 	ALTER DATABASE cpe_db OWNER TO cpedba;
 	ALTER ROLE cpedba WITH CREATEDB SUPERUSER;
-	
+
 	\c cpe_db cpedba;
 
 	ALTER ROLE cpewebuser WITH NOSUPERUSER NOCREATEDB;
 	GRANT USAGE ON SCHEMA public TO cpewebuser;
-	
+
 	GRANT CONNECT ON DATABASE cpe_db TO cpewebuser;
 	GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO cpewebuser;
 	GRANT CONNECT ON DATABASE cpe_db TO cpedba;
@@ -128,8 +128,8 @@
 	);
 	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.programa TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE programa_programa_id_seq TO cpewebuser;
-		   
-		   
+
+
 	CREATE TABLE public.estado (
 	       estado_id     SERIAL PRIMARY KEY,
 	       descripcion   varchar(40)
@@ -160,7 +160,7 @@
 
 ---
 -- Acciones registradas de todo el circuito administrativo (tabla fija)
--- El objetivo de esta tabla es poder completar la tabla asignsector que hace funcionar al 
+-- El objetivo de esta tabla es poder completar la tabla asignsector que hace funcionar al
 -- comando app\commands\RoleAccessChecker
 	CREATE TABLE public.actionrole (
 		actionrole_id SERIAL PRIMARY KEY,
@@ -171,7 +171,7 @@
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE actionrole_actionrole_id_seq TO cpewebuser;
 ---
 -- Acciones registradas de todo el circuito administrativo (tabla fija)
--- El objetivo de esta tabla es poder completar la tabla asignsector que hace funcionar al 
+-- El objetivo de esta tabla es poder completar la tabla asignsector que hace funcionar al
 -- comando app\commands\RoaleAccessChecker
 	CREATE TABLE public.asignsector (
 		asignsector_id SERIAL PRIMARY KEY,
@@ -181,5 +181,34 @@
 	);
 	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.asignsector TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE asignsector_asignsector_id_seq TO cpewebuser;
+
+	CREATE TABLE public.planes(
+		planes_id SERIAL PRIMARY KEY,
+		ano_id  integer REFERENCES ano,
+		carrera_id  integer REFERENCES carrera,
+		ano_nivel integer,
+		instituto_id integer REFERENCES instituto,
+		materia_id  integer REFERENCES materia
+	);
+	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.planes TO cpewebuser;
+	GRANT SELECT, USAGE, UPDATE ON SEQUENCE planes_planes_id_seq TO cpewebuser;
+
+		--FUNCION TRIGGER. Inserta los id de carrera y ano (de la tabla planes) en la tabla planestudio
+		CREATE OR REPLACE FUNCTION test()
+  		RETURNS trigger AS
+		$$
+		BEGIN
+        	INSERT INTO planestudio(carrera_id,ano_id)
+         	VALUES(NEW.carrera_id,NEW.ano_id);
+
+    		RETURN NEW;
+		END;
+		$$ language plpgsql;
+		--TRIGGER DECLARADO. Dispara el trigger luego de que se insertan valores en planes. Se guardan en planestudio
+		CREATE TRIGGER planestudio
+  			AFTER INSERT
+  			ON planes
+  			FOR EACH ROW
+  			EXECUTE PROCEDURE test();
 
 COMMIT;
