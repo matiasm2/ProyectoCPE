@@ -25,6 +25,7 @@ $this->title = 'Archivos de programas';
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             //'programa_id',
+            'fecha',
             [
               'attribute' => 'programa',
               'value' =>'descripcionPrograma',
@@ -33,7 +34,6 @@ $this->title = 'Archivos de programas';
             'nombreUsuario',
             'descripcionEstado',
             'archivo',
-            // 'fecha',
             // IMAGEN DEL DOCUMENTO
 				/*[
 					'attribute'	=> 'archivo',

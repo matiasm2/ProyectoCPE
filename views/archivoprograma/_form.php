@@ -14,21 +14,15 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($model, "estado_id")
-                    ->dropDownList(
-            ArrayHelper::map($subModelEstado->find()->all(), 'estado_id', 'descripcion'))
-            ?>
+    <?= $form->field($model, "estado_id")->dropDownList(
+            ArrayHelper::map($subModelEstado->getAllEstados(), 'estado_id', 'descripcion')) ?>
 
-    <?= $form->field($model, "programa_id")
-                    ->dropDownList(
-            ArrayHelper::map($subModelPrograma->find()->all(), 'programa_id', 'descripcion'))
-            ?>
+    <?= $form->field($model, "programa_id")->dropDownList(
+            ArrayHelper::map($subModelPrograma->find()->all(), 'programa_id', 'descripcion')) ?>
 
-     <?= $form->field($model, 'archivo')->widget(FileInput::classname(),
-        ['options' => ['accept' => 'upload/*'],])
-    ?>
-
-    <!--?= $form->field($model, 'fecha')->textInput() ?>-->
+    <?= $form->field($model, 'archivo')->widget(FileInput::classname(),
+    ['options' => ['accept' => 'upload/*','multiple'=> false],
+    'pluginOptions'=>['showPreview'=>false,'showCaption'=>true,'showRemove'=>false, 'showUpload'=>false,],]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

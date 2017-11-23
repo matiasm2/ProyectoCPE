@@ -105,9 +105,7 @@ class ArchivoprogramaController extends Controller
 				  if ($model->save()) {
 					if ($model->upload()) return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
 					else return $this->render('errorup');
-				  } else return $this->render('create', ['model' => $model,
-						'subModelEstado' => $subModelEstado,
-						'subModelPrograma' => $subModelPrograma,]);
+				  } 
 				} else return $this->render('create', ['model' => $model,
 						'subModelEstado' => $subModelEstado,
 						'subModelPrograma' => $subModelPrograma,]);
@@ -128,14 +126,17 @@ class ArchivoprogramaController extends Controller
 				$model = $this->findModel($id);
 				$subModelEstado = new Estado();
 				$subModelPrograma = new Programa();
-				if ($model->load(Yii::$app->request->post()) && $model->save()) {
-					return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
-				} else {
-					return $this->render('update', [
-						'model' => $model,
-						'subModelEstado' => $subModelEstado,
-						'subModelPrograma' => $subModelPrograma,
-						]);
+				//~ if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				if ($model->load(Yii::$app->request->post())){
+						$model->usuario_id=Yii::$app->user->identity->usuario_id;
+						$model->fecha=date('Y-m-d');
+					if ($model->save()) return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
+					} else {
+						return $this->render('update', [
+							'model' => $model,
+							'subModelEstado' => $subModelEstado,
+							'subModelPrograma' => $subModelPrograma,
+							]);
 				}
 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
 		} else return $this->redirect(['error/level-access-error',]);

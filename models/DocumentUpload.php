@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\commands\RegisterModeChecker;
 
 /**
  * This is the model class for table "archivoprograma".
@@ -93,6 +94,15 @@ class DocumentUpload extends \yii\db\ActiveRecord
     public static function find()
     {
         return new DocumentUploadQuery(get_called_class());
+    }
+
+	public function uploadFormatted($archivo) {
+		$archivo->baseName='unArch';
+		$archivo->saveAs('uploads/'. $this->archivo->baseName .'.'. $this->archivo->extension);
+		if ($this->validate()) {
+		  $this->archivo->saveAs('uploads/'. $this->archivo->baseName .'.'. $this->archivo->extension);
+		  return true;
+		} else return false;
     }
     
 	public function upload() {
