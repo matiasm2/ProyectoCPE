@@ -122,7 +122,7 @@ CREATE DATABASE cpe_db WITH ENCODING 'UTF8';
 		planmateria_id  integer REFERENCES planmateria,
 		ano_id  integer REFERENCES ano,
 		fecha date,
-	    descripcion   varchar(75)
+	    descripcion   varchar(175)
 	);
 	GRANT SELECT, INSERT, UPDATE, DELETE  ON public.programa TO cpewebuser;
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE programa_programa_id_seq TO cpewebuser;
@@ -200,8 +200,8 @@ CREATE DATABASE cpe_db WITH ENCODING 'UTF8';
 	GRANT SELECT, USAGE, UPDATE ON SEQUENCE planes_planes_id_seq TO cpewebuser;
 	
 	---
-	--FUNCION TRIGGER. Inserta los id de carrera y ano (de la tabla planes) en la tabla planestudio y 
-	--en la tabla planmateria
+	--FUNCION TRIGGER. Inserta los id de carrera y ano (de la tabla planes) en la tabla planestudio,  
+	--en la tabla planmateria y en la tabla programa
 	CREATE OR REPLACE FUNCTION test()
 	RETURNS trigger AS
 	$$
@@ -212,7 +212,16 @@ CREATE DATABASE cpe_db WITH ENCODING 'UTF8';
 				(SELECT NEW.carrera_id FROM carrera WHERE carrera_id=NEW.carrera_id)
 				AND ano_id=NEW.ano_id)
 			,NEW.materia_id);
-		RETURN NEW;
+		INSERT INTO programa(planmateria_id,ano_id,fecha,descripcion)
+			VALUES ((SELECT planmateria_id FROM planmateria WHERE planestudio_id=(
+				SELECT planestudio_id FROM planestudio WHERE carrera_id=NEW.carrera_id AND ano_id=NEW.ano_id)
+				AND materia_id=NEW.materia_id),
+				NEW.ano_id,(SELECT CURRENT_DATE),
+				(SELECT CONCAT((SELECT nombre FROM instituto WHERE instituto_id=NEW.instituto_id),'-',
+				(SELECT descripcion FROM carrera WHERE carrera_id=NEW.carrera_id),'-',
+				(SELECT nombre FROM materia WHERE materia_id=NEW.materia_id),'-',
+				(SELECT ano FROM ano WHERE ano_id=NEW.ano_id))));
+RETURN NEW;
 	END;
 	$$ language plpgsql;
 	
