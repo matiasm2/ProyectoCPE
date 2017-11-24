@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\file\FileInput;
 use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
@@ -17,7 +16,7 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, "programa_id")->dropDownList(ArrayHelper::map($subModelPrograma->find()->all(), 'programa_id', 'descripcion'))?>
 
-    <?= $form->field($model, 'archivo')->widget(FileInput::classname(),['options' => ['accept' => 'upload/*'],])?>
+    <?= $form->field($model, 'archivo')->fileInput( ['accept' => 'upload/*'])?>
     
     <?= $form->field($model, 'moderw_id')->dropDownList(ArrayHelper::map($subModelModerw->find()->all(),'moderw_id','moderw'))?>
     
