@@ -4340,6 +4340,7 @@
     <Compile Include="views\planmateria\view.php" />
     <Compile Include="views\planmateria\_form.php" />
     <Compile Include="views\planmateria\_search.php" />
+    <Compile Include="views\programa\historial.php" />
     <Compile Include="views\programa\create.php" />
     <Compile Include="views\programa\index.php" />
     <Compile Include="views\programa\update.php" />
@@ -6267,7 +6268,9 @@
     <Content Include="vendor\bower-asset\bootstrap\less\component-animations.less" />
     <Content Include="vendor\bower-asset\bootstrap\less\dropdowns.less" />
     <Content Include="vendor\bower-asset\bootstrap\less\forms.less" />
-    <Content Include="vendor\bower-asset\bootstrap\less\glyphicons.less" />
+    <Content Include="..\..\..\Users\BNV\Desktop\glyphicons.less">
+      <Link>vendor\bower-asset\bootstrap\less\glyphicons.less</Link>
+    </Content>
     <Content Include="vendor\bower-asset\bootstrap\less\grid.less" />
     <Content Include="vendor\bower-asset\bootstrap\less\input-groups.less" />
     <Content Include="vendor\bower-asset\bootstrap\less\jumbotron.less" />

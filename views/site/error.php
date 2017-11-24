@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /* @var $this yii\web\View */
 /* @var $name string */
@@ -18,10 +18,10 @@ $this->title = $name;
     </div>
 
     <p>
-        The above error occurred while the Web server was processing your request.
+        El error ocurrió mientras el servidor web estaba procesando su solicitud.
     </p>
     <p>
-        Please contact us if you think this is a server error. Thank you.
+        Por favor contactenos si cree que es un error del servidor. Gracias.
     </p>
 
 </div>
