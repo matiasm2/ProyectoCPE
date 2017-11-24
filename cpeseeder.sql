@@ -287,12 +287,13 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (60,'programa/update','Actualizar referencia de documento');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (61,'programa/create','Crear referencia de documentos');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (62,'programa/delete','Eliminar referencia de documentos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (63, 'site/indexUserAdmCPE','Home del administrador y usuario CPE');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (64, 'planes/index','Ver lista de planes creados');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (65, 'planes/view','Ver planes creados');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (66, 'planes/update','Actualiza planes creados');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (67, 'planes/delete','Borra planes creados');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (68, 'planes/create','Crea planes de estudio');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (63,'programa/historial','Ver historial de estados de documentos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (64, 'site/indexUserAdmCPE','Home del administrador y usuario CPE');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (65, 'planes/index','Ver lista de planes creados');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (66, 'planes/view','Ver planes creados');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (67, 'planes/update','Actualiza planes creados');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (68, 'planes/delete','Borra planes creados');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (69, 'planes/create','Crea planes de estudio');
 ---
 -- Acciones configurables para cada sector a travez del usuario Administrador del sistema CPE', Admin CPE., id1
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 

@@ -6268,9 +6268,7 @@
     <Content Include="vendor\bower-asset\bootstrap\less\component-animations.less" />
     <Content Include="vendor\bower-asset\bootstrap\less\dropdowns.less" />
     <Content Include="vendor\bower-asset\bootstrap\less\forms.less" />
-    <Content Include="..\..\..\Users\BNV\Desktop\glyphicons.less">
-      <Link>vendor\bower-asset\bootstrap\less\glyphicons.less</Link>
-    </Content>
+    <Content Include="vendor\bower-asset\bootstrap\less\glyphicons.less" />
     <Content Include="vendor\bower-asset\bootstrap\less\grid.less" />
     <Content Include="vendor\bower-asset\bootstrap\less\input-groups.less" />
     <Content Include="vendor\bower-asset\bootstrap\less\jumbotron.less" />
