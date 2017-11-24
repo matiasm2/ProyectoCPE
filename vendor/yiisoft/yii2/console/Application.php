@@ -10,12 +10,6 @@ namespace yii\console;
 use Yii;
 use yii\base\InvalidRouteException;
 
-// define STDIN, STDOUT and STDERR if the PHP SAPI did not define them (e.g. creating console application in web env)
-// http://php.net/manual/en/features.commandline.io-streams.php
-defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
-defined('STDOUT') or define('STDOUT', fopen('php://stdout', 'w'));
-defined('STDERR') or define('STDERR', fopen('php://stderr', 'w'));
-
 /**
  * Application represents a console application.
  *
@@ -34,9 +28,9 @@ defined('STDERR') or define('STDERR', fopen('php://stderr', 'w'));
  *
  * To run the console application, enter the following on the command line:
  *
- * ```
+ * ~~~
  * yii <route> [--param1=value1 --param2 ...]
- * ```
+ * ~~~
  *
  * where `<route>` refers to a controller route in the form of `ModuleID/ControllerID/ActionID`
  * (e.g. `sitemap/create`), and `param1`, `param2` refers to a set of named parameters that
@@ -46,13 +40,9 @@ defined('STDERR') or define('STDERR', fopen('php://stderr', 'w'));
  * A `help` command is provided by default, which lists available commands and shows their usage.
  * To use this command, simply type:
  *
- * ```
+ * ~~~
  * yii help
- * ```
- *
- * @property ErrorHandler $errorHandler The error handler application component. This property is read-only.
- * @property Request $request The request component. This property is read-only.
- * @property Response $response The response component. This property is read-only.
+ * ~~~
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -70,7 +60,7 @@ class Application extends \yii\base\Application
      */
     public $defaultRoute = 'help';
     /**
-     * @var bool whether to enable the commands provided by the core framework.
+     * @var boolean whether to enable the commands provided by the core framework.
      * Defaults to true.
      */
     public $enableCoreCommands = true;
@@ -78,7 +68,6 @@ class Application extends \yii\base\Application
      * @var Controller the currently active controller instance
      */
     public $controller;
-
 
     /**
      * @inheritdoc
@@ -105,10 +94,10 @@ class Application extends \yii\base\Application
                 if (strpos($param, $option) !== false) {
                     $path = substr($param, strlen($option));
                     if (!empty($path) && is_file($file = Yii::getAlias($path))) {
-                        return require $file;
+                        return require($file);
+                    } else {
+                        die("The configuration file does not exist: $path\n");
                     }
-
-                    exit("The configuration file does not exist: $path\n");
                 }
             }
         }
@@ -142,17 +131,17 @@ class Application extends \yii\base\Application
      */
     public function handleRequest($request)
     {
-        list($route, $params) = $request->resolve();
+        list ($route, $params) = $request->resolve();
         $this->requestedRoute = $route;
         $result = $this->runAction($route, $params);
         if ($result instanceof Response) {
             return $result;
+        } else {
+            $response = $this->getResponse();
+            $response->exitStatus = (int) $result;
+
+            return $response;
         }
-
-        $response = $this->getResponse();
-        $response->exitStatus = $result;
-
-        return $response;
     }
 
     /**
@@ -160,27 +149,17 @@ class Application extends \yii\base\Application
      * This method parses the specified route and creates the corresponding child module(s), controller and action
      * instances. It then calls [[Controller::runAction()]] to run the action with the given parameters.
      * If the route is empty, the method will use [[defaultRoute]].
-     *
-     * For example, to run `public function actionTest($a, $b)` assuming that the controller has options the following
-     * code should be used:
-     *
-     * ```php
-     * \Yii::$app->runAction('controller/test', ['option' => 'value', $a, $b]);
-     * ```
-     *
      * @param string $route the route that specifies the action.
      * @param array $params the parameters to be passed to the action
-     * @return int|Response the result of the action. This can be either an exit code or Response object.
-     * Exit code 0 means normal, and other values mean abnormal. Exit code of `null` is treaded as `0` as well.
+     * @return integer the status code returned by the action execution. 0 means normal, and other values mean abnormal.
      * @throws Exception if the route is invalid
      */
     public function runAction($route, $params = [])
     {
         try {
-            $res = parent::runAction($route, $params);
-            return is_object($res) ? $res : (int) $res;
+            return parent::runAction($route, $params);
         } catch (InvalidRouteException $e) {
-            throw new UnknownCommandException($route, $this, 0, $e);
+            throw new Exception(Yii::t('yii', 'Unknown command "{command}".', ['command' => $route]), 0, $e);
         }
     }
 
@@ -191,41 +170,13 @@ class Application extends \yii\base\Application
     public function coreCommands()
     {
         return [
-            'asset' => 'yii\console\controllers\AssetController',
-            'cache' => 'yii\console\controllers\CacheController',
-            'fixture' => 'yii\console\controllers\FixtureController',
-            'help' => 'yii\console\controllers\HelpController',
             'message' => 'yii\console\controllers\MessageController',
+            'help' => 'yii\console\controllers\HelpController',
             'migrate' => 'yii\console\controllers\MigrateController',
-            'serve' => 'yii\console\controllers\ServeController',
+            'cache' => 'yii\console\controllers\CacheController',
+            'asset' => 'yii\console\controllers\AssetController',
+            'fixture' => 'yii\console\controllers\FixtureController',
         ];
-    }
-
-    /**
-     * Returns the error handler component.
-     * @return ErrorHandler the error handler application component.
-     */
-    public function getErrorHandler()
-    {
-        return $this->get('errorHandler');
-    }
-
-    /**
-     * Returns the request component.
-     * @return Request the request component.
-     */
-    public function getRequest()
-    {
-        return $this->get('request');
-    }
-
-    /**
-     * Returns the response component.
-     * @return Response the response component.
-     */
-    public function getResponse()
-    {
-        return $this->get('response');
     }
 
     /**
@@ -236,7 +187,17 @@ class Application extends \yii\base\Application
         return array_merge(parent::coreComponents(), [
             'request' => ['class' => 'yii\console\Request'],
             'response' => ['class' => 'yii\console\Response'],
-            'errorHandler' => ['class' => 'yii\console\ErrorHandler'],
         ]);
+    }
+
+    /**
+     * Registers the errorHandler component as a PHP error handler.
+     */
+    protected function registerErrorHandler(&$config)
+    {
+        if (!isset($config['components']['errorHandler']['class'])) {
+            $config['components']['errorHandler']['class'] = 'yii\\console\\ErrorHandler';
+        }
+        parent::registerErrorHandler($config);
     }
 }

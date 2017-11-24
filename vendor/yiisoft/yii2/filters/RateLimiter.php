@@ -40,7 +40,7 @@ use yii\web\TooManyRequestsHttpException;
 class RateLimiter extends ActionFilter
 {
     /**
-     * @var bool whether to include rate limit headers in the response
+     * @var boolean whether to include rate limit headers in the response
      */
     public $enableRateLimitHeaders = true;
     /**
@@ -65,34 +65,22 @@ class RateLimiter extends ActionFilter
     /**
      * @inheritdoc
      */
-    public function init()
-    {
-        if ($this->request === null) {
-            $this->request = Yii::$app->getRequest();
-        }
-        if ($this->response === null) {
-            $this->response = Yii::$app->getResponse();
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function beforeAction($action)
     {
-        if ($this->user === null && Yii::$app->getUser()) {
-            $this->user = Yii::$app->getUser()->getIdentity(false);
-        }
-
-        if ($this->user instanceof RateLimitInterface) {
+        $user = $this->user ? : Yii::$app->getUser()->getIdentity(false);
+        if ($user instanceof RateLimitInterface) {
             Yii::trace('Check rate limit', __METHOD__);
-            $this->checkRateLimit($this->user, $this->request, $this->response, $action);
-        } elseif ($this->user) {
-            Yii::info('Rate limit skipped: "user" does not implement RateLimitInterface.', __METHOD__);
+            $this->checkRateLimit(
+                $user,
+                $this->request ? : Yii::$app->getRequest(),
+                $this->response ? : Yii::$app->getResponse(),
+                $action
+            );
+        } elseif ($user) {
+            Yii::info('Rate limit skipped: "user" does not implement RateLimitInterface.');
         } else {
-            Yii::info('Rate limit skipped: user not logged in.', __METHOD__);
+            Yii::info('Rate limit skipped: user not logged in.');
         }
-
         return true;
     }
 
@@ -108,8 +96,8 @@ class RateLimiter extends ActionFilter
     {
         $current = time();
 
-        list($limit, $window) = $user->getRateLimit($request, $action);
-        list($allowance, $timestamp) = $user->loadAllowance($request, $action);
+        list ($limit, $window) = $user->getRateLimit($request, $action);
+        list ($allowance, $timestamp) = $user->loadAllowance($request, $action);
 
         $allowance += (int) (($current - $timestamp) * $limit / $window);
         if ($allowance > $limit) {
@@ -120,18 +108,18 @@ class RateLimiter extends ActionFilter
             $user->saveAllowance($request, $action, 0, $current);
             $this->addRateLimitHeaders($response, $limit, 0, $window);
             throw new TooManyRequestsHttpException($this->errorMessage);
+        } else {
+            $user->saveAllowance($request, $action, $allowance - 1, $current);
+            $this->addRateLimitHeaders($response, $limit, 0, (int) (($limit - $allowance) * $window / $limit));
         }
-
-        $user->saveAllowance($request, $action, $allowance - 1, $current);
-        $this->addRateLimitHeaders($response, $limit, $allowance - 1, (int) (($limit - $allowance) * $window / $limit));
     }
 
     /**
-     * Adds the rate limit headers to the response.
+     * Adds the rate limit headers to the response
      * @param Response $response
-     * @param int $limit the maximum number of allowed requests during a period
-     * @param int $remaining the remaining number of allowed requests within the current period
-     * @param int $reset the number of seconds to wait before having maximum number of allowed requests again
+     * @param integer $limit the maximum number of allowed requests during a period
+     * @param integer $remaining the remaining number of allowed requests within the current period
+     * @param integer $reset the number of seconds to wait before having maximum number of allowed requests again
      */
     public function addRateLimitHeaders($response, $limit, $remaining, $reset)
     {

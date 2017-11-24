@@ -7,7 +7,7 @@
 
 namespace yii\web;
 
-use yii\base\BaseObject;
+use yii\base\Object;
 use yii\helpers\Html;
 
 /**
@@ -18,18 +18,18 @@ use yii\helpers\Html;
  * You may also query other information about the file, including [[name]],
  * [[tempName]], [[type]], [[size]] and [[error]].
  *
- * For more details and usage information on UploadedFile, see the [guide article on handling uploads](guide:input-file-upload).
- *
  * @property string $baseName Original file base name. This property is read-only.
  * @property string $extension File extension. This property is read-only.
- * @property bool $hasError Whether there is an error with the uploaded file. Check [[error]] for detailed
+ * @property boolean $hasError Whether there is an error with the uploaded file. Check [[error]] for detailed
  * error code information. This property is read-only.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class UploadedFile extends BaseObject
+class UploadedFile extends Object
 {
+    private static $_files;
+
     /**
      * @var string the original name of the file being uploaded
      */
@@ -42,21 +42,19 @@ class UploadedFile extends BaseObject
     public $tempName;
     /**
      * @var string the MIME-type of the uploaded file (such as "image/gif").
-     * Since this MIME type is not checked on the server-side, do not take this value for granted.
+     * Since this MIME type is not checked on the server side, do not take this value for granted.
      * Instead, use [[\yii\helpers\FileHelper::getMimeType()]] to determine the exact MIME type.
      */
     public $type;
     /**
-     * @var int the actual size of the uploaded file in bytes
+     * @var integer the actual size of the uploaded file in bytes
      */
     public $size;
     /**
-     * @var int an error code describing the status of this file uploading.
+     * @var integer an error code describing the status of this file uploading.
      * @see http://www.php.net/manual/en/features.file-upload.errors.php
      */
     public $error;
-
-    private static $_files;
 
 
     /**
@@ -104,13 +102,13 @@ class UploadedFile extends BaseObject
      * Returns an uploaded file according to the given file input name.
      * The name can be a plain string or a string like an array element (e.g. 'Post[imageFile]', or 'Post[0][imageFile]').
      * @param string $name the name of the file input field.
-     * @return null|UploadedFile the instance of the uploaded file.
+     * @return UploadedFile the instance of the uploaded file.
      * Null is returned if no file is uploaded for the specified name.
      */
     public static function getInstanceByName($name)
     {
         $files = self::loadFiles();
-        return isset($files[$name]) ? new static($files[$name]) : null;
+        return isset($files[$name]) ? $files[$name] : null;
     }
 
     /**
@@ -118,7 +116,7 @@ class UploadedFile extends BaseObject
      * This is mainly used when multiple files were uploaded and saved as 'files[0]', 'files[1]',
      * 'files[n]'..., and you can retrieve them all by passing 'files' as the name.
      * @param string $name the name of the array of files
-     * @return UploadedFile[] the array of UploadedFile objects. Empty array is returned
+     * @return UploadedFile[] the array of CUploadedFile objects. Empty array is returned
      * if no adequate upload was found. Please note that this array will contain
      * all files from all sub-arrays regardless how deeply nested they are.
      */
@@ -126,15 +124,14 @@ class UploadedFile extends BaseObject
     {
         $files = self::loadFiles();
         if (isset($files[$name])) {
-            return [new static($files[$name])];
+            return [$files[$name]];
         }
         $results = [];
         foreach ($files as $key => $file) {
             if (strpos($key, "{$name}[") === 0) {
-                $results[] = new static($file);
+                $results[] = $file;
             }
         }
-
         return $results;
     }
 
@@ -152,9 +149,9 @@ class UploadedFile extends BaseObject
      * Note that this method uses php's move_uploaded_file() method. If the target file `$file`
      * already exists, it will be overwritten.
      * @param string $file the file path used to save the uploaded file
-     * @param bool $deleteTempFile whether to delete the temporary file after saving.
+     * @param boolean $deleteTempFile whether to delete the temporary file after saving.
      * If true, you will not be able to save the uploaded file again in the current request.
-     * @return bool true whether the file is saved successfully
+     * @return boolean true whether the file is saved successfully
      * @see error
      */
     public function saveAs($file, $deleteTempFile = true)
@@ -166,7 +163,6 @@ class UploadedFile extends BaseObject
                 return copy($this->tempName, $file);
             }
         }
-
         return false;
     }
 
@@ -175,9 +171,7 @@ class UploadedFile extends BaseObject
      */
     public function getBaseName()
     {
-        // https://github.com/yiisoft/yii2/issues/11012
-        $pathInfo = pathinfo('_' . $this->name, PATHINFO_FILENAME);
-        return mb_substr($pathInfo, 1, mb_strlen($pathInfo, '8bit'), '8bit');
+        return pathinfo($this->name, PATHINFO_FILENAME);
     }
 
     /**
@@ -189,7 +183,7 @@ class UploadedFile extends BaseObject
     }
 
     /**
-     * @return bool whether there is an error with the uploaded file.
+     * @return boolean whether there is an error with the uploaded file.
      * Check [[error]] for detailed error code information.
      */
     public function getHasError()
@@ -211,7 +205,6 @@ class UploadedFile extends BaseObject
                 }
             }
         }
-
         return self::$_files;
     }
 
@@ -230,14 +223,14 @@ class UploadedFile extends BaseObject
             foreach ($names as $i => $name) {
                 self::loadFilesRecursive($key . '[' . $i . ']', $name, $tempNames[$i], $types[$i], $sizes[$i], $errors[$i]);
             }
-        } elseif ((int) $errors !== UPLOAD_ERR_NO_FILE) {
-            self::$_files[$key] = [
+        } else {
+            self::$_files[$key] = new static([
                 'name' => $names,
                 'tempName' => $tempNames,
                 'type' => $types,
                 'size' => $sizes,
                 'error' => $errors,
-            ];
+            ]);
         }
     }
 }

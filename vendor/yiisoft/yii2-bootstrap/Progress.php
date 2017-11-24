@@ -9,6 +9,7 @@ namespace yii\bootstrap;
 
 use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**
  * Progress renders a bootstrap progress bar component.
@@ -96,7 +97,7 @@ class Progress extends Widget
     public function init()
     {
         parent::init();
-        Html::addCssClass($this->options, ['widget' => 'progress']);
+        Html::addCssClass($this->options, 'progress');
     }
 
     /**
@@ -137,7 +138,7 @@ class Progress extends Widget
 
     /**
      * Generates a bar
-     * @param int $percent the percentage of the bar
+     * @param integer $percent the percentage of the bar
      * @param string $label, optional, the label to display at the bar
      * @param array $options the HTML attributes of the bar
      * @return string the rendering result.
@@ -152,7 +153,7 @@ class Progress extends Widget
             'style' => "width:{$percent}%",
         ];
         $options = array_merge($defaultOptions, $options);
-        Html::addCssClass($options, ['widget' => 'progress-bar']);
+        Html::addCssClass($options, 'progress-bar');
 
         $out = Html::beginTag('div', $options);
         $out .= $label;

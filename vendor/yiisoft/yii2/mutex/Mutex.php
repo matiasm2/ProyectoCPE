@@ -7,46 +7,28 @@
 
 namespace yii\mutex;
 
+use Yii;
 use yii\base\Component;
 
 /**
- * The Mutex component allows mutual execution of concurrent processes in order to prevent "race conditions".
- *
- * This is achieved by using a "lock" mechanism. Each possibly concurrent thread cooperates by acquiring
- * a lock before accessing the corresponding data.
- *
- * Usage example:
- *
- * ```
- * if ($mutex->acquire($mutexName)) {
- *     // business logic execution
- * } else {
- *     // execution is blocked!
- * }
- * ```
- *
- * This is a base class, which should be extended in order to implement the actual lock mechanism.
- *
  * @author resurtm <resurtm@gmail.com>
  * @since 2.0
  */
 abstract class Mutex extends Component
 {
     /**
-     * @var bool whether all locks acquired in this process (i.e. local locks) must be released automatically
+     * @var boolean whether all locks acquired in this process (i.e. local locks) must be released automagically
      * before finishing script execution. Defaults to true. Setting this property to true means that all locks
-     * acquired in this process must be released (regardless of errors or exceptions).
+     * acquire in this process must be released in any case (regardless any kind of errors or exceptions).
      */
     public $autoRelease = true;
-
     /**
-     * @var string[] names of the locks acquired by the current PHP process.
+     * @var string[] names of the locks acquired in the current PHP process.
      */
     private $_locks = [];
 
-
     /**
-     * Initializes the Mutex component.
+     * Initializes the mutex component.
      */
     public function init()
     {
@@ -61,11 +43,11 @@ abstract class Mutex extends Component
     }
 
     /**
-     * Acquires a lock by name.
+     * Acquires lock by given name.
      * @param string $name of the lock to be acquired. Must be unique.
-     * @param int $timeout time (in seconds) to wait for lock to be released. Defaults to zero meaning that method will return
+     * @param integer $timeout to wait for lock to be released. Defaults to zero meaning that method will return
      * false immediately in case lock was already acquired.
-     * @return bool lock acquiring result.
+     * @return boolean lock acquiring result.
      */
     public function acquire($name, $timeout = 0)
     {
@@ -73,15 +55,15 @@ abstract class Mutex extends Component
             $this->_locks[] = $name;
 
             return true;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
     /**
-     * Releases acquired lock. This method will return false in case the lock was not found.
-     * @param string $name of the lock to be released. This lock must already exist.
-     * @return bool lock release result: false in case named lock was not found..
+     * Release acquired lock. This method will return false in case named lock was not found.
+     * @param string $name of the lock to be released. This lock must be already created.
+     * @return boolean lock release result: false in case named lock was not found..
      */
     public function release($name)
     {
@@ -92,23 +74,23 @@ abstract class Mutex extends Component
             }
 
             return true;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
     /**
-     * This method should be extended by a concrete Mutex implementations. Acquires lock by name.
+     * This method should be extended by concrete mutex implementations. Acquires lock by given name.
      * @param string $name of the lock to be acquired.
-     * @param int $timeout time (in seconds) to wait for the lock to be released.
-     * @return bool acquiring result.
+     * @param integer $timeout to wait for lock to become released.
+     * @return boolean acquiring result.
      */
     abstract protected function acquireLock($name, $timeout = 0);
 
     /**
-     * This method should be extended by a concrete Mutex implementations. Releases lock by given name.
+     * This method should be extended by concrete mutex implementations. Releases lock by given name.
      * @param string $name of the lock to be released.
-     * @return bool release result.
+     * @return boolean release result.
      */
     abstract protected function releaseLock($name);
 }

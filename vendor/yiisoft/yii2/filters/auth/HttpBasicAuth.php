@@ -7,6 +7,9 @@
 
 namespace yii\filters\auth;
 
+use Yii;
+use yii\web\UnauthorizedHttpException;
+
 /**
  * HttpBasicAuth is an action filter that supports the HTTP Basic authentication method.
  *
@@ -21,37 +24,6 @@ namespace yii\filters\auth;
  *         ],
  *     ];
  * }
- * ```
- *
- * The default implementation of HttpBasicAuth uses the [[\yii\web\User::loginByAccessToken()|loginByAccessToken()]]
- * method of the `user` application component and only passes the user name. This implementation is used
- * for authenticating API clients.
- *
- * If you want to authenticate users using username and password, you should provide the [[auth]] function for example like the following:
- *
- * ```php
- * public function behaviors()
- * {
- *     return [
- *         'basicAuth' => [
- *             'class' => \yii\filters\auth\HttpBasicAuth::className(),
- *             'auth' => function ($username, $password) {
- *                 $user = User::find()->where(['username' => $username])->one();
- *                 if ($user->verifyPassword($password)) {
- *                     return $user;
- *                 }
- *                 return null;
- *             },
- *         ],
- *     ];
- * }
- * ```
- *
- * > Tip: In case authentication does not work like expected, make sure your web server passes
- * username and password to `$_SERVER['PHP_AUTH_USER']` and `$_SERVER['PHP_AUTH_PW']` variables.
- * If you are using Apache with PHP-CGI, you might need to add this line to your `.htaccess` file:
- * ```
- * RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
  * ```
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -91,25 +63,24 @@ class HttpBasicAuth extends AuthMethod
      */
     public function authenticate($user, $request, $response)
     {
-        list($username, $password) = $request->getAuthCredentials();
+        $username = $request->getAuthUser();
+        $password = $request->getAuthPassword();
 
         if ($this->auth) {
             if ($username !== null || $password !== null) {
                 $identity = call_user_func($this->auth, $username, $password);
                 if ($identity !== null) {
-                    $user->switchIdentity($identity);
+                    $user->setIdentity($identity);
                 } else {
                     $this->handleFailure($response);
                 }
-
                 return $identity;
             }
         } elseif ($username !== null) {
-            $identity = $user->loginByAccessToken($username, get_class($this));
+            $identity = $user->loginByAccessToken($username);
             if ($identity === null) {
                 $this->handleFailure($response);
             }
-
             return $identity;
         }
 
@@ -119,8 +90,9 @@ class HttpBasicAuth extends AuthMethod
     /**
      * @inheritdoc
      */
-    public function challenge($response)
+    public function handleFailure($response)
     {
         $response->getHeaders()->set('WWW-Authenticate', "Basic realm=\"{$this->realm}\"");
+        throw new UnauthorizedHttpException('You are requesting with an invalid access token.');
     }
 }

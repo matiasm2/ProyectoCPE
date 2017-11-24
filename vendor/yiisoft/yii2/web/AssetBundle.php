@@ -8,9 +8,7 @@
 namespace yii\web;
 
 use Yii;
-use yii\base\BaseObject;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
+use yii\base\Object;
 
 /**
  * AssetBundle represents a collection of asset files, such as CSS, JS, images.
@@ -22,25 +20,22 @@ use yii\helpers\Url;
  * An asset bundle can depend on other asset bundles. When registering an asset bundle
  * with a view, all its dependent asset bundles will be automatically registered.
  *
- * For more details and usage information on AssetBundle, see the [guide article on assets](guide:structure-assets).
- *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class AssetBundle extends BaseObject
+class AssetBundle extends Object
 {
     /**
-     * @var string the directory that contains the source asset files for this asset bundle.
-     * A source asset file is a file that is part of your source code repository of your Web application.
+     * @var string the root directory of the source asset files. A source asset file
+     * is a file that is part of your source code repository of your Web application.
      *
-     * You must set this property if the directory containing the source asset files is not Web accessible.
-     * By setting this property, [[AssetManager]] will publish the source asset files
-     * to a Web-accessible directory automatically when the asset bundle is registered on a page.
+     * You must set this property if the directory containing the source asset files
+     * is not Web accessible (this is usually the case for extensions).
      *
-     * If you do not set this property, it means the source asset files are located under [[basePath]].
+     * By setting this property, the asset manager will publish the source asset files
+     * to a Web-accessible directory [[basePath]].
      *
      * You can use either a directory or an alias of the directory.
-     * @see $publishOptions
      */
     public $sourcePath;
     /**
@@ -49,14 +44,23 @@ class AssetBundle extends BaseObject
      * If [[sourcePath]] is set, this property will be *overwritten* by [[AssetManager]]
      * when it publishes the asset files from [[sourcePath]].
      *
+     * If the bundle contains any assets that are specified in terms of relative file path,
+     * then this property must be set either manually or automatically (by [[AssetManager]] via
+     * asset publishing).
+     *
      * You can use either a directory or an alias of the directory.
      */
     public $basePath;
     /**
-     * @var string the base URL for the relative asset files listed in [[js]] and [[css]].
+     * @var string the base URL that will be prefixed to the asset files for them to
+     * be accessed via Web server.
      *
      * If [[sourcePath]] is set, this property will be *overwritten* by [[AssetManager]]
      * when it publishes the asset files from [[sourcePath]].
+     *
+     * If the bundle contains any assets that are specified in terms of relative file path,
+     * then this property must be set either manually or automatically (by asset manager via
+     * asset publishing).
      *
      * You can use either a URL or an alias of the URL.
      */
@@ -75,49 +79,39 @@ class AssetBundle extends BaseObject
      */
     public $depends = [];
     /**
-     * @var array list of JavaScript files that this bundle contains. Each JavaScript file can be
-     * specified in one of the following formats:
+     * @var array list of JavaScript files that this bundle contains. Each JavaScript file can
+     * be either a file path (without leading slash) relative to [[basePath]] or a URL representing
+     * an external JavaScript file.
      *
-     * - an absolute URL representing an external asset. For example,
-     *   `http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js` or
-     *   `//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js`.
-     * - a relative path representing a local asset (e.g. `js/main.js`). The actual file path of a local
-     *   asset can be determined by prefixing [[basePath]] to the relative path, and the actual URL
-     *   of the asset can be determined by prefixing [[baseUrl]] to the relative path.
-     * - an array, with the first entry being the URL or relative path as described before, and a list of key => value pairs
-     *   that will be used to overwrite [[jsOptions]] settings for this entry.
-     *   This functionality is available since version 2.0.7.
-     *
-     * Note that only a forward slash "/" should be used as directory separator.
+     * Note that only forward slash "/" can be used as directory separator.
      */
     public $js = [];
     /**
-     * @var array list of CSS files that this bundle contains. Each CSS file can be specified
-     * in one of the three formats as explained in [[js]].
+     * @var array list of CSS files that this bundle contains. Each CSS file can
+     * be either a file path (without leading slash) relative to [[basePath]] or a URL representing
+     * an external CSS file.
      *
-     * Note that only a forward slash "/" should be used as directory separator.
+     * Note that only forward slash "/" can be used as directory separator.
      */
     public $css = [];
     /**
-     * @var array the options that will be passed to [[View::registerJsFile()]]
+     * @var array the options that will be passed to [[\yii\web\View::registerJsFile()]]
      * when registering the JS files in this bundle.
      */
     public $jsOptions = [];
     /**
-     * @var array the options that will be passed to [[View::registerCssFile()]]
+     * @var array the options that will be passed to [[\yii\web\View::registerCssFile()]]
      * when registering the CSS files in this bundle.
      */
     public $cssOptions = [];
     /**
      * @var array the options to be passed to [[AssetManager::publish()]] when the asset bundle
-     * is being published. This property is used only when [[sourcePath]] is set.
+     * is being published.
      */
     public $publishOptions = [];
 
-
     /**
-     * Registers this asset bundle with a view.
-     * @param View $view the view to be registered with
+     * @param View $view
      * @return static the registered asset bundle instance
      */
     public static function register($view)
@@ -148,27 +142,18 @@ class AssetBundle extends BaseObject
      */
     public function registerAssetFiles($view)
     {
-        $manager = $view->getAssetManager();
         foreach ($this->js as $js) {
-            if (is_array($js)) {
-                $file = array_shift($js);
-                $options = ArrayHelper::merge($this->jsOptions, $js);
-                $view->registerJsFile($manager->getAssetUrl($this, $file), $options);
+            if (strpos($js, '/') !== 0 && strpos($js, '://') === false) {
+                $view->registerJsFile($this->baseUrl . '/' . $js, [], $this->jsOptions);
             } else {
-                if ($js !== null) {
-                    $view->registerJsFile($manager->getAssetUrl($this, $js), $this->jsOptions);
-                }
+                $view->registerJsFile($js, [], $this->jsOptions);
             }
         }
         foreach ($this->css as $css) {
-            if (is_array($css)) {
-                $file = array_shift($css);
-                $options = ArrayHelper::merge($this->cssOptions, $css);
-                $view->registerCssFile($manager->getAssetUrl($this, $file), $options);
+            if (strpos($css, '/') !== 0 && strpos($css, '://') === false) {
+                $view->registerCssFile($this->baseUrl . '/' . $css, [], $this->cssOptions);
             } else {
-                if ($css !== null) {
-                    $view->registerCssFile($manager->getAssetUrl($this, $css), $this->cssOptions);
-                }
+                $view->registerCssFile($css, [], $this->cssOptions);
             }
         }
     }
@@ -182,32 +167,24 @@ class AssetBundle extends BaseObject
     public function publish($am)
     {
         if ($this->sourcePath !== null && !isset($this->basePath, $this->baseUrl)) {
-            list($this->basePath, $this->baseUrl) = $am->publish($this->sourcePath, $this->publishOptions);
+            list ($this->basePath, $this->baseUrl) = $am->publish($this->sourcePath, $this->publishOptions);
         }
-
-        if (isset($this->basePath, $this->baseUrl) && ($converter = $am->getConverter()) !== null) {
-            foreach ($this->js as $i => $js) {
-                if (is_array($js)) {
-                    $file = array_shift($js);
-                    if (Url::isRelative($file)) {
-                        $js = ArrayHelper::merge($this->jsOptions, $js);
-                        array_unshift($js, $converter->convert($file, $this->basePath));
-                        $this->js[$i] = $js;
-                    }
-                } elseif (Url::isRelative($js)) {
-                    $this->js[$i] = $converter->convert($js, $this->basePath);
+        $converter = $am->getConverter();
+        foreach ($this->js as $i => $js) {
+            if (strpos($js, '/') !== 0 && strpos($js, '://') === false) {
+                if (isset($this->basePath, $this->baseUrl)) {
+                    $this->js[$i] = $converter->convert($js, $this->basePath, $this->baseUrl);
+                } else {
+                    $this->js[$i] = '/' . $js;
                 }
             }
-            foreach ($this->css as $i => $css) {
-                if (is_array($css)) {
-                    $file = array_shift($css);
-                    if (Url::isRelative($file)) {
-                        $css = ArrayHelper::merge($this->cssOptions, $css);
-                        array_unshift($css, $converter->convert($file, $this->basePath));
-                        $this->css[$i] = $css;
-                    }
-                } elseif (Url::isRelative($css)) {
-                    $this->css[$i] = $converter->convert($css, $this->basePath);
+        }
+        foreach ($this->css as $i => $css) {
+            if (strpos($css, '/') !== 0 && strpos($css, '://') === false) {
+                if (isset($this->basePath, $this->baseUrl)) {
+                    $this->css[$i] = $converter->convert($css, $this->basePath, $this->baseUrl);
+                } else {
+                    $this->css[$i] = '/' . $css;
                 }
             }
         }

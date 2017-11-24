@@ -1,8 +1,10 @@
 <?php
-/* @var $this yii\web\View */
-/* @var $generator yii\gii\Generator */
-/* @var $results string */
-/* @var $hasError boolean */
+/**
+ * @var yii\web\View $this
+ * @var yii\gii\Generator $generator
+ * @var string $results
+ * @var boolean $hasError
+ */
 ?>
 <div class="default-view-results">
     <?php

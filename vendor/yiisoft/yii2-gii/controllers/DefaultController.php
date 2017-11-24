@@ -27,7 +27,6 @@ class DefaultController extends Controller
      */
     public $generator;
 
-
     public function actionIndex()
     {
         $this->layout = 'main';
@@ -39,21 +38,16 @@ class DefaultController extends Controller
     {
         $generator = $this->loadGenerator($id);
         $params = ['generator' => $generator, 'id' => $id];
-
-        $preview = Yii::$app->request->post('preview');
-        $generate = Yii::$app->request->post('generate');
-        $answers = Yii::$app->request->post('answers');
-
-        if ($preview !== null || $generate !== null) {
+        if (isset($_POST['preview']) || isset($_POST['generate'])) {
             if ($generator->validate()) {
                 $generator->saveStickyAttributes();
                 $files = $generator->generate();
-                if ($generate !== null && !empty($answers)) {
-                    $params['hasError'] = !$generator->save($files, (array) $answers, $results);
+                if (isset($_POST['generate']) && !empty($_POST['answers'])) {
+                    $params['hasError'] = $generator->save($files, (array) $_POST['answers'], $results);
                     $params['results'] = $results;
                 } else {
                     $params['files'] = $files;
-                    $params['answers'] = $answers;
+                    $params['answers'] = isset($_POST['answers']) ? $_POST['answers'] : null;
                 }
             }
         }
@@ -98,9 +92,9 @@ class DefaultController extends Controller
      * Runs an action defined in the generator.
      * Given an action named "xyz", the method "actionXyz()" in the generator will be called.
      * If the method does not exist, a 400 HTTP exception will be thrown.
-     * @param string $id the ID of the generator
-     * @param string $name the action name
-     * @return mixed the result of the action.
+     * @param  string                $id   the ID of the generator
+     * @param  string                $name the action name
+     * @return mixed                 the result of the action.
      * @throws NotFoundHttpException if the action method does not exist.
      */
     public function actionAction($id, $name)
@@ -116,8 +110,8 @@ class DefaultController extends Controller
 
     /**
      * Loads the generator with the specified ID.
-     * @param string $id the ID of the generator to be loaded.
-     * @return \yii\gii\Generator the loaded generator
+     * @param  string                $id the ID of the generator to be loaded.
+     * @return \yii\gii\Generator    the loaded generator
      * @throws NotFoundHttpException
      */
     protected function loadGenerator($id)
@@ -125,7 +119,7 @@ class DefaultController extends Controller
         if (isset($this->module->generators[$id])) {
             $this->generator = $this->module->generators[$id];
             $this->generator->loadStickyAttributes();
-            $this->generator->load(Yii::$app->request->post());
+            $this->generator->load($_POST);
 
             return $this->generator;
         } else {
