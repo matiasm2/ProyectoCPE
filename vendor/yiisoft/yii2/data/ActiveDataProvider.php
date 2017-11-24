@@ -7,10 +7,9 @@
 
 namespace yii\data;
 
-use Yii;
-use yii\db\ActiveQueryInterface;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
+use yii\db\ActiveQueryInterface;
 use yii\db\Connection;
 use yii\db\QueryInterface;
 use yii\di\Instance;
@@ -22,7 +21,7 @@ use yii\di\Instance;
  *
  * The following is an example of using ActiveDataProvider to provide ActiveRecord instances:
  *
- * ~~~
+ * ```php
  * $provider = new ActiveDataProvider([
  *     'query' => Post::find(),
  *     'pagination' => [
@@ -32,12 +31,12 @@ use yii\di\Instance;
  *
  * // get the posts in the current page
  * $posts = $provider->getModels();
- * ~~~
+ * ```
  *
  * And the following example shows how to use ActiveDataProvider without ActiveRecord:
  *
- * ~~~
- * $query = new Query;
+ * ```php
+ * $query = new Query();
  * $provider = new ActiveDataProvider([
  *     'query' => $query->from('post'),
  *     'pagination' => [
@@ -47,7 +46,9 @@ use yii\di\Instance;
  *
  * // get the posts in the current page
  * $posts = $provider->getModels();
- * ~~~
+ * ```
+ *
+ * For more details and usage information on ActiveDataProvider, see the [guide article on data providers](guide:output-data-providers).
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -72,10 +73,12 @@ class ActiveDataProvider extends BaseDataProvider
      */
     public $key;
     /**
-     * @var Connection|string the DB connection object or the application component ID of the DB connection.
+     * @var Connection|array|string the DB connection object or the application component ID of the DB connection.
      * If not set, the default DB connection will be used.
+     * Starting from version 2.0.2, this can also be a configuration array for creating the object.
      */
     public $db;
+
 
     /**
      * Initializes the DB connection component.
@@ -98,15 +101,19 @@ class ActiveDataProvider extends BaseDataProvider
         if (!$this->query instanceof QueryInterface) {
             throw new InvalidConfigException('The "query" property must be an instance of a class that implements the QueryInterface e.g. yii\db\Query or its subclasses.');
         }
+        $query = clone $this->query;
         if (($pagination = $this->getPagination()) !== false) {
             $pagination->totalCount = $this->getTotalCount();
-            $this->query->limit($pagination->getLimit())->offset($pagination->getOffset());
+            if ($pagination->totalCount === 0) {
+                return [];
+            }
+            $query->limit($pagination->getLimit())->offset($pagination->getOffset());
         }
         if (($sort = $this->getSort()) !== false) {
-            $this->query->addOrderBy($sort->getOrders());
+            $query->addOrderBy($sort->getOrders());
         }
 
-        return $this->query->all($this->db);
+        return $query->all($this->db);
     }
 
     /**
@@ -126,7 +133,7 @@ class ActiveDataProvider extends BaseDataProvider
 
             return $keys;
         } elseif ($this->query instanceof ActiveQueryInterface) {
-            /** @var \yii\db\ActiveRecord $class */
+            /* @var $class \yii\db\ActiveRecordInterface */
             $class = $this->query->modelClass;
             $pks = $class::primaryKey();
             if (count($pks) === 1) {
@@ -145,9 +152,9 @@ class ActiveDataProvider extends BaseDataProvider
             }
 
             return $keys;
-        } else {
-            return array_keys($models);
         }
+
+        return array_keys($models);
     }
 
     /**
@@ -159,7 +166,6 @@ class ActiveDataProvider extends BaseDataProvider
             throw new InvalidConfigException('The "query" property must be an instance of a class that implements the QueryInterface e.g. yii\db\Query or its subclasses.');
         }
         $query = clone $this->query;
-
         return (int) $query->limit(-1)->offset(-1)->orderBy([])->count('*', $this->db);
     }
 
@@ -169,15 +175,24 @@ class ActiveDataProvider extends BaseDataProvider
     public function setSort($value)
     {
         parent::setSort($value);
-        if (($sort = $this->getSort()) !== false && empty($sort->attributes) && $this->query instanceof ActiveQueryInterface) {
-            /** @var Model $model */
-            $model = new $this->query->modelClass;
-            foreach ($model->attributes() as $attribute) {
-                $sort->attributes[$attribute] = [
-                    'asc' => [$attribute => SORT_ASC],
-                    'desc' => [$attribute => SORT_DESC],
-                    'label' => $model->getAttributeLabel($attribute),
-                ];
+        if (($sort = $this->getSort()) !== false && $this->query instanceof ActiveQueryInterface) {
+            /* @var $modelClass Model */
+            $modelClass = $this->query->modelClass;
+            $model = $modelClass::instance();
+            if (empty($sort->attributes)) {
+                foreach ($model->attributes() as $attribute) {
+                    $sort->attributes[$attribute] = [
+                        'asc' => [$attribute => SORT_ASC],
+                        'desc' => [$attribute => SORT_DESC],
+                        'label' => $model->getAttributeLabel($attribute),
+                    ];
+                }
+            } else {
+                foreach ($sort->attributes as $attribute => $config) {
+                    if (!isset($config['label'])) {
+                        $sort->attributes[$attribute]['label'] = $model->getAttributeLabel($attribute);
+                    }
+                }
             }
         }
     }

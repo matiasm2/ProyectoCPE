@@ -15,20 +15,23 @@ use Yii;
  * The name of the controller method is available via [[actionMethod]] which
  * is set by the [[controller]] who creates this action.
  *
+ * For more details and usage information on InlineAction, see the [guide article on actions](guide:structure-controllers).
+ *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
 class InlineAction extends Action
 {
     /**
-     * @var string the controller method that  this inline action is associated with
+     * @var string the controller method that this inline action is associated with
      */
     public $actionMethod;
+
 
     /**
      * @param string $id the ID of this action
      * @param Controller $controller the controller that owns this action
-     * @param string $actionMethod the controller method that  this inline action is associated with
+     * @param string $actionMethod the controller method that this inline action is associated with
      * @param array $config name-value pairs that will be used to initialize the object properties
      */
     public function __construct($id, $controller, $actionMethod, $config = [])

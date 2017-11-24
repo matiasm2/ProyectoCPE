@@ -27,3 +27,15 @@ par5
 ###### h6
 
 ####### h7
+
+<a name="example"></a>
+head
+----
+
+hallo
+hallo
+test
+====
+test
+
+#1 has been fixed

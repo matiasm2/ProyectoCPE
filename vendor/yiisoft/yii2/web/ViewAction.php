@@ -9,7 +9,7 @@ namespace yii\web;
 
 use Yii;
 use yii\base\Action;
-use yii\base\InvalidParamException;
+use yii\base\ViewNotFoundException;
 
 /**
  * ViewAction represents an action that displays a view according to a user-specified parameter.
@@ -34,7 +34,6 @@ class ViewAction extends Action
      * @var string the name of the GET parameter that contains the requested view name.
      */
     public $viewParam = 'view';
-
     /**
      * @var string the name of the default view when [[\yii\web\ViewAction::$viewParam]] GET parameter is not provided
      * by user. Defaults to 'index'. This should be in the format of 'path/to/view', similar to that given in the
@@ -42,7 +41,6 @@ class ViewAction extends Action
      * @see \yii\web\ViewAction::$viewPrefix
      */
     public $defaultView = 'index';
-
     /**
      * @var string a string to be prefixed to the user-specified view name to form a complete view name.
      * For example, if a user requests for `tutorial/chap1`, the corresponding view name will
@@ -51,7 +49,6 @@ class ViewAction extends Action
      * @see \yii\base\View::findViewFile()
      */
     public $viewPrefix = 'pages';
-
     /**
      * @var mixed the name of the layout to be applied to the requested view.
      * This will be assigned to [[\yii\base\Controller::$layout]] before the view is rendered.
@@ -59,6 +56,7 @@ class ViewAction extends Action
      * If false, no layout will be applied.
      */
     public $layout;
+
 
     /**
      * Runs the action.
@@ -68,9 +66,10 @@ class ViewAction extends Action
     public function run()
     {
         $viewName = $this->resolveViewName();
+        $this->controller->actionParams[$this->viewParam] = Yii::$app->request->get($this->viewParam);
 
         $controllerLayout = null;
-        if($this->layout !== null) {
+        if ($this->layout !== null) {
             $controllerLayout = $this->controller->layout;
             $this->controller->layout = $this->layout;
         }
@@ -81,27 +80,25 @@ class ViewAction extends Action
             if ($controllerLayout) {
                 $this->controller->layout = $controllerLayout;
             }
-
-        } catch (InvalidParamException $e) {
-
+        } catch (ViewNotFoundException $e) {
             if ($controllerLayout) {
                 $this->controller->layout = $controllerLayout;
             }
 
             if (YII_DEBUG) {
                 throw new NotFoundHttpException($e->getMessage());
-            } else {
-                throw new NotFoundHttpException(
-                    Yii::t('yii', 'The requested view "{name}" was not found.', ['name' => $viewName])
-                );
             }
+
+            throw new NotFoundHttpException(
+                Yii::t('yii', 'The requested view "{name}" was not found.', ['name' => $viewName])
+            );
         }
 
         return $output;
     }
 
     /**
-     * Renders a view
+     * Renders a view.
      *
      * @param string $viewName view name
      * @return string result of the rendering
@@ -121,12 +118,12 @@ class ViewAction extends Action
     {
         $viewName = Yii::$app->request->get($this->viewParam, $this->defaultView);
 
-        if (!is_string($viewName) || !preg_match('/^\w[\w\/\-\.]*$/', $viewName)) {
+        if (!is_string($viewName) || !preg_match('~^\w(?:(?!\/\.{0,2}\/)[\w\/\-\.])*$~', $viewName)) {
             if (YII_DEBUG) {
-                throw new NotFoundHttpException("The requested view \"$viewName\" must start with a word character and can contain only word characters, forward slashes, dots and dashes.");
-            } else {
-                throw new NotFoundHttpException(Yii::t('yii', 'The requested view "{name}" was not found.', ['name' => $viewName]));
+                throw new NotFoundHttpException("The requested view \"$viewName\" must start with a word character, must not contain /../ or /./, can contain only word characters, forward slashes, dots and dashes.");
             }
+
+            throw new NotFoundHttpException(Yii::t('yii', 'The requested view "{name}" was not found.', ['name' => $viewName]));
         }
 
         return empty($this->viewPrefix) ? $viewName : $this->viewPrefix . '/' . $viewName;
