@@ -42,7 +42,7 @@ return [
     'Page not found.' => 'لم يتم العثور على الصفحة',
     'Please fix the following errors:' => 'الرجاء تصحيح الأخطاء التالية:',
     'Please upload a file.' => 'الرجاء تحميل ملف.',
-    'Showing <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.' => 'عرض <b>{begin, number}-{end, number}</b> من أصل <b>{totalCount, number}</b> {totalCount, plural, one{مُدخل} few{مُدخلات} many{مُدخل} other{مُدخلات}}.',
+    'Mostrando <b>{begin, number}-{end, number}</b> de <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.' => 'عرض <b>{begin, number}-{end, number}</b> من أصل <b>{totalCount, number}</b> {totalCount, plural, one{مُدخل} few{مُدخلات} many{مُدخل} other{مُدخلات}}.',
     'The file "{file}" is not an image.' => 'الملف "{file}" ليس صورة.',
     'The file "{file}" is too big. Its size cannot exceed {formattedLimit}.' => 'الملف "{file}" كبير الحجم. حجمه لا يجب أن يتخطى {formattedLimit}.',
     'The file "{file}" is too small. Its size cannot be smaller than {formattedLimit}.' => 'الملف "{file}"  صغير جداً. حجمه لا يجب أن يكون أصغر من {formattedLimit}.',

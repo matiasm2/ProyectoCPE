@@ -41,7 +41,7 @@ return [
     'Page not found.' => 'Stranica nije pronađena.',
     'Please fix the following errors:' => 'Molimo ispravite sljedeće greške:',
     'Please upload a file.' => 'Molimo da pošaljete datoteku.',
-    'Showing <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.' => 'Prikazano <b>{begin, number}-{end, number}</b> od <b>{totalCount, number}</b> {totalCount, plural, one{stavke} other{stavki}}.',
+    'Mostrando <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.' => 'Prikazano <b>{begin, number}-{end, number}</b> od <b>{totalCount, number}</b> {totalCount, plural, one{stavke} other{stavki}}.',
     'The file "{file}" is not an image.' => 'Datoteka "{file}" nije slika.',
     'The file "{file}" is too big. Its size cannot exceed {formattedLimit}.' => 'Datoteka "{file}" je prevelika. Veličina ne smije biti veća od {formattedLimit}.',
     'The file "{file}" is too small. Its size cannot be smaller than {formattedLimit}.' => 'Datoteka "{file}" је premala. Veličina ne smije biti manja od {formattedLimit}.',

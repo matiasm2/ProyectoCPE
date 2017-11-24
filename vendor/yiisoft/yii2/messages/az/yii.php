@@ -43,7 +43,7 @@ return [
     'Page not found.' => 'Səhifə tapılmadı.',
     'Please fix the following errors:' => 'Xahiş olunur xətaları düzəldin: ',
     'Please upload a file.' => 'Xahiş olunur bir fayl yükləyin.',
-    'Showing <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.' => '<b>{totalCount, number}</b> {totalCount, plural, one{elementdən} other{elementdən}} <b>{begin, number}-{end, number}</b> arası göstərilir.',
+    'Mostrando <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.' => '<b>{totalCount, number}</b> {totalCount, plural, one{elementdən} other{elementdən}} <b>{begin, number}-{end, number}</b> arası göstərilir.',
     'The file "{file}" is not an image.' => '"{file}" təsvir faylı deyil.',
     'The file "{file}" is too big. Its size cannot exceed {formattedLimit}.' => '"{file}" faylı çox böyükdür. Həcmi {formattedLimit} qiymətindən böyük ola bilməz.',
     'The file "{file}" is too small. Its size cannot be smaller than {formattedLimit}.' => '"{file}" faylı çox kiçikdir. Həcmi {formattedLimit} qiymətindən kiçik ola bilməz.',
