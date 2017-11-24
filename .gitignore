@@ -1,4 +1,6 @@
 .vs/*
 PHPWebProject2.*
 CPE.phpp*
-/web/uploads/prueba.ktr
+web/uploads/prueba.ktr
+*.phpproj
+*.sln
