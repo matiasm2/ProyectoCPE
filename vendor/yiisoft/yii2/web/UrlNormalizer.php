@@ -84,7 +84,7 @@ class UrlNormalizer extends BaseObject
         } elseif ($this->action === static::ACTION_REDIRECT_PERMANENT || $this->action === static::ACTION_REDIRECT_TEMPORARY) {
             throw new UrlNormalizerRedirectException([$route[0]] + $route[1], $this->action);
         } elseif ($this->action === static::ACTION_NOT_FOUND) {
-            throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
+            throw new NotFoundHttpException(Yii::t('yii', 'Página no encontrada.'));
         } elseif (is_callable($this->action)) {
             return call_user_func($this->action, $route, $this);
         }

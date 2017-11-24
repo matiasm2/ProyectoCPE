@@ -152,7 +152,7 @@ class ErrorAction extends Action
     protected function findException()
     {
         if (($exception = Yii::$app->getErrorHandler()->exception) === null) {
-            $exception = new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
+            $exception = new NotFoundHttpException(Yii::t('yii', 'Página no encontrada.'));
         }
 
         return $exception;

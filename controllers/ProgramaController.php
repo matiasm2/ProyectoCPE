@@ -154,6 +154,17 @@ class ProgramaController extends Controller
         }else return $this->redirect(['error/level-access-error',]);
     }
 
+    public function actionHistorial($id){
+		$msg='';
+		if (RoleAccessChecker::actionIsAsignSector('programa/historial')) {
+			try{
+				return $this->render('historial', [
+					'model' => $this->findModel($id),
+				]);
+ 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+        }else return $this->redirect(['error/level-access-error',]);
+    }
+
     /**
      * Finds the Programa model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
