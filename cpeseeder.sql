@@ -354,7 +354,7 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (60,2);--acceso a programa/update
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (61,2);--acceso a programa/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (62,2);--acceso a programa/delete
-	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (63,2);--acceso a site/indexUserAdmCPE
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (63,2);
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (7,2);--acceso a archivoprograma/view
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (4,2);--acceso a archivoprograma/index
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (5,2);--acceso a archivoprograma/update
@@ -373,10 +373,12 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (25,2);--acceso a materia/update
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (26,2);--acceso a materia/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (23,2);--acceso a materia/delete
-	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (64,2);--acceso a planes/index
-	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (65,2);--acceso a planes/view
-	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (68,2);--acceso a planes/create
----
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (65,2);--acceso a planes/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (66,2);--acceso a planes/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (69,2);--acceso a planes/create
+  INSERT INTO asignsector(actionrole_id,sector_id)VALUES (64,2);--acceso a site/indexUserAdmCPE- User CPE
+  INSERT INTO asignsector(actionrole_id,sector_id)VALUES (64,1);--acceso a site/indexUserAdmCPE- User ADMIN CPE
+  INSERT INTO asignsector(actionrole_id,sector_id)VALUES (64,3);--acceso a site/indexUserAdmCPE- User Prensa
 -- Acciones configurables para: 'Usuario de Prensa','Usr Pr'
 ---
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (58,3);--acceso a programa/view

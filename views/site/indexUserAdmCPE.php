@@ -23,6 +23,7 @@ $this->title = 'CPE UNAJ Application';
     </div>
 --> 
       <div class="body-content">
+       <h2>Bienvenido </h2><p>Puede comenzar a operar desde el menu herramientas.</p>
 
         <div id= "allInst" class="col-lg-15 col-md-offset-2">
 
@@ -94,7 +95,7 @@ $this->title = 'CPE UNAJ Application';
 
             </div>
 
-                <div id="instituto1" class="col-lg-3">
+                <div id="instituto1" class="col-lg-3" style="visibility: hidden;">
                 <h4>Estudios Iniciales</h4>
 
                 <table class="tableAll">
