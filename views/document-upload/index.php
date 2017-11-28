@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\widgets\Pjax;
 use app\models\Moderw;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentUploadSearch */
@@ -16,10 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 	<p><?= $msg; ?></p>
-    <p>
-        <?= Html::a('Crear Document Upload', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
+    <p><?= Html::a('Crear Document Upload', ['create'], ['class' => 'btn btn-success']) ?></p>
+	<?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -36,8 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'label' => 'File',
 					'format' => 'raw',
 					'value' => function ($data) {
-						$url = "uploads/" . $data ->archivo;
-						return Html::a($data->archivo, $url);
+						return Html::a('Descargar', 'uploads/'.$data ->archivo);
 					},
 				],
 			[
@@ -47,9 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 return Moderw::find()->where(['moderw_id'=>$model->moderw_id])->one()->moderw;
               }
             ],
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-
-<?php Pjax::end(); ?></div>
+</div>

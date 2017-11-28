@@ -166,7 +166,9 @@ class RegisterModeChecker extends Controller{
 	}
 
 	public static function formatDocument($model){
-		return 'archivo';
+		$new='dato'.date('YmdHis.').$model->archivo->extension;
+		rename('uploads/'.$model->archivo,'uploads/'.$new);
+		return $new;
 	}
 
 	public static function test($currentModeRegister,$msg){

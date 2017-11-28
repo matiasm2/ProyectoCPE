@@ -15,7 +15,7 @@ $this->title = 'CPE UNAJ Application';
 
     <?php if (Yii::$app->user->isGuest){?>
         <h2>Ingrese al sistema para operar</h2><p>Si no tiene acceso comuniquese con el CPE Admin</p>
-    <?php }else{ ?>
+    <?php }else if($instituto !="Usuario del Instituto de Estudios Iniciales"){ ?>
      
     <h2>Bienvenido </h2><p>Puede comenzar a operar desde el menu herramientas.</p>
 
@@ -49,7 +49,6 @@ $this->title = 'CPE UNAJ Application';
 <script type="text/javascript" src="js/progresBar.js"></script>
 <script type="text/javascript" src="js/jquery-asProgress.js"></script>
 <script type="text/javascript">
-
 jQuery(function($) {
 
     $(".progress").asProgress({
@@ -66,6 +65,8 @@ jQuery(function($) {
  
 });
 </script>         
-<?php } ?>
+<?php }else{?>
+  <h2>Bienvenido </h2><p>Puede comenzar a operar desde el menu herramientas.</p>
+ <?php } ?>
     </div>
 </div>

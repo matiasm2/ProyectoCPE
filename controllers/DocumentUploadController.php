@@ -97,13 +97,10 @@ class DocumentUploadController extends Controller
 				$model->archivo= UploadedFile::getInstance($model,'archivo');
 				$model->fecha=date('Y-m-d');
 			if (($model->save())&&($model->upload())){
-				$new='dato'.date('YmdHis.').$model->archivo->extension;
-				rename('uploads/'.$model->archivo,'uploads/'.$new);
-				$model->archivo=$new;
-				$model->save();
+				$new=RegisterModeChecker::formatDocument($model);
+				$model->archivo=$new;$model->save();
 				return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
 			}
-			else return $this->redirect(['error/error',]);
 		} else return $this->render('create', ['model' => $model,
 				'subModelEstado' => $subModelEstado,
 				'subModelPrograma' => $subModelPrograma,

@@ -37,7 +37,7 @@ class DocumentUpload extends \yii\db\ActiveRecord
     {
         return [
             [['programa_id', 'usuario_id', 'estado_id'], 'integer'],
-            [['archivo'], 'file'],
+            [['archivo'], 'file','maxSize' => 2*1024*1024,'tooBig' => 'Límite de 2MB..',],/*editar linea 802: upload_max_filesize = 2M de /etc/php/7.0/apache2/php.ini */
             [['archivo'], 'required'],
             [['fecha'], 'safe'],
             [['moderw_id'], 'integer'],
