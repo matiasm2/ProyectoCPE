@@ -35,7 +35,7 @@ class Archivoprograma extends \yii\db\ActiveRecord
     {
         return [
             [['programa_id', 'usuario_id', 'estado_id'], 'integer'],
-            [['archivo'], 'file'],
+            [['archivo'], 'file','maxSize' => 2*1024*1024,'tooBig' => 'Límite de 2MB..',],/*editar linea 802: upload_max_filesize = 2M de /etc/php/7.0/apache2/php.ini */
             [['fecha'], 'safe'],
             [['estado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::className(), 'targetAttribute' => ['estado_id' => 'estado_id']],
             [['programa_id'], 'exist', 'skipOnError' => true, 'targetClass' => Programa::className(), 'targetAttribute' => ['programa_id' => 'programa_id']],
