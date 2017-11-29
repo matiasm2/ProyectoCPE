@@ -5,7 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\DocumentUpload;
 use app\models\DocumentUploadSearch;
-use app\models\DefaultDocumentUploadSearch;
+use app\models\HistoryDocumentUploadSearch;
 use app\models\Estado;
 use app\models\Programa;
 use app\models\Moderw;
@@ -72,7 +72,7 @@ class DocumentUploadController extends Controller
     }
 
     public function actionHistorial_estados(){
-        $searchModel = new DefaultDocumentUploadSearch();
+        $searchModel = new HistoryDocumentUploadSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		return $this->render('historial_estados', [
             'searchModel' => $searchModel,

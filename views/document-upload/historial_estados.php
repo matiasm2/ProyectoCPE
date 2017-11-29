@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'archivo',
             'fecha',
 				[
-					'label' => 'File',
+					'label' => 'Enlaces',
 					'format' => 'raw',
 					'value' => function ($data) {
 						return Html::a('Descargar', 'uploads/'.$data ->archivo);

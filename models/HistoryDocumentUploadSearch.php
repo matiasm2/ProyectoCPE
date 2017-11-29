@@ -11,7 +11,7 @@ use app\commands\RegisterModeChecker;
 /**
  * DocumentUploadSearch represents the model behind the search form about `app\models\DocumentUpload`.
  */
-class DefaultDocumentUploadSearch extends DocumentUpload
+class HistoryDocumentUploadSearch extends DocumentUpload
 {
     /**
      * @inheritdoc
@@ -41,7 +41,10 @@ class DefaultDocumentUploadSearch extends DocumentUpload
      * @return ActiveDataProvider
      */
     public function search($params){
-        $query = DocumentUpload::find();
+		//~ $progId=DocumentUpload::find()
+			//~ -> where('archivoprograma_id=:archivoprograma_id',[':archivoprograma_id'=> $ID ])
+			//~ -> one()->programa_id;
+		$query = DocumentUpload::find();
         $query->leftJoin('moderw','moderw.moderw_id=archivoprograma.moderw_id');
 
         // add conditions that should always apply here
