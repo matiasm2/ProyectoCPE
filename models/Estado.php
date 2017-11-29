@@ -63,7 +63,7 @@ class Estado extends \yii\db\ActiveRecord
     
 	public static function getAllEstados(){
         //~ return Estado::find()->all();/*Se incerta interferencia de resultados*/
-        return RegisterModeChecker::estadoQyery(Estado::find());
+        return RegisterModeChecker::estadoQuery(Estado::find());
     }
 
    public static function getFaltantes($instituto){

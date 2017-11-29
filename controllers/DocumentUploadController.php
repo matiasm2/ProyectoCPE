@@ -93,9 +93,11 @@ class DocumentUploadController extends Controller
 		$subModelPrograma = new Programa();
 		$subModelModerw = new Moderw();
 		if ($model->load(Yii::$app->request->post())){
-				$model->usuario_id=Yii::$app->user->identity->usuario_id;
-				$model->archivo= UploadedFile::getInstance($model,'archivo');
-				$model->fecha=date('Y-m-d');
+			$a=RegisterModeChecker::isInstanceDocument($model->programa_id);
+			if($a != false){$a->moderw_id=64;$a->save();}/* Se etiqueta como inaccesible el documento */
+			$model->usuario_id=Yii::$app->user->identity->usuario_id;
+			$model->archivo= UploadedFile::getInstance(	$model,'archivo');
+			$model->fecha=date('Y-m-d');
 			if (($model->save())&&($model->upload())){
 				$new=RegisterModeChecker::formatDocument($model);
 				$model->archivo=$new;$model->save();

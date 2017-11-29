@@ -159,18 +159,46 @@ class RegisterModeChecker extends Controller{
 	* Interfiere y devuelve la consulta con los elementos accesibles al modelo indicado por el sector_id
 	* del logoneado..
 	**/
-	public static function estadoQyery($modelFind){
+	public static function estadoQuery($modelFind){
 		if(Yii::$app->user->identity->getSector()->one()->sector_id < 4)/*Si el sector del logoneado es menor a 4 entonces*/
 			return $modelFind->all();									/*no es un usuario de Institutos... devuelve todo*/	
 		else return $modelFind->fromInstitutos(); /* Sino filtra segun la funcion definida en la clase EstadoQuery*/
 	}
 
 	public static function formatDocument($model){
-		$new='dato'.date('YmdHis.').$model->archivo->extension;
+		$new=date('YmdHis').'sector'.Yii::$app->user->identity->getSector()->one()->sector_id.
+		'.'.$model->archivo->extension;
 		rename('uploads/'.$model->archivo,'uploads/'.$new);
 		return $new;
 	}
 
+	public static function isInstanceDocument($id){
+		//~ $strCode='sector'.Yii::$app->user->identity->getSector()->one()->sector_id.
+		//~ '.'.$model->archivo->extension;
+		//~ do{
+			//~ $strDate=date('YmdHis',strtotime('-'.$loop1.' second'));
+			//~ if (file_exists('uploads/'.$strDate.$strCode))return $strDate.$strCode; 
+			//~ $loop1+=1;
+		//~ }while($loop==365*24*60*60);
+		//~ return false;
+		$ref=new Sector();
+		$current=DocumentUpload::find()-> where("programa_id=:programa_id",[":programa_id"=> $id])
+		//~ $current-> Where(['like','moderw.moderw', 'OTROS|LECTOESCR'])
+			//~ -> orFilterWhere(['like','moderw.moderw', 'OTROS|LECTURA'])
+			//~ -> orFilterWhere(['like','moderw.moderw', 'OTROS|ESCRITURA']);
+		//~ $current -> Where('usuario_id=:usuario_id',[':usuario_id' => $ref -> usuarios])
+			//~ -> andFilterWhere(['like','moderw.moderw', '_SECTOR|LECTOESCR'])
+			//~ -> orFilterWhere(['like','moderw.moderw', '_SECTOR|LECTURA'])
+			//~ -> orFilterWhere(['like','moderw.moderw', '_SECTOR|ESCRITURA']);
+		//~ $current -> Where('usuario_id=:usuario_id',[':usuario_id' => Yii::$app->user->identity->usuario_id])
+			//~ -> andFilterWhere(['like','moderw.moderw', '_USUARIO|LECTOESCR'])
+			//~ -> orFilterWhere(['like','moderw.moderw', '_USUARIO|LECTURA'])
+			//~ -> orFilterWhere(['like','moderw.moderw', '_USUARIO|ESCRITURA']);
+		-> andWhere('moderw_id<:moderw_id',[':moderw_id' => 64]);
+		if($current->count() != 1) return false;
+		return $current->one();
+	}
+	
 	public static function test($currentModeRegister,$msg){
 		/**
 		 * DocumentUpload class for table "archivoprograma".
