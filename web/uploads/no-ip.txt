@@ -1,0 +1,3 @@
+https://norfipc.com/recuperar/puertos-abiertos.html
+
+CMD /K NETSTAT -ANO -P TCP 04|FINDSTR /C:ESTABLISHED
