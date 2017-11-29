@@ -71,9 +71,9 @@ class DocumentUploadController extends Controller
         ]);
     }
 
-    public function actionHistorial_estados(){
-        $searchModel = new DefaultDocumentUploadSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    public function actionHistorial_estados($archivoprograma_id){
+        $searchModel = new HistoryDocumentUploadSearch();
+        $dataProvider = $searchModel->searchPorIdArchivoPrograma($archivoprograma_id);
 		return $this->render('historial_estados', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
