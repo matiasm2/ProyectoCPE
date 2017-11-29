@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\DocumentUpload;
 use app\models\DocumentUploadSearch;
+use app\models\DefaultDocumentUploadSearch;
 use app\models\Estado;
 use app\models\Programa;
 use app\models\Moderw;
@@ -70,6 +71,16 @@ class DocumentUploadController extends Controller
         ]);
     }
 
+    public function actionHistorial_estados(){
+        $searchModel = new DefaultDocumentUploadSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		return $this->render('historial_estados', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
     /**
      * Displays a single DocumentUpload model.
      * @param integer $id
@@ -93,9 +104,11 @@ class DocumentUploadController extends Controller
 		$subModelPrograma = new Programa();
 		$subModelModerw = new Moderw();
 		if ($model->load(Yii::$app->request->post())){
-				$model->usuario_id=Yii::$app->user->identity->usuario_id;
-				$model->archivo= UploadedFile::getInstance($model,'archivo');
-				$model->fecha=date('Y-m-d');
+			$a=RegisterModeChecker::isInstanceDocument($model->programa_id);
+			if($a != false){$a->moderw_id=64;$a->save();}/* Se etiqueta como inaccesible el documento */
+			$model->usuario_id=Yii::$app->user->identity->usuario_id;
+			$model->archivo= UploadedFile::getInstance(	$model,'archivo');
+			$model->fecha=date('Y-m-d');
 			if (($model->save())&&($model->upload())){
 				$new=RegisterModeChecker::formatDocument($model);
 				$model->archivo=$new;$model->save();
