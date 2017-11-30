@@ -31,7 +31,7 @@ use yii\helpers\Url;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class ActionColumn extends Column
+class ActionColumn2 extends Column
 {
     /**
      * @inheritdoc
@@ -59,7 +59,7 @@ class ActionColumn extends Column
      *
      * @see buttons
      */
-    public $template = '{view} {update} {delete} {historial_estados}';
+    public $template = '{view} {update} {delete} {historial}';
     /**
      * @var array button rendering callbacks. The array keys are the button names (without curly brackets),
      * and the values are the corresponding button rendering callbacks. The callbacks should use the following
@@ -148,6 +148,7 @@ class ActionColumn extends Column
             'data-confirm' => Yii::t('yii', '¿Está seguro que quiere eliminar este item?'),
             'data-method' => 'post',
         ]);
+        $this->initDefaultButton('historial', 'info-sign');
     }
 
     /**
@@ -171,6 +172,8 @@ class ActionColumn extends Column
                     case 'delete':
                         $title = Yii::t('yii', 'Eliminar');
                         break;
+                    case 'historial_estados':
+                        $title = Yii::t('yii', 'Historial');
                     default:
                         $title = ucfirst($name);
                 }

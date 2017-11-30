@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 return Moderw::find()->where(['moderw_id'=>$model->moderw_id])->one()->moderw;
               }
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn2'],
         ],
     ]); ?>
 </div>
