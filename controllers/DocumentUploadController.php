@@ -71,7 +71,7 @@ class DocumentUploadController extends Controller
         ]);
     }
 
-    public function actionHistorial_estados($id){
+    public function actionHistorial($id){
         $searchModel = new DocumentUploadSearch();
         $dataProvider = $searchModel->searchPorIdArchivoPrograma($id);
 		return $this->render('historial_estados', [
