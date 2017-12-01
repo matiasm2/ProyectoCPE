@@ -236,7 +236,7 @@ class SiteController extends Controller{
 										->andWhere("authkeyuser=:authkeyuser", [":authkeyuser" => $authKey])->one();
 						$activar->activuser = 1;
 					if ($activar->update() !== false) {
-						echo "Registro ok, redireccionando..";
+						echo "Cuenta confirmada! redireccionando a Inicio de Sesion...";
 						echo "<meta http-equiv='refresh' content='8; " . Url::toRoute("site/login") . "'>";
 					} else {
 						echo "Registro fallido, redireccionando..";
@@ -355,8 +355,17 @@ class SiteController extends Controller{
 				->setSubject($subject)
 				->setHtmlBody($body)
 				->send();
-                echo "Enhorabuena, ahora sólo falta que confirmes tu registro en tu cuenta de correo!";
-				return "Enhorabuena, ahora sólo falta que confirmes tu registro en tu cuenta de correo!";
+                //esto es una chanchada
+				//aria-label="close"
+				?>
+				<div class="alert alert-success">
+					<a href="#" class="close" data-dismiss="alert" aria-hidden="true">&times;</a>
+					<h4><strong>¡Usuario registrado!</strong> Sólo falta que confirmes el registro en tu cuenta de correo </h4>
+				</div>
+				<?php
+				//(Yii::$app->session->setFlash('success', "Sólo falta que confirmes tu registro en tu cuenta de correo"));
+				//(Yii::$app->session->setFlash('registerFormSubmitted'));
+				return "Sólo falta que confirmes tu registro en tu cuenta de correo";
 		} else return "Confirmación alternativa " . Mailto::getUrlMailto(
 			$user->mailUser, $subject, "", "", "Haga click en el siguiente enlace para finalizar tu registro", $link,
 			"\nClick aquí para reenviar confirmación vía mailto:");
