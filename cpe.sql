@@ -101,7 +101,7 @@ CREATE DATABASE cpe_db WITH ENCODING 'UTF8';
 
 	CREATE TABLE public.materia (
 	       materia_id    SERIAL PRIMARY KEY,
-	       nombre        varchar(40),
+	       nombre        varchar(180),
 	       optativa      boolean
 	);
 	GRANT SELECT, INSERT, UPDATE ,DELETE  ON public.materia TO cpewebuser;
