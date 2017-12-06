@@ -16,6 +16,7 @@ use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use app\commands\RoleAccessChecker;
 use app\commands\RegisterModeChecker;
+use app\commands\Stadistics;
 /**
  * DocumentUploadController implements the CRUD actions for DocumentUpload model.
  */
@@ -65,13 +66,13 @@ class DocumentUploadController extends Controller
 			try{
 				$searchModel = new DocumentUploadSearch();
 				$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-				$msg='El resultado de test RegisterModeChhecker es: '
-				//~ .RegisterModeChecker::test(-1,"OTROS|ESCRITURA_SECTOR|INACCESIBLE_USUARIO|INACCESIBLE")
+				$msg='El resultado de test estadistico es: '
+				.Stadistics::test()
 				;
 				return $this->render('index', [
 					'searchModel' => $searchModel,
 					'dataProvider' => $dataProvider,
-					//~ 'msg'=>$msg,
+					'msg'=>$msg,
 				]);
 			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
 		} else return $this->redirect(['error/level-access-error',]);
@@ -182,10 +183,13 @@ class DocumentUploadController extends Controller
 		//if (RoleAccessChecker::actionIsAsignSector('archivoprograma/programa')) {
 			$searchModel = new DocumentUploadSearch();
 			$dataProvider = $searchModel->searchPorIdPrograma($idprograma);
-
+			$msg='El resultado de test estadistico es: '
+				.Stadistics::test()
+				;
 			return $this->render('index', [
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
+				'msg'=>$msg,
 			]);
 		//} else return $this->redirect(['error/level-access-error',]);
     }

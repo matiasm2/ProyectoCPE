@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="document-upload-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <p><?= $msg ?></p>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <p><?= Html::a('Crear Document Upload', ['create'], ['class' => 'btn btn-success']) ?></p>
 	<?= GridView::widget([
