@@ -91,8 +91,8 @@ class SiteController extends Controller{
 			else {$msg='Logoneado!';
 				}
 		if (($numUsr==0)||(RoleAccessChecker::actionIsAsignSector('site/indexUserAdmCPE'))) {
-			 $estadosFaltantesIngyAgr = Estado::getFaltantes("Instituto de Ingeniería y Agronomía");
-			 $countEstadosFaltantesIngyAgr = count ($estadosFaltantesIngyAgr);
+			$estadosFaltantesIngyAgr = Estado::getFaltantes("Instituto de Ingeniería y Agronomía");
+			$countEstadosFaltantesIngyAgr = count ($estadosFaltantesIngyAgr);
 
 			$estadosEntregadosIngyAgr = Estado::getEntregados("Instituto de Ingeniería y Agronomía");
 			$countEstadosEntregadoIngyAgr = count ($estadosEntregadosIngyAgr);

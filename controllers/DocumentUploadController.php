@@ -61,14 +61,20 @@ class DocumentUploadController extends Controller
      * @return mixed
      */
     public function actionIndex(){
-        $searchModel = new DocumentUploadSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$msg='El resultado de test RegisterModeChhecker es: '.RegisterModeChecker::test(-1,"OTROS|ESCRITURA_SECTOR|INACCESIBLE_USUARIO|INACCESIBLE");
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'msg'=>$msg,
-        ]);
+		if (RoleAccessChecker::actionIsAsignSector('document-upload/index')) {
+			try{
+				$searchModel = new DocumentUploadSearch();
+				$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+				$msg='El resultado de test RegisterModeChhecker es: '
+				//~ .RegisterModeChecker::test(-1,"OTROS|ESCRITURA_SECTOR|INACCESIBLE_USUARIO|INACCESIBLE")
+				;
+				return $this->render('index', [
+					'searchModel' => $searchModel,
+					'dataProvider' => $dataProvider,
+					//~ 'msg'=>$msg,
+				]);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+		} else return $this->redirect(['error/level-access-error',]);
     }
 
     public function actionHistorial($id){
@@ -86,11 +92,14 @@ class DocumentUploadController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+    public function actionView($id){
+		if (RoleAccessChecker::actionIsAsignSector('document-upload/view')) {
+			try{
+				return $this->render('view', [
+					'model' => $this->findModel($id),
+				]);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+		} else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -99,25 +108,29 @@ class DocumentUploadController extends Controller
      * @return mixed
      */
     public function actionCreate(){
-        $model = new DocumentUpload();
-		$subModelEstado = new Estado();
-		$subModelPrograma = new Programa();
-		$subModelModerw = new Moderw();
-		if ($model->load(Yii::$app->request->post())){
-			$a=RegisterModeChecker::isInstanceDocument($model->programa_id);
-			if($a != false){$a->moderw_id=64;$a->save();}/* Se etiqueta como inaccesible el documento */
-			$model->usuario_id=Yii::$app->user->identity->usuario_id;
-			$model->archivo= UploadedFile::getInstance(	$model,'archivo');
-			$model->fecha=date('Y-m-d');
-			if (($model->save())&&($model->upload())){
-				$new=RegisterModeChecker::formatDocument($model);
-				$model->archivo=$new;$model->save();
-				return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
-			}
-		} else return $this->render('create', ['model' => $model,
-				'subModelEstado' => $subModelEstado,
-				'subModelPrograma' => $subModelPrograma,
-				'subModelModerw' => $subModelModerw,]);
+		if (RoleAccessChecker::actionIsAsignSector('document-upload/create')) {
+			try{
+				$model = new DocumentUpload();
+				$subModelEstado = new Estado();
+				$subModelPrograma = new Programa();
+				$subModelModerw = new Moderw();
+				if ($model->load(Yii::$app->request->post())){
+					$a=RegisterModeChecker::isInstanceDocument($model->programa_id);
+					if($a != false){$a->moderw_id=64;$a->save();}/* Se etiqueta como inaccesible el documento */
+					$model->usuario_id=Yii::$app->user->identity->usuario_id;
+					$model->archivo= UploadedFile::getInstance(	$model,'archivo');
+					$model->fecha=date('Y-m-d');
+					if (($model->save())&&($model->upload())){
+						$new=RegisterModeChecker::formatDocument($model);
+						$model->archivo=$new;$model->save();
+						return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
+					}
+				} else return $this->render('create', ['model' => $model,
+						'subModelEstado' => $subModelEstado,
+						'subModelPrograma' => $subModelPrograma,
+						'subModelModerw' => $subModelModerw,]);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+		} else return $this->redirect(['error/level-access-error',]);
 	}
 	
     /**
@@ -127,20 +140,23 @@ class DocumentUploadController extends Controller
      * @return mixed
      */
     public function actionUpdate($id){
-        $model = $this->findModel($id);
-		$subModelEstado = new Estado();
-		$subModelPrograma = new Programa();
-		$subModelModerw = new Moderw();
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
-		} else {
-			return $this->render('update', [
-				'model' => $model,
-				'subModelEstado' => $subModelEstado,
-				'subModelPrograma' => $subModelPrograma,
-				'subModelModerw' => $subModelModerw,
-				]);
-		}
+		if (RoleAccessChecker::actionIsAsignSector('document-upload/update')) {
+			try{
+				$model = $this->findModel($id);
+				$subModelEstado = new Estado();
+				$subModelPrograma = new Programa();
+				$subModelModerw = new Moderw();
+				if ($model->load(Yii::$app->request->post())){
+						$model->usuario_id=Yii::$app->user->identity->usuario_id;
+						$model->fecha=date('Y-m-d');
+					if ($model->save()) return $this->redirect(['index', 'id' => $model->archivoprograma_id]);
+					} else return $this->render('update', [
+							'model' => $model,
+							'subModelEstado' => $subModelEstado,
+							'subModelPrograma' => $subModelPrograma,
+							'subModelModerw' => $subModelModerw,]);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+		} else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -149,11 +165,29 @@ class DocumentUploadController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+    public function actionDelete($id){
+		if (RoleAccessChecker::actionIsAsignSector('document-upload/index')) {
+			try{
+				$this->findModel($id)->delete();
+				return $this->redirect(['index']);
+			} catch (\yii\db\Exception $e) {return $this->redirect(['error/db-grant-error',]);}
+		} else return $this->redirect(['error/level-access-error',]);
+    }
+    
+    /**
+     * Lists all Archivoprograma models.
+     * @return mixed
+     */
+    public function actionPrograma($idprograma){
+		//if (RoleAccessChecker::actionIsAsignSector('archivoprograma/programa')) {
+			$searchModel = new DocumentUploadSearch();
+			$dataProvider = $searchModel->searchPorIdPrograma($idprograma);
 
-        return $this->redirect(['index']);
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+			]);
+		//} else return $this->redirect(['error/level-access-error',]);
     }
 
     /**
@@ -163,8 +197,7 @@ class DocumentUploadController extends Controller
      * @return DocumentUpload the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id){
         if (($model = DocumentUpload::findOne($id)) !== null) {
             return $model;
         } else {

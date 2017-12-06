@@ -1569,31 +1569,31 @@ BEGIN;
 -- comando app\commands\RoleAccessChecker a travez de la tabla asignsector que depende de esta
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (1,'error/error','Ver pantalla bloqueada');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (2,'site/register','Registrar nuevos usuarios');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (3,'archivoprograma/delete','Eliminar documentos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (4,'archivoprograma/index','Ver lista de documentos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (5,'archivoprograma/update','Actualizar documentos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (6,'archivoprograma/create','Crear documentos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (7,'archivoprograma/view','Ver documentos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (3,'document-upload/delete','Eliminar documentos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (4,'document-upload/index','Ver lista de documentos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (5,'document-upload/update','Actualizar documentos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (6,'document-upload/create','Crear documentos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (7,'document-upload/view','Ver documentos');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (8,'estado/delete','Eliminar estados');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (9,'estado/index','Ver lista de estados de documentos');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (10,'estado/update','Actualizar estados de documentos');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (11,'estado/create','Crear tipos de estados de documentos');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (12,'estado/view','Ver tipos de estados de documentos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (13,'instituto/delete','Eliminar institutos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (14,'instituto/index','Ver lista de institutos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (15,'instituto/update','Actualizar institutos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (16,'instituto/create','Crear nuevos institutos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (17,'instituto/view','Ver institutos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (18,'carrera/delete','Eliminar carreras');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (19,'carrera/index','Ver lista de carreras');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (20,'carrera/update','Actualizar carreras');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (21,'carrera/create','Crear carreras');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (22,'carrera/view','Ver carreras');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (23,'materia/delete','Eliminar materias');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (24,'materia/index','Ver lista de materias');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (25,'materia/update','Actualizar materias');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (26,'materia/create','Crear materias');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (27,'materia/view','Ver materias');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (13,'instituto/delete','Eliminar nombre de instituto');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (14,'instituto/index','Ver lista de nombres de institutos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (15,'instituto/update','Actualizar nombre deinstitutos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (16,'instituto/create','Crear nuevo nombre de institutos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (17,'instituto/view','Ver nombres de institutos');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (18,'carrera/delete','Eliminar nombre de carreras');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (19,'carrera/index','Ver lista de nombres de carreras');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (20,'carrera/update','Actualizar nombre de carrera');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (21,'carrera/create','Crear nombre de carreras');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (22,'carrera/view','Ver detalle del nombre de carrera');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (23,'materia/delete','Eliminar nombre de materias');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (24,'materia/index','Ver lista de nombres de materias');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (25,'materia/update','Actualizar nombre de materia');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (26,'materia/create','Crear nombre de materias');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (27,'materia/view','Ver detalle del nombre de materias');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (28,'ano/delete','Eliminar años');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (29,'ano/index','Ver lista de años');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (30,'ano/update','Actualizar años');
@@ -1629,7 +1629,12 @@ BEGIN;
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (60,'programa/update','Actualizar referencia de documento');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (61,'programa/create','Crear referencia de documentos');
 	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (62,'programa/delete','Eliminar referencia de documentos');
-	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (63, 'site/indexUserAdmCPE','Home del administrador y usuario CPE');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (63,'site/indexUserAdmCPE','Home del administrador y usuario CPE');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (64,'planes/index','Ver lista de planes creados');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (65,'planes/view','Ver detalle del plan');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (66,'planes/update','Actualiza planes creados');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (67,'planes/delete','Elimina planes creados');
+	INSERT INTO actionrole(actionrole_id,action_disp,descripcion)VALUES (68,'planes/create','Crea planes de estudio');
 ---
 -- Acciones configurables para cada sector a travez del usuario Administrador del sistema CPE', Admin CPE., id1
 -- El objetivo de esta tabla es poder completar la tabla actions_asignsector que hace funcionar al 
@@ -1709,6 +1714,9 @@ BEGIN;
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (25,2);--acceso a materia/update
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (26,2);--acceso a materia/create
 	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (23,2);--acceso a materia/delete
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (64,2);--acceso a planes/index
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (65,2);--acceso a planes/view
+	INSERT INTO asignsector(actionrole_id,sector_id)VALUES (68,2);--acceso a planes/create
 ---
 -- Acciones configurables para: 'Usuario de Prensa','Usr Pr'
 ---

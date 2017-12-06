@@ -98,5 +98,39 @@ class DocumentUploadSearch extends DocumentUpload
 
         return $dataProvider;
     }
+    
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchPorIdPrograma($idprograma)
+    {
+        $query = DocumentUpload::find();
+        $query->leftJoin('moderw','moderw.moderw_id=archivoprograma.moderw_id');
+        $query = RegisterModeChecker::joinedQueryMode($query);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'programa_id' => $idprograma,
+
+        ]);
+
+        return $dataProvider;
+    }
 
 }

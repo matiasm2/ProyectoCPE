@@ -45,7 +45,7 @@ $this->title = Yii::t('app', 'Programas');
                 'value' => function($model, $key, $index, $column) {
                         return Html::a(
                             '<i class="fa fa-euro">Ver archivos</i>',
-                            Url::to(['/archivoprograma/programa', 'idprograma' => $model->programa_id]),
+                            Url::to(['/document-upload/programa', 'idprograma' => $model->programa_id]),
                             [
                                 'id'=>'grid-custom-button',
                                 'data-pjax'=>true,

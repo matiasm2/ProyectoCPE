@@ -80,7 +80,7 @@ class RoleAccessChecker extends Controller{
 				['label' => '<span class="glyphicon glyphicon-user"></span> Crear usuarios', 'url' => ['/site/register']],
 				   ['label' => '<span class="glyphicon glyphicon-cog"></span> Herramientas','items'=> [
 					   (self::actionIsAsignSector('site/register')) ? (['label' => 'Registra nuevo usuario', 'url' => ['/site/register']]):(''),
-					   (self::actionIsAsignSector('archivoprograma/index')) ? (['label' => 'Documentos', 'url' => ['/archivoprograma/index']]):(''),
+					   (self::actionIsAsignSector('document-upload/index')) ? (['label' => 'Documentos', 'url' => ['/document-upload/index']]):(''),
 					   (self::actionIsAsignSector('estado/index')) ? (['label' => 'Estados de documentos', 'url' => ['/estado/index']]):(''),
 					   (self::actionIsAsignSector('instituto/index')) ? (['label' => 'Intitutos', 'url' => ['/instituto/index']]):(''),
 					   (self::actionIsAsignSector('carrera/index')) ? (['label' => 'Carreras', 'url' => ['/carrera/index']]):(''),
